@@ -1,6 +1,5 @@
 ---
 alwaysApply: false
-description: 当项目结构发生变化时候，需要更新文档
 ---
 # 项目文档管理规则
 
