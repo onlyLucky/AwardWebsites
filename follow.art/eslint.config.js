@@ -23,7 +23,10 @@ export default defineConfig([
       },
     },
     rules: {
+      // 忽略未使用的变量，仅检查大写字母开头的变量
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // 仅允许导出 React 组件，常量导出需开启 allowConstantExport
+      "react-refresh/only-export-components": ["warn", { "allowConstantExport": true }]
     },
   },
 ])

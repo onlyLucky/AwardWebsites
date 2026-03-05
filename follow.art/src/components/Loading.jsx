@@ -3,27 +3,29 @@ import gsap from 'gsap'
 import './Loading.less'
 
 function Loading() {
-  const [visible, setVisible] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [animationPlayed, setAnimationPlayed] = useState(false)
   const spinnerRef = useRef(null)
   const circlesRef = useRef([])
 
-  /* useEffect(() => {
+  useEffect(() => {
+    console.log("useEffect1")
     const timer1 = setTimeout(() => {
       setAnimationPlayed(true)
     }, 2000)
 
     const timer2 = setTimeout(() => {
-      setVisible(false)
+      setIsLoading(false)
     }, 4000)
 
     return () => {
       clearTimeout(timer1)
       clearTimeout(timer2)
     }
-  }, []) */
+  }, [])
 
   useEffect(() => {
+    console.log("useEffect2")
     if (!spinnerRef.current || !animationPlayed) return
 
     // 初始状态：圆点静止
@@ -63,7 +65,7 @@ function Loading() {
     }
   }, [animationPlayed])
 
-  if (!visible) return null
+  if (!isLoading) return null
 
   return (
     <div className="loading-overlay">
