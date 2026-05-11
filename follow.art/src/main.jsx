@@ -9,16 +9,15 @@ import Loading from './components/loading'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <>
-      <Loading></Loading>
-      {/* <RouteGuardProvider>
+    <LoadingProvider>
+      <RouteGuardProvider>
         <CounterProvider>
           <>
             <Loading />
             <AppRouter />
           </>
         </CounterProvider>
-      </RouteGuardProvider> */}
-    </>
+      </RouteGuardProvider>
+    </LoadingProvider>
   </StrictMode>,
 )
