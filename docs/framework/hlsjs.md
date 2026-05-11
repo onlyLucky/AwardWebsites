@@ -2,764 +2,1392 @@
 
 ## 1. 技术介绍
 
-HLS.js 是一个开源的 JavaScript 库，用于在浏览器中播放 HLS (HTTP Live Streaming) 视频流。它将 HLS 流转换为浏览器可播放的格式，使 HLS 视频能够在不支持原生 HLS 的浏览器中播放。
+### 1.1 什么是 HLS.js
 
-核心特性：
-- **跨浏览器支持** - 在不支持 HLS 的浏览器中播放
-- **自适应比特率** - 根据网络条件自动切换质量
-- **实时流支持** - 支持实时 HLS 流
-- **错误处理** - 强大的错误恢复机制
-- **自定义配置** - 丰富的配置选项
-- **事件系统** - 完整的事件通知机制
-- **轻量级** - 体积小，性能高
+HLS.js (HTTP Live Streaming JavaScript) 是一个开源的 JavaScript 库，用于在支持 HTML5 视频标签的现代浏览器中播放 HLS（HTTP Live Streaming）媒体。它使用 MediaSource Extensions (MSE) 来解析和播放 HLS 流，而不需要浏览器原生支持 HLS。
 
-## 2. 使用场景
+### 1.2 核心特性
 
-### 适用场景
-- **视频点播 (VOD)** - 预录制视频的流式播放
-- **直播** - 实时视频流的播放
-- **自适应比特率** - 需要根据网络条件调整视频质量
-- **跨浏览器兼容** - 需要在各种浏览器中播放 HLS 流
-- **移动设备** - 在移动设备上播放视频
-- **企业视频** - 企业内部视频系统
-- **教育平台** - 在线教育视频
-- **流媒体服务** - 视频网站和流媒体平台
+- **自适应码率**：自动切换适合网络条件的视频质量
+- **实时流播放**：支持直播和点播两种模式
+- **DVR（数字视频录像机）**：支持暂停、回看直播流
+- **音视频同步**：确保音频和视频同步播放
+- **加密内容支持**：支持 AES 加密的 HLS 流
+- **字幕支持**：支持 WebVTT 和其他字幕格式
+- **多音轨选择**：支持多语言和多种音频质量
+- **错误恢复**：自动重试和错误恢复机制
+- **事件系统**：丰富的事件监听和响应机制
+- **自定义配置**：高度可配置的播放器行为
 
-### 不适用场景
-- **非 HLS 流** - 其他格式的视频流
-- **原生支持 HLS** - 在支持 HLS 的浏览器中（如 Safari）
-- **极低延迟** - 需要毫秒级延迟的场景（可考虑 WebRTC）
-- **不需要自适应比特率** - 固定带宽环境
+### 1.3 适用场景
 
-## 3. 快速入门
+- **视频点播平台**：提供高质量的视频点播服务
+- **直播流媒体**：新闻直播、体育赛事、音乐会等
+- **教育和培训**：在线课程、培训视频、学术讲座
+- **企业视频**：公司培训、产品演示、会议录制
+- **移动应用**：在移动浏览器中提供高质量视频播放
+- **多语言网站**：提供多语言音轨和字幕
+- **视频门户网站**：类似 YouTube、优酷等视频分享网站
 
-### 安装
+### 1.4 不适用场景
 
-**使用 npm**
+- **超高清实时流**：对延迟要求特别严格的应用
+- **需要特殊编解码器**：HLS.js 只支持浏览器支持的编解码器
+- **完全离线播放**：没有网络时无法播放（除非预加载）
+- **DRM 受限内容**：某些 DRM 方案可能需要额外配置
+
+## 2. 快速入门
+
+### 2.1 环境要求
+
+- 现代浏览器（Chrome、Firefox、Safari、Edge）
+- HTML5 Video 标签支持
+- MediaSource Extensions (MSE) 支持
+- Node.js（如果需要在开发环境使用）
+
+### 2.2 安装依赖
 
 ```bash
+# 使用 npm
 npm install hls.js
+
+# 使用 yarn
+yarn add hls.js
+
+# 使用 CDN（直接在 HTML 中引入）
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
 ```
 
-**使用 CDN**
+### 2.3 项目结构建议
 
-```html
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+```
+src/
+├── components/
+│   ├── VideoPlayer.jsx    # 视频播放器组件
+│   ├── PlayerControls.jsx # 播放控制组件
+│   ├── QualitySelector.jsx # 质量选择器
+│   └── SubtitleSelector.jsx # 字幕选择器
+├── hooks/
+│   ├── useVideoPlayer.js  # 视频播放器 Hook
+│   └── useHlsPlayer.js   # HLS 播放器 Hook
+└── pages/
+    └── index.jsx         # 主页面
 ```
 
-### 基本使用
+### 2.4 第一个 HLS 播放器
 
-```html
-<video id="video" controls></video>
+让我们创建一个简单的 HLS 视频播放器。
 
-<script>
-  if (Hls.isSupported()) {
-    const video = document.getElementById('video');
-    const hls = new Hls();
-    
-    // 加载 HLS 流
-    hls.loadSource('https://example.com/stream.m3u8');
-    hls.attachMedia(video);
-    
-    // 监听事件
-    hls.on(Hls.Events.MANIFEST_PARSED, function() {
-      video.play();
-    });
-  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    // Safari 原生支持 HLS
-    video.src = 'https://example.com/stream.m3u8';
-    video.addEventListener('loadedmetadata', function() {
-      video.play();
-    });
-  }
-</script>
-```
+```jsx
+// src/components/VideoPlayer.jsx
+import React, { useEffect, useRef } from 'react';
+import Hls from 'hls.js';
 
-## 4. 核心知识点
+function VideoPlayer({ src, poster }) {
+  const videoRef = useRef(null);
 
-### 4.1 基本概念
+  useEffect(() => {
+    if (videoRef.current && src) {
+      const video = videoRef.current;
 
-**HLS 流结构**
+      if (Hls.isSupported()) {
+        // 创建 HLS 实例
+        const hls = new Hls({
+          debug: false, // 生产环境设为 false
+        });
 
-- **主播放列表 (Master Playlist)** - 包含不同质量的流
-- **媒体播放列表 (Media Playlist)** - 包含实际的媒体片段
-- **媒体片段 (Segments)** - 小的视频文件
-- **密钥文件** - 用于加密内容
+        // 加载视频源
+        hls.loadSource(src);
+        hls.attachMedia(video);
 
-**自适应比特率**
+        // 监听事件
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          console.log('Manifest loaded');
+        });
 
-- 根据网络条件自动切换视频质量
-- 提供流畅的观看体验
-- 减少缓冲和卡顿
+        // 错误处理
+        hls.on(Hls.Events.ERROR, function(event, data) {
+          if (data.fatal) {
+            switch (data.type) {
+              case Hls.ErrorTypes.NETWORK_ERROR:
+                console.log('Network error, trying to recover');
+                hls.startLoad();
+                break;
+              case Hls.ErrorTypes.MEDIA_ERROR:
+                console.log('Media error, trying to recover');
+                hls.recoverMediaError();
+                break;
+              default:
+                console.log('Fatal error, cannot recover');
+                hls.destroy();
+                break;
+            }
+          }
+        });
 
-### 4.2 核心 API
-
-**Hls 构造函数**
-
-```javascript
-const hls = new Hls({
-  maxBufferLength: 30,         // 最大缓冲长度（秒）
-  maxMaxBufferLength: 60,      // 最大最大缓冲长度（秒）
-  startLevel: -1,              // 初始质量级别（-1 自动）
-  capLevelToPlayerSize: true,   // 根据播放器大小限制质量
-  debug: false                 // 调试模式
-});
-```
-
-**核心方法**
-
-```javascript
-// 加载 HLS 流
-hls.loadSource('https://example.com/stream.m3u8');
-
-// 附加到视频元素
-hls.attachMedia(video);
-
-// 销毁实例
-hls.destroy();
-
-// 重载流
-hls.reload();
-
-// 手动切换质量
-hls.currentLevel = 2; // 设置为特定质量级别
-```
-
-**事件系统**
-
-```javascript
-// 监听事件
-hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
-  console.log('Manifest parsed:', data);
-  video.play();
-});
-
-// 错误处理
-hls.on(Hls.Events.ERROR, function(event, data) {
-  console.error('Error:', data);
-  if (data.fatal) {
-    switch(data.type) {
-      case Hls.ErrorTypes.NETWORK_ERROR:
-        console.log('Network error, trying to recover...');
-        hls.startLoad();
-        break;
-      case Hls.ErrorTypes.MEDIA_ERROR:
-        console.log('Media error, trying to recover...');
-        hls.recoverMediaError();
-        break;
-      default:
-        hls.destroy();
-        break;
-    }
-  }
-});
-
-// 质量级别变化
-hls.on(Hls.Events.LEVEL_CHANGED, function(event, data) {
-  console.log('Level changed to:', data.level);
-});
-```
-
-### 4.3 配置选项
-
-**缓冲配置**
-
-| 选项 | 描述 | 默认值 |
-|------|------|--------|
-| maxBufferLength | 最大缓冲长度（秒） | 30 |
-| maxMaxBufferLength | 最大最大缓冲长度（秒） | 60 |
-| maxBufferSize | 最大缓冲大小（字节） | 60 * 1024 * 1024 |
-| startPosition | 初始播放位置（秒） | -1 |
-
-**质量控制**
-
-| 选项 | 描述 | 默认值 |
-|------|------|--------|
-| startLevel | 初始质量级别 | -1（自动） |
-| capLevelToPlayerSize | 根据播放器大小限制质量 | false |
-| maxBufferLevel | 最大缓冲质量级别 | -1（无限制） |
-| minBufferLevel | 最小缓冲质量级别 | -1（无限制） |
-
-**网络配置**
-
-| 选项 | 描述 | 默认值 |
-|------|------|--------|
-| maxBufferTime | 最大缓冲时间（秒） | 30 |
-| maxBufferHole | 最大缓冲空洞（秒） | 0.5 |
-| highBufferWatchdogPeriod | 高缓冲监控周期（秒） | 5 |
-| nudgeOffset | 微调偏移（秒） | 0.1 |
-| nudgeMaxRetry | 最大微调重试次数 | 3 |
-
-### 4.4 错误处理
-
-**错误类型**
-
-- **NETWORK_ERROR** - 网络错误
-- **MEDIA_ERROR** - 媒体错误
-- **MANIFEST_ERROR** - 播放列表错误
-- **OTHER_ERROR** - 其他错误
-
-**错误恢复**
-
-```javascript
-hls.on(Hls.Events.ERROR, function(event, data) {
-  console.error('Error type:', data.type, 'Fatal:', data.fatal);
-  
-  if (data.fatal) {
-    switch(data.type) {
-      case Hls.ErrorTypes.NETWORK_ERROR:
-        console.log('Network error, recovering...');
-        hls.startLoad();
-        break;
-      case Hls.ErrorTypes.MEDIA_ERROR:
-        console.log('Media error, recovering...');
-        hls.recoverMediaError();
-        break;
-      case Hls.ErrorTypes.MANIFEST_ERROR:
-        console.log('Manifest error, cannot recover');
-        hls.destroy();
-        break;
-      default:
-        console.log('Unknown error, cannot recover');
-        hls.destroy();
-        break;
-    }
-  }
-});
-```
-
-## 5. 使用技巧
-
-### 5.1 基本使用
-
-**自动检测和回退**
-
-```javascript
-function setupVideo(videoElement, hlsUrl) {
-  if (Hls.isSupported()) {
-    const hls = new Hls();
-    hls.loadSource(hlsUrl);
-    hls.attachMedia(videoElement);
-    hls.on(Hls.Events.MANIFEST_PARSED, () => {
-      videoElement.play();
-    });
-    return hls;
-  } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
-    videoElement.src = hlsUrl;
-    videoElement.addEventListener('loadedmetadata', () => {
-      videoElement.play();
-    });
-    return null;
-  } else {
-    console.error('HLS not supported');
-    return null;
-  }
-}
-```
-
-**自定义质量切换**
-
-```javascript
-// 创建质量选择器
-function createQualitySelector(hls, videoElement) {
-  const select = document.createElement('select');
-  select.className = 'quality-selector';
-  
-  hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
-    // 清空现有选项
-    select.innerHTML = '';
-    
-    // 添加自动选项
-    const autoOption = document.createElement('option');
-    autoOption.value = '-1';
-    autoOption.textContent = 'Auto';
-    select.appendChild(autoOption);
-    
-    // 添加质量选项
-    data.levels.forEach((level, index) => {
-      const option = document.createElement('option');
-      option.value = index;
-      option.textContent = `${level.width}x${level.height} (${Math.round(level.bitrate / 1000)}kbps)`;
-      select.appendChild(option);
-    });
-    
-    // 监听选择变化
-    select.addEventListener('change', function() {
-      hls.currentLevel = parseInt(this.value);
-    });
-  });
-  
-  return select;
-}
-```
-
-### 5.2 高级使用
-
-**事件监听**
-
-```javascript
-// 监听所有重要事件
-const hls = new Hls();
-
-// 清单解析完成
-hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
-  console.log('Manifest parsed, levels:', data.levels.length);
-});
-
-// 级别变化
-hls.on(Hls.Events.LEVEL_CHANGED, (event, data) => {
-  console.log('Level changed to:', data.level);
-});
-
-// 缓冲更新
-hls.on(Hls.Events.BUFFER_UPDATE, (event, data) => {
-  console.log('Buffer level:', data.level, 'Buffer length:', data.len);
-});
-
-// 加载进度
-hls.on(Hls.Events.LOADING_PROGRESS, (event, data) => {
-  console.log('Loading progress:', data.loaded, '/', data.total);
-});
-
-// 错误处理
-hls.on(Hls.Events.ERROR, (event, data) => {
-  console.error('Error:', data);
-});
-```
-
-**自定义配置**
-
-```javascript
-const hls = new Hls({
-  // 缓冲配置
-  maxBufferLength: 40,
-  maxMaxBufferLength: 60,
-  maxBufferSize: 100 * 1024 * 1024,
-  
-  // 质量控制
-  startLevel: -1, // 自动
-  capLevelToPlayerSize: true,
-  
-  // 网络配置
-  maxBufferTime: 30,
-  maxBufferHole: 0.5,
-  
-  // 其他
-  debug: true,
-  enableWorker: true,
-  lowLatencyMode: true
-});
-```
-
-**低延迟模式**
-
-```javascript
-const hls = new Hls({
-  lowLatencyMode: true,
-  maxBufferLength: 3,
-  maxMaxBufferLength: 5,
-  maxBufferTime: 3,
-  maxBufferHole: 0.2,
-  highBufferWatchdogPeriod: 1,
-  nudgeOffset: 0.1,
-  nudgeMaxRetry: 3
-});
-```
-
-### 5.3 性能优化
-
-**内存管理**
-
-```javascript
-// 组件卸载时销毁 HLS 实例
-function cleanupHls(hls) {
-  if (hls) {
-    hls.destroy();
-  }
-}
-
-// React 示例
-useEffect(() => {
-  const hls = setupVideo(videoRef.current, hlsUrl);
-  
-  return () => {
-    cleanupHls(hls);
-  };
-}, [hlsUrl]);
-```
-
-**缓冲优化**
-
-```javascript
-// 根据网络状况调整缓冲
-function adjustBufferBasedOnNetwork() {
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  
-  if (connection) {
-    connection.addEventListener('change', function() {
-      if (connection.effectiveType === '4g') {
-        hls.config.maxBufferLength = 30;
-      } else if (connection.effectiveType === '3g') {
-        hls.config.maxBufferLength = 45;
-      } else {
-        hls.config.maxBufferLength = 60;
+        return () => {
+          hls.destroy(); // 清理
+        };
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        // 浏览器原生支持 HLS（如 Safari）
+        video.src = src;
       }
-    });
-  }
+    }
+  }, [src]);
+
+  return (
+    <div className="video-player">
+      <video
+        ref={videoRef}
+        controls
+        poster={poster}
+        playsInline
+        crossOrigin="anonymous"
+      />
+    </div>
+  );
 }
+
+export default VideoPlayer;
+```
+
+```jsx
+// src/App.jsx
+import React from 'react';
+import VideoPlayer from './components/VideoPlayer';
+
+function App() {
+  const videoUrl = 'https://example.com/path/to/video/index.m3u8';
+  
+  return (
+    <div className="app">
+      <h1>HLS.js Video Player</h1>
+      <VideoPlayer 
+        src={videoUrl} 
+        poster="https://example.com/path/to/poster.jpg" 
+      />
+    </div>
+  );
+}
+
+export default App;
+```
+
+### 2.5 添加播放控制
+
+让我们创建一个自定义的播放控制界面。
+
+```jsx
+// src/components/PlayerControls.jsx
+import React from 'react';
+
+function PlayerControls({ 
+  isPlaying, 
+  currentTime, 
+  duration, 
+  volume, 
+  isMuted,
+  onPlayPause, 
+  onSeek, 
+  onVolumeChange, 
+  onToggleMute 
+}) {
+  const formatTime = (seconds) => {
+    if (isNaN(seconds)) return '00:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  return (
+    <div className="player-controls">
+      {/* 播放/暂停 */}
+      <button onClick={onPlayPause}>
+        {isPlaying ? 'Pause' : 'Play'}
+      </button>
+
+      {/* 进度条 */}
+      <div className="progress-bar">
+        <span className="time">{formatTime(currentTime)}</span>
+        <input
+          type="range"
+          min={0}
+          max={duration || 100}
+          value={currentTime}
+          onChange={(e) => onSeek(parseFloat(e.target.value))}
+          className="seek-slider"
+        />
+        <span className="time">{formatTime(duration)}</span>
+      </div>
+
+      {/* 音量控制 */}
+      <div className="volume-control">
+        <button onClick={onToggleMute}>
+          {isMuted ? 'Unmute' : 'Mute'}
+        </button>
+        <input
+          type="range"
+          min={0}
+          max={1}
+          step={0.1}
+          value={isMuted ? 0 : volume}
+          onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
+          className="volume-slider"
+        />
+      </div>
+    </div>
+  );
+}
+
+export default PlayerControls;
+```
+
+## 3. 基础使用
+
+### 3.1 基础配置
+
+```jsx
+import Hls from 'hls.js';
+
+// 基础配置
+const hlsConfig = {
+  enableWorker: true,           // 启用 Web Worker
+  lowLatencyMode: false,         // 低延迟模式（直播用）
+  maxBufferLength: 30,          // 最大缓冲秒数
+  maxBufferSize: 60 * 1000 * 1000, // 最大缓冲大小 60MB
+  maxBufferHole: 0.5,           // 允许的缓冲间隙
+  startLevel: -1,               // 初始质量级别（-1 = 自动）
+  testBandwidth: true,          // 测试带宽
+  maxStarvationDelay: 4,       // 最大缓冲等待时间
+};
+
+const hls = new Hls(hlsConfig);
+```
+
+### 3.2 播放器事件监听
+
+```jsx
+import Hls from 'hls.js';
+
+function setupEventListeners(hls) {
+  // 核心事件
+  hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
+    console.log('Manifest parsed, levels:', data.levels);
+  });
+
+  hls.on(Hls.Events.LEVEL_LOADED, (event, data) => {
+    console.log('Level loaded:', data.details);
+  });
+
+  hls.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
+    console.log('Level switched to:', data.level);
+  });
+
+  hls.on(Hls.Events.BUFFER_CREATED, (event, data) => {
+    console.log('Buffer created');
+  });
+
+  hls.on(Hls.Events.BUFFER_APPENDING, (event, data) => {
+    console.log('Buffer appending:', data.type);
+  });
+
+  // 播放事件
+  hls.on(Hls.Events.FRAG_LOADING, (event, data) => {
+    console.log('Fragment loading:', data.frag);
+  });
+
+  hls.on(Hls.Events.FRAG_LOADED, (event, data) => {
+    console.log('Fragment loaded');
+  });
+
+  hls.on(Hls.Events.FRAG_PARSING_DATA, (event, data) => {
+    console.log('Fragment parsing data');
+  });
+
+  // 错误处理
+  hls.on(Hls.Events.ERROR, (event, data) => {
+    console.error('Error:', data);
+    if (data.fatal) {
+      switch (data.type) {
+        case Hls.ErrorTypes.NETWORK_ERROR:
+          console.error('Network error, trying to recover');
+          hls.startLoad();
+          break;
+        case Hls.ErrorTypes.MEDIA_ERROR:
+          console.error('Media error, trying to recover');
+          hls.recoverMediaError();
+          break;
+        default:
+          console.error('Fatal error, destroying HLS instance');
+          hls.destroy();
+          break;
+      }
+    }
+  });
+}
+```
+
+### 3.3 质量选择和自适应码率
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+function QualitySelector({ hls, levels }) {
+  const [currentLevel, setCurrentLevel] = useState(-1);
+
+  useEffect(() => {
+    if (hls) {
+      const handleLevelSwitched = (event, data) => {
+        setCurrentLevel(data.level);
+      };
+
+      hls.on(Hls.Events.LEVEL_SWITCHED, handleLevelSwitched);
+
+      return () => {
+        hls.off(Hls.Events.LEVEL_SWITCHED, handleLevelSwitched);
+      };
+    }
+  }, [hls]);
+
+  const handleLevelChange = (levelIndex) => {
+    if (hls) {
+      hls.currentLevel = levelIndex; // -1 = 自动
+      setCurrentLevel(levelIndex);
+    }
+  };
+
+  return (
+    <div className="quality-selector">
+      <select 
+        value={currentLevel}
+        onChange={(e) => handleLevelChange(parseInt(e.target.value))}
+      >
+        <option value={-1}>Auto</option>
+        {levels.map((level, index) => (
+          <option key={index} value={index}>
+            {level.height}p ({Math.round(level.bitrate / 1000)} Kbps)
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+export default QualitySelector;
+```
+
+### 3.4 字幕和多音轨
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+function SubtitleSelector({ hls, subtitleTracks }) {
+  const [currentSubtitle, setCurrentSubtitle] = useState(-1);
+
+  useEffect(() => {
+    if (hls) {
+      const handleSubtitleTracksUpdated = (event, data) => {
+        console.log('Subtitle tracks updated:', data.tracks);
+      };
+
+      hls.on(Hls.Events.SUBTITLE_TRACKS_UPDATED, handleSubtitleTracksUpdated);
+
+      return () => {
+        hls.off(Hls.Events.SUBTITLE_TRACKS_UPDATED, handleSubtitleTracksUpdated);
+      };
+    }
+  }, [hls]);
+
+  const handleSubtitleChange = (trackIndex) => {
+    if (hls) {
+      hls.subtitleTrack = trackIndex; // -1 = 关闭
+      setCurrentSubtitle(trackIndex);
+    }
+  };
+
+  return (
+    <div className="subtitle-selector">
+      <select 
+        value={currentSubtitle}
+        onChange={(e) => handleSubtitleChange(parseInt(e.target.value))}
+      >
+        <option value={-1}>Off</option>
+        {subtitleTracks.map((track, index) => (
+          <option key={index} value={index}>
+            {track.lang || track.name || `Track ${index}`}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+function AudioTrackSelector({ hls, audioTracks }) {
+  const [currentAudio, setCurrentAudio] = useState(0);
+
+  const handleAudioChange = (trackIndex) => {
+    if (hls) {
+      hls.audioTrack = trackIndex;
+      setCurrentAudio(trackIndex);
+    }
+  };
+
+  return (
+    <div className="audio-selector">
+      <select 
+        value={currentAudio}
+        onChange={(e) => handleAudioChange(parseInt(e.target.value))}
+      >
+        {audioTracks.map((track, index) => (
+          <option key={index} value={index}>
+            {track.lang || track.name || `Audio ${index}`}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+export { SubtitleSelector, AudioTrackSelector };
+```
+
+### 3.5 使用 React Hooks
+
+```jsx
+// src/hooks/useHlsPlayer.js
+import { useState, useRef, useEffect, useCallback } from 'react';
+import Hls from 'hls.js';
+
+function useHlsPlayer(src) {
+  const videoRef = useRef(null);
+  const hlsRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(1);
+  const [isMuted, setIsMuted] = useState(false);
+  const [levels, setLevels] = useState([]);
+  const [currentLevel, setCurrentLevel] = useState(-1);
+  const [audioTracks, setAudioTracks] = useState([]);
+  const [subtitleTracks, setSubtitleTracks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // 初始化 HLS
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !src) return;
+
+    const initHls = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        if (Hls.isSupported()) {
+          const hls = new Hls({
+            debug: process.env.NODE_ENV === 'development',
+            enableWorker: true,
+            lowLatencyMode: false,
+          });
+
+          hlsRef.current = hls;
+
+          hls.loadSource(src);
+          hls.attachMedia(video);
+
+          // 事件监听
+          hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
+            setLevels(data.levels);
+            setLoading(false);
+          });
+
+          hls.on(Hls.Events.AUDIO_TRACKS_UPDATED, (event, data) => {
+            setAudioTracks(data.tracks);
+          });
+
+          hls.on(Hls.Events.SUBTITLE_TRACKS_UPDATED, (event, data) => {
+            setSubtitleTracks(data.tracks);
+          });
+
+          hls.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
+            setCurrentLevel(data.level);
+          });
+
+          hls.on(Hls.Events.ERROR, (event, data) => {
+            if (data.fatal) {
+              console.error('Fatal HLS error:', data);
+              setError(data);
+            }
+          });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          // 原生 HLS 支持（如 Safari）
+          video.src = src;
+          setLoading(false);
+        } else {
+          throw new Error('HLS is not supported in this browser');
+        }
+      } catch (err) {
+        console.error('Error initializing HLS:', err);
+        setError(err);
+        setLoading(false);
+      }
+    };
+
+    initHls();
+
+    return () => {
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+      }
+    };
+  }, [src]);
+
+  // 视频事件监听
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+    const handleTimeUpdate = () => setCurrentTime(video.currentTime);
+    const handleDurationChange = () => setDuration(video.duration);
+    const handleVolumeChange = () => {
+      setVolume(video.volume);
+      setIsMuted(video.muted);
+    };
+
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('pause', handlePause);
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('durationchange', handleDurationChange);
+    video.addEventListener('volumechange', handleVolumeChange);
+
+    return () => {
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('pause', handlePause);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('durationchange', handleDurationChange);
+      video.removeEventListener('volumechange', handleVolumeChange);
+    };
+  }, []);
+
+  // 播放控制方法
+  const play = useCallback(() => {
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+  }, []);
+
+  const pause = useCallback(() => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  }, []);
+
+  const togglePlay = useCallback(() => {
+    if (isPlaying) {
+      pause();
+    } else {
+      play();
+    }
+  }, [isPlaying, play, pause]);
+
+  const seek = useCallback((time) => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = time;
+    }
+  }, []);
+
+  const setVolumeValue = useCallback((value) => {
+    if (videoRef.current) {
+      videoRef.current.volume = value;
+      videoRef.current.muted = value === 0;
+    }
+  }, []);
+
+  const toggleMute = useCallback(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+    }
+  }, []);
+
+  const setLevel = useCallback((level) => {
+    if (hlsRef.current) {
+      hlsRef.current.currentLevel = level;
+    }
+  }, []);
+
+  const setAudioTrack = useCallback((trackIndex) => {
+    if (hlsRef.current) {
+      hlsRef.current.audioTrack = trackIndex;
+    }
+  }, []);
+
+  const setSubtitleTrack = useCallback((trackIndex) => {
+    if (hlsRef.current) {
+      hlsRef.current.subtitleTrack = trackIndex;
+    }
+  }, []);
+
+  return {
+    videoRef,
+    isPlaying,
+    currentTime,
+    duration,
+    volume,
+    isMuted,
+    levels,
+    currentLevel,
+    audioTracks,
+    subtitleTracks,
+    loading,
+    error,
+    play,
+    pause,
+    togglePlay,
+    seek,
+    setVolume: setVolumeValue,
+    toggleMute,
+    setLevel,
+    setAudioTrack,
+    setSubtitleTrack,
+  };
+}
+
+export default useHlsPlayer;
+```
+
+## 4. 进阶使用
+
+### 4.1 直播流和 DVR 功能
+
+```jsx
+// src/components/LivePlayer.jsx
+import React from 'react';
+import Hls from 'hls.js';
+import useHlsPlayer from '../hooks/useHlsPlayer';
+
+function LivePlayer({ src, enableDvr }) {
+  const {
+    videoRef,
+    isPlaying,
+    togglePlay,
+    currentTime,
+    duration,
+    seek,
+    loading,
+    error,
+  } = useHlsPlayer(src);
+
+  const isDvrAvailable = duration && isFinite(duration);
+
+  const goToLive = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = videoRef.current.duration;
+    }
+  };
+
+  if (loading) return <div>Loading live stream...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return (
+    <div className="live-player">
+      <video ref={videoRef} playsInline className="live-video" />
+
+      <div className="live-controls">
+        <button onClick={togglePlay}>
+          {isPlaying ? 'Pause' : 'Play'}
+        </button>
+
+        <div className="live-indicator">
+          <span className="live-badge">LIVE</span>
+        </div>
+
+        {enableDvr && isDvrAvailable && (
+          <>
+            <div className="dvr-controls">
+              <span className="time">
+                {Math.max(0, Math.floor(currentTime - duration))}s (DVR)
+              </span>
+              <input
+                type="range"
+                min={0}
+                max={duration}
+                value={currentTime}
+                onChange={(e) => seek(parseFloat(e.target.value))}
+              />
+            </div>
+            <button onClick={goToLive}>Go Live</button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default LivePlayer;
+```
+
+### 4.2 自定义配置和性能优化
+
+```jsx
+import Hls from 'hls.js';
+
+const optimizedConfig = {
+  // 基础配置
+  enableWorker: true,
+  enableSoftwareAES: true,
+
+  // 缓冲配置
+  maxBufferLength: 30,           // 最多缓冲30秒
+  maxBufferSize: 60 * 1000 * 1000, // 60MB 缓冲
+  maxBufferHole: 0.5,
+  highBufferWatchdogPeriod: 3,
+  nudgeOffset: 0.1,
+  nudgeMaxRetry: 3,
+
+  // 片段加载
+  maxFragLookUpTolerance: 0.2,
+  startLevel: -1,               // 自动选择起始质量
+  testBandwidth: true,
+  startPosition: -1,
+
+  // 自适应码率
+  abrEwmaFastLive: 3.0,
+  abrEwmaSlowLive: 9.0,
+  abrEwmaFastVoD: 3.0,
+  abrEwmaSlowVoD: 9.0,
+  abrBandWidthFactor: 0.8,
+  abrBandWidthUpFactor: 0.7,
+
+  // 高级
+  maxLoadingDelay: 4,
+  liveSyncDurationCount: 3,
+  liveMaxLatencyDurationCount: Infinity,
+  liveDurationInfinity: false,
+  enableSTBBuffer: false,
+  forceKeyFrameOnDiscontinuity: true,
+  progressive: false,
+  capLevelToPlayerSize: false,
+  capLevelOnFPSDrop: false,
+};
+
+function createOptimizedHlsPlayer(src, videoElement) {
+  const hls = new Hls(optimizedConfig);
+  hls.loadSource(src);
+  hls.attachMedia(videoElement);
+  return hls;
+}
+
+export { optimizedConfig, createOptimizedHlsPlayer };
+```
+
+### 4.3 自定义播放器 UI
+
+```jsx
+// src/components/CustomVideoPlayer.jsx
+import React from 'react';
+import useHlsPlayer from '../hooks/useHlsPlayer';
+import PlayerControls from './PlayerControls';
+import QualitySelector from './QualitySelector';
+import { SubtitleSelector, AudioTrackSelector } from './SubtitleSelector';
+
+function CustomVideoPlayer({ src, poster }) {
+  const {
+    videoRef,
+    isPlaying,
+    currentTime,
+    duration,
+    volume,
+    isMuted,
+    levels,
+    currentLevel,
+    audioTracks,
+    subtitleTracks,
+    loading,
+    error,
+    togglePlay,
+    seek,
+    setVolume,
+    toggleMute,
+    setLevel,
+    setAudioTrack,
+    setSubtitleTrack,
+  } = useHlsPlayer(src);
+
+  if (loading) {
+    return (
+      <div className="video-container loading">
+        <div className="loading-spinner">Loading...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="video-container error">
+        <p>Error loading video: {error.message}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="video-container">
+      <video
+        ref={videoRef}
+        poster={poster}
+        playsInline
+        crossOrigin="anonymous"
+        className="video-player"
+      />
+
+      <div className="video-overlay">
+        <PlayerControls
+          isPlaying={isPlaying}
+          currentTime={currentTime}
+          duration={duration}
+          volume={volume}
+          isMuted={isMuted}
+          onPlayPause={togglePlay}
+          onSeek={seek}
+          onVolumeChange={setVolume}
+          onToggleMute={toggleMute}
+        />
+
+        <div className="extra-controls">
+          {levels.length > 0 && (
+            <QualitySelector levels={levels} />
+          )}
+          
+          {audioTracks.length > 0 && (
+            <AudioTrackSelector audioTracks={audioTracks} />
+          )}
+          
+          {subtitleTracks.length > 0 && (
+            <SubtitleSelector subtitleTracks={subtitleTracks} />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default CustomVideoPlayer;
+```
+
+### 4.4 错误处理和重试机制
+
+```jsx
+// src/utils/errorHandler.js
+import Hls from 'hls.js';
+
+function setupErrorHandling(hls, maxRetries = 3) {
+  let retryCount = 0;
+  let isRecovering = false;
+
+  const resetRetryCount = () => {
+    retryCount = 0;
+  };
+
+  hls.on(Hls.Events.ERROR, (event, data) => {
+    console.error('HLS Error:', data);
+
+    if (data.fatal) {
+      switch (data.type) {
+        case Hls.ErrorTypes.NETWORK_ERROR:
+          if (retryCount < maxRetries) {
+            console.log(`Network error, retrying (${retryCount + 1}/${maxRetries})...`);
+            retryCount++;
+            setTimeout(() => {
+              hls.startLoad();
+            }, 2000 * retryCount); // 递增重试延迟
+          } else {
+            console.error('Max retries reached, giving up');
+            hls.destroy();
+          }
+          break;
+
+        case Hls.ErrorTypes.MEDIA_ERROR:
+          if (!isRecovering) {
+            isRecovering = true;
+            console.log('Media error, trying to recover');
+            hls.recoverMediaError();
+
+            // 重置恢复标志
+            setTimeout(() => {
+              isRecovering = false;
+            }, 5000);
+          }
+          break;
+
+        default:
+          console.error('Fatal error, cannot recover');
+          hls.destroy();
+          break;
+      }
+    } else {
+      // 非致命错误
+      console.warn('Non-fatal error:', data);
+      if (data.details === Hls.ErrorDetails.BUFFER_STALLED_ERROR) {
+        console.log('Buffer stalled, trying to recover');
+        hls.nextLevel = hls.currentLevel - 1; // 降低质量
+      }
+    }
+  });
+
+  // 成功恢复后重置重试计数
+  hls.on(Hls.Events.FRAG_LOADED, resetRetryCount);
+  hls.on(Hls.Events.LEVEL_LOADED, resetRetryCount);
+
+  return {
+    resetRetryCount,
+    getRetryCount: () => retryCount,
+  };
+}
+
+export { setupErrorHandling };
+```
+
+## 5. 实际应用
+
+### 5.1 完整的视频门户网站播放器
+
+```jsx
+// src/components/VideoPortalPlayer.jsx
+import React, { useState } from 'react';
+import CustomVideoPlayer from './CustomVideoPlayer';
+
+function VideoPortalPlayer() {
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [showPlaylist, setShowPlaylist] = useState(false);
+
+  const videoPlaylist = [
+    {
+      id: 1,
+      title: 'Introduction to Web Development',
+      url: 'https://example.com/videos/intro/index.m3u8',
+      thumbnail: 'https://example.com/thumbnails/intro.jpg',
+      duration: '15:32',
+    },
+    {
+      id: 2,
+      title: 'Advanced JavaScript Concepts',
+      url: 'https://example.com/videos/advanced-js/index.m3u8',
+      thumbnail: 'https://example.com/thumbnails/advanced-js.jpg',
+      duration: '24:15',
+    },
+    {
+      id: 3,
+      title: 'Building Responsive UIs',
+      url: 'https://example.com/videos/responsive-ui/index.m3u8',
+      thumbnail: 'https://example.com/thumbnails/responsive-ui.jpg',
+      duration: '18:42',
+    },
+  ];
+
+  return (
+    <div className="video-portal">
+      <header className="portal-header">
+        <h1>Video Portal</h1>
+        <button onClick={() => setShowPlaylist(!showPlaylist)}>
+          {showPlaylist ? 'Hide Playlist' : 'Show Playlist'}
+        </button>
+      </header>
+
+      <div className="portal-content">
+        <div className="main-player">
+          {selectedVideo ? (
+            <CustomVideoPlayer
+              src={selectedVideo.url}
+              poster={selectedVideo.thumbnail}
+            />
+          ) : (
+            <div className="no-video-selected">
+              <p>Select a video from the playlist</p>
+            </div>
+          )}
+        </div>
+
+        {showPlaylist && (
+          <aside className="playlist-sidebar">
+            <h3>Playlist</h3>
+            <ul className="video-list">
+              {videoPlaylist.map((video) => (
+                <li
+                  key={video.id}
+                  className={`video-item ${selectedVideo?.id === video.id ? 'active' : ''}`}
+                  onClick={() => setSelectedVideo(video)}
+                >
+                  <img src={video.thumbnail} alt={video.title} className="video-thumbnail" />
+                  <div className="video-info">
+                    <h4>{video.title}</h4>
+                    <span className="video-duration">{video.duration}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default VideoPortalPlayer;
+```
+
+### 5.2 多语言教育平台
+
+```jsx
+// src/components/EducationPlayer.jsx
+import React, { useState } from 'react';
+import CustomVideoPlayer from './CustomVideoPlayer';
+import { SubtitleSelector, AudioTrackSelector } from './SubtitleSelector';
+
+function EducationPlayer({ courseData }) {
+  const [currentLesson, setCurrentLesson] = useState(0);
+  const [notes, setNotes] = useState('');
+  const [activeNote, setActiveNote] = useState(null);
+
+  const lesson = courseData.lessons[currentLesson];
+
+  const saveNote = () => {
+    if (activeNote !== null) {
+      console.log('Saving note at timestamp:', activeNote);
+      setNotes('');
+      setActiveNote(null);
+    }
+  };
+
+  const addNoteAtCurrentTime = (timestamp) => {
+    setActiveNote(timestamp);
+  };
+
+  return (
+    <div className="education-player">
+      <div className="player-section">
+        {lesson && (
+          <CustomVideoPlayer
+            src={lesson.videoUrl}
+            poster={lesson.thumbnail}
+          />
+        )}
+      </div>
+
+      <div className="content-section">
+        <div className="lesson-info">
+          <h2>{lesson.title}</h2>
+          <p>{lesson.description}</p>
+        </div>
+
+        <div className="notes-section">
+          <h3>Notes</h3>
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="Take notes while watching..."
+          />
+          <div className="note-controls">
+            <button onClick={saveNote} disabled={!activeNote}>
+              Save Note
+            </button>
+          </div>
+        </div>
+
+        <div className="lesson-navigation">
+          <button
+            disabled={currentLesson === 0}
+            onClick={() => setCurrentLesson(prev => prev - 1)}
+          >
+            Previous Lesson
+          </button>
+          <span>
+            Lesson {currentLesson + 1} of {courseData.lessons.length}
+          </span>
+          <button
+            disabled={currentLesson === courseData.lessons.length - 1}
+            onClick={() => setCurrentLesson(prev => prev + 1)}
+          >
+            Next Lesson
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default EducationPlayer;
+```
+
+### 5.3 活动直播平台
+
+```jsx
+// src/components/LiveEventPlayer.jsx
+import React, { useState, useEffect } from 'react';
+import Hls from 'hls.js';
+import LivePlayer from './LivePlayer';
+
+function LiveEventPlayer({ eventData }) {
+  const [isLive, setIsLive] = useState(false);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+  const [viewerCount, setViewerCount] = useState(0);
+
+  useEffect(() => {
+    // 模拟实时观众计数
+    const interval = setInterval(() => {
+      setViewerCount(prev => Math.max(1000, prev + Math.floor(Math.random() * 10) - 5));
+    }, 3000);
+
+    // 模拟直播状态
+    setIsLive(true);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+    if (newMessage.trim()) {
+      setChatMessages(prev => [
+        ...prev,
+        {
+          id: Date.now(),
+          user: 'You',
+          text: newMessage,
+          timestamp: new Date().toLocaleTimeString(),
+        },
+      ]);
+      setNewMessage('');
+    }
+  };
+
+  return (
+    <div className="live-event">
+      <header className="event-header">
+        <div className="event-info">
+          <h1>{eventData.title}</h1>
+          <div className="live-indicator">
+            <span className="live-badge">{isLive ? 'LIVE' : 'OFFLINE'}</span>
+            <span className="viewer-count">{viewerCount} watching</span>
+          </div>
+        </div>
+      </header>
+
+      <div className="event-content">
+        <div className="player-area">
+          <LivePlayer src={eventData.streamUrl} enableDvr={true} />
+        </div>
+
+        <aside className="chat-sidebar">
+          <div className="chat-header">
+            <h3>Live Chat</h3>
+          </div>
+
+          <div className="chat-messages">
+            {chatMessages.map((msg) => (
+              <div key={msg.id} className="chat-message">
+                <span className="message-user">{msg.user}</span>
+                <span className="message-text">{msg.text}</span>
+                <span className="message-time">{msg.timestamp}</span>
+              </div>
+            ))}
+          </div>
+
+          <form className="chat-input" onSubmit={sendMessage}>
+            <input
+              type="text"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Type a message..."
+              disabled={!isLive}
+            />
+            <button type="submit" disabled={!isLive}>Send</button>
+          </form>
+        </aside>
+      </div>
+    </div>
+  );
+}
+
+export default LiveEventPlayer;
 ```
 
 ## 6. 常见问题
 
 ### 6.1 播放问题
 
-**问题**：视频无法播放
-**解决方案**：
-- 检查 HLS URL 是否正确
-- 确保 CORS 配置正确
-- 检查网络连接
-- 查看控制台错误信息
+**问题：视频无法加载或播放**
 
-**问题**：视频卡顿
-**解决方案**：
-- 增加缓冲长度
-- 降低初始质量级别
-- 检查网络速度
-- 优化服务器配置
+解决方案：
+1. 检查视频 URL 是否正确
+2. 确认浏览器支持 HLS
+3. 检查 CORS 设置
+4. 验证 HLS 流格式是否正确
 
-**问题**：质量切换不流畅
-**解决方案**：
-- 调整缓冲设置
-- 启用平滑切换
-- 检查网络稳定性
+```jsx
+// 检查支持情况
+if (Hls.isSupported()) {
+  console.log('HLS.js is supported');
+} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+  console.log('Native HLS is supported');
+} else {
+  console.error('HLS is not supported');
+}
 
-### 6.2 错误处理
+// 检查 CORS
+const checkCors = async (url) => {
+  try {
+    const response = await fetch(url, { method: 'HEAD' });
+    return response.ok;
+  } catch (err) {
+    console.error('CORS error:', err);
+    return false;
+  }
+};
+```
 
-**问题**：网络错误
-**解决方案**：
-- 实现错误重试机制
-- 检查网络连接
-- 优化服务器响应时间
+### 6.2 性能问题
 
-**问题**：媒体错误
-**解决方案**：
-- 检查媒体文件完整性
-- 实现错误恢复
-- 确保正确的编码格式
+**问题：视频卡顿或缓冲频繁**
 
-**问题**：清单错误
-**解决方案**：
-- 检查 M3U8 文件格式
-- 确保播放列表正确生成
-- 检查服务器配置
+解决方案：
+1. 优化 HLS 配置
+2. 降低起始质量
+3. 增加缓冲时间
+4. 检查网络连接
 
-### 6.3 性能问题
+```jsx
+const performanceConfig = {
+  maxBufferLength: 60,          // 增加缓冲
+  startLevel: 0,                // 从最低质量开始
+  abrBandWidthFactor: 0.6,      // 更保守的带宽估计
+  capLevelToPlayerSize: true,   // 根据播放器大小限制质量
+};
+```
 
-**问题**：内存使用高
-**解决方案**：
-- 及时销毁 HLS 实例
-- 优化缓冲设置
-- 减少同时播放的视频数量
+### 6.3 兼容性问题
 
-**问题**：CPU 使用率高
-**解决方案**：
-- 禁用不必要的功能
-- 优化质量切换策略
-- 考虑使用 Web Workers
+**问题：在某些浏览器中无法播放**
+
+解决方案：
+1. 提供降级方案
+2. 使用多种视频格式
+3. 检查编解码器支持
+
+```jsx
+function getVideoSource(video) {
+  if (Hls.isSupported()) {
+    return { type: 'hls', url: video.hlsUrl };
+  } else if (video.canPlayType('video/mp4')) {
+    return { type: 'mp4', url: video.mp4Url };
+  } else if (video.canPlayType('video/webm')) {
+    return { type: 'webm', url: video.webmUrl };
+  }
+  return { type: 'fallback', url: video.downloadUrl };
+}
+```
 
 ## 7. 性能优化
 
-### 7.1 客户端优化
+### 7.1 播放器优化
 
-**缓冲策略**
+- **使用 Web Workers**：启用多线程处理
+- **智能缓冲**：根据网络条件调整缓冲
+- **自适应码率**：自动选择最佳质量
+- **预加载**：提前加载下一个视频
 
-- 根据网络条件调整缓冲设置
-- 使用适当的初始缓冲大小
-- 实现智能缓冲管理
+```jsx
+const optimizedHlsConfig = {
+  enableWorker: true,
+  maxBufferLength: 30,
+  abrBandWidthFactor: 0.8,
+  capLevelToPlayerSize: true,
+};
+```
 
-**质量选择**
+### 7.2 网络优化
 
-- 基于网络速度自动选择质量
-- 考虑播放器尺寸
-- 实现平滑的质量切换
+- **CDN 集成**：使用内容分发网络
+- **缓存策略**：合理设置缓存头
+- **断点续传**：支持从断点继续
+- **多 CDN 备份**：提供备用源
 
-**内存管理**
+```jsx
+// 多源支持
+const sources = [
+  'https://cdn1.example.com/video/index.m3u8',
+  'https://cdn2.example.com/video/index.m3u8',
+  'https://cdn3.example.com/video/index.m3u8',
+];
 
-- 及时销毁不需要的 HLS 实例
-- 优化事件监听器
-- 避免内存泄漏
-
-### 7.2 服务器优化
-
-**CDN 使用**
-
-- 使用全球 CDN 分发内容
-- 确保 CDN 配置正确
-- 优化缓存策略
-
-**流媒体优化**
-
-- 使用适当的编码设置
-- 合理设置关键帧间隔
-- 优化片段大小
-
-**网络优化**
-
-- 启用 HTTP/2
-- 配置适当的缓存头
-- 优化服务器响应时间
-
-## 8. 应用场景示例
-
-### 8.1 基本视频播放器
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <title>HLS.js Example</title>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-</head>
-<body>
-  <div style="max-width: 800px; margin: 0 auto;">
-    <h1>HLS.js Video Player</h1>
-    <video id="video" controls style="width: 100%; height: auto;"></video>
-    <div id="quality-selector"></div>
-  </div>
-  
-  <script>
-    const video = document.getElementById('video');
-    const qualitySelector = document.getElementById('quality-selector');
-    const hlsUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
-    
-    if (Hls.isSupported()) {
-      const hls = new Hls({
-        maxBufferLength: 30,
-        maxMaxBufferLength: 60,
-        capLevelToPlayerSize: true
-      });
-      
-      hls.loadSource(hlsUrl);
-      hls.attachMedia(video);
-      
-      hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
-        console.log('Manifest parsed successfully');
-        video.play();
-        
-        // 创建质量选择器
-        const select = document.createElement('select');
-        select.innerHTML = '<option value="-1">Auto</option>';
-        
-        data.levels.forEach((level, index) => {
-          const option = document.createElement('option');
-          option.value = index;
-          option.textContent = `${level.width}x${level.height} (${Math.round(level.bitrate / 1000)}kbps)`;
-          select.appendChild(option);
-        });
-        
-        select.addEventListener('change', function() {
-          hls.currentLevel = parseInt(this.value);
-        });
-        
-        qualitySelector.appendChild(select);
-      });
-      
-      hls.on(Hls.Events.ERROR, function(event, data) {
-        console.error('Error:', data);
-        if (data.fatal) {
-          switch(data.type) {
-            case Hls.ErrorTypes.NETWORK_ERROR:
-              console.log('Network error, trying to recover...');
-              hls.startLoad();
-              break;
-            case Hls.ErrorTypes.MEDIA_ERROR:
-              console.log('Media error, trying to recover...');
-              hls.recoverMediaError();
-              break;
-            default:
-              hls.destroy();
-              break;
-          }
-        }
-      });
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = hlsUrl;
-      video.addEventListener('loadedmetadata', function() {
-        video.play();
-      });
-    } else {
-      console.error('HLS not supported');
+// 自动切换到可用源
+let currentSourceIndex = 0;
+const hls = new Hls();
+hls.on(Hls.Events.ERROR, (event, data) => {
+  if (data.fatal && data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+    if (currentSourceIndex < sources.length - 1) {
+      currentSourceIndex++;
+      hls.loadSource(sources[currentSourceIndex]);
     }
-  </script>
-</body>
-</html>
-```
-
-### 8.2 直播播放器
-
-```javascript
-function createLivePlayer(videoElement, hlsUrl) {
-  const hls = new Hls({
-    lowLatencyMode: true,
-    maxBufferLength: 3,
-    maxMaxBufferLength: 5,
-    maxBufferTime: 3,
-    maxBufferHole: 0.2,
-    highBufferWatchdogPeriod: 1,
-    nudgeOffset: 0.1,
-    nudgeMaxRetry: 3
-  });
-  
-  hls.loadSource(hlsUrl);
-  hls.attachMedia(videoElement);
-  
-  // 监听直播状态
-  hls.on(Hls.Events.LEVEL_UPDATED, function(event, data) {
-    console.log('Level updated:', data.level);
-  });
-  
-  hls.on(Hls.Events.BUFFER_UPDATE, function(event, data) {
-    console.log('Buffer level:', data.level, 'Buffer length:', data.len);
-  });
-  
-  hls.on(Hls.Events.MANIFEST_PARSED, function() {
-    videoElement.play();
-  });
-  
-  return hls;
-}
-```
-
-### 8.3 响应式播放器
-
-```javascript
-function createResponsivePlayer(containerId, hlsUrl) {
-  const container = document.getElementById(containerId);
-  
-  // 创建视频元素
-  const video = document.createElement('video');
-  video.controls = true;
-  video.style.width = '100%';
-  video.style.height = 'auto';
-  container.appendChild(video);
-  
-  // 创建 HLS 实例
-  if (Hls.isSupported()) {
-    const hls = new Hls({
-      capLevelToPlayerSize: true,
-      maxBufferLength: 30
-    });
-    
-    hls.loadSource(hlsUrl);
-    hls.attachMedia(video);
-    
-    // 响应窗口大小变化
-    window.addEventListener('resize', function() {
-      // 强制重新评估质量
-      hls.currentLevel = hls.currentLevel;
-    });
-    
-    return hls;
-  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    video.src = hlsUrl;
-    return null;
-  } else {
-    console.error('HLS not supported');
-    return null;
   }
-}
+});
 ```
 
-### 8.4 自定义播放器控件
+## 8. 学习资源
 
-```javascript
-function createCustomPlayer(videoElement, hlsUrl) {
-  const hls = new Hls();
-  hls.loadSource(hlsUrl);
-  hls.attachMedia(videoElement);
-  
-  // 自定义播放/暂停按钮
-  const playButton = document.getElementById('play-button');
-  playButton.addEventListener('click', function() {
-    if (videoElement.paused) {
-      videoElement.play();
-      playButton.textContent = 'Pause';
-    } else {
-      videoElement.pause();
-      playButton.textContent = 'Play';
-    }
-  });
-  
-  // 自定义音量控制
-  const volumeSlider = document.getElementById('volume-slider');
-  volumeSlider.addEventListener('input', function() {
-    videoElement.volume = parseFloat(this.value);
-  });
-  
-  // 自定义进度条
-  const progressBar = document.getElementById('progress-bar');
-  videoElement.addEventListener('timeupdate', function() {
-    const progress = (videoElement.currentTime / videoElement.duration) * 100;
-    progressBar.style.width = progress + '%';
-  });
-  
-  // 质量选择
-  const qualitySelect = document.getElementById('quality-select');
-  hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
-    data.levels.forEach((level, index) => {
-      const option = document.createElement('option');
-      option.value = index;
-      option.textContent = `${level.width}x${level.height}`;
-      qualitySelect.appendChild(option);
-    });
-  });
-  
-  qualitySelect.addEventListener('change', function() {
-    hls.currentLevel = parseInt(this.value);
-  });
-  
-  return hls;
-}
-```
+### 8.1 官方资源
 
-## 9. 学习资源
+- **HLS.js GitHub**：[https://github.com/video-dev/hls.js/](https://github.com/video-dev/hls.js/)
+- **HLS.js 文档**：[https://hlsjs.com/docs/](https://hlsjs.com/docs/)
+- **HLS 规范**：[https://datatracker.ietf.org/doc/html/rfc8216](https://datatracker.ietf.org/doc/html/rfc8216)
+- **Mozilla MediaSource**：[https://developer.mozilla.org/en-US/docs/Web/API/MediaSource](https://developer.mozilla.org/en-US/docs/Web/API/MediaSource)
 
-- [HLS.js 官方文档](https://github.com/video-dev/hls.js/blob/master/docs/API.md)
-- [HLS.js GitHub 仓库](https://github.com/video-dev/hls.js)
-- [HLS 规范](https://tools.ietf.org/html/rfc8216)
-- [M3U8 格式详解](https://developer.apple.com/documentation/http_live_streaming)
-- [HLS.js 示例](https://hls-js.netlify.app/demo/)
+### 8.2 社区资源
 
-## 10. 最佳实践
+- **HLS.js 演示**：[https://hlsjs.com/demo/](https://hlsjs.com/demo/)
+- **Stack Overflow**：[https://stackoverflow.com/questions/tagged/hls.js](https://stackoverflow.com/questions/tagged/hls.js)
+- **Video.js 集成**：[https://videojs.com/](https://videojs.com/)
+- **Shaka Player**：[https://github.com/shaka-project/shaka-player](https://github.com/shaka-project/shaka-player)
 
-### 10.1 代码组织
+### 8.3 推荐教程
 
-- **模块化** - 将播放器逻辑封装为模块
-- **错误处理** - 实现全面的错误处理
-- **事件管理** - 合理使用事件监听器
-- **资源管理** - 及时销毁 HLS 实例
+- **HLS.js 入门教程**：[https://hlsjs.com/docs/getting-started/](https://hlsjs.com/docs/getting-started/)
+- **MSE 深入讲解**：[https://developer.mozilla.org/en-US/docs/Web/API/MediaSource/Examples](https://developer.mozilla.org/en-US/docs/Web/API/MediaSource/Examples)
+- **视频流最佳实践**：[https://web.dev/fast-playback-with-media-source/](https://web.dev/fast-playback-with-media-source/)
 
-### 10.2 性能
+## 9. 最佳实践
 
-- **缓冲管理** - 合理设置缓冲参数
-- **质量控制** - 实现智能质量切换
-- **内存优化** - 避免内存泄漏
-- **网络适应** - 根据网络条件调整配置
+### 9.1 代码组织
 
-### 10.3 用户体验
+- **组件化设计**：将播放器功能拆分为多个组件
+- **Hook 复用**：使用自定义 Hook 管理播放器逻辑
+- **错误处理**：全面的错误捕获和恢复机制
+- **事件管理**：合理的事件监听和清理
 
-- **加载状态** - 显示加载指示器
-- **错误提示** - 提供友好的错误信息
-- **质量选择** - 允许用户手动选择质量
-- **自适应** - 根据设备和网络自动调整
+### 9.2 用户体验
 
-### 10.4 兼容性
+- **加载状态**：提供清晰的加载指示
+- **错误反馈**：友好的错误信息
+- **控制直观**：简单易用的播放控制
+- **响应式**：适配各种屏幕尺寸
 
-- **特性检测** - 检测 HLS 支持
-- **回退方案** - 为不支持的浏览器提供替代方案
-- **跨浏览器测试** - 测试主流浏览器
-- **响应式设计** - 适配不同设备
+### 9.3 性能考虑
 
-## 总结
+- **懒加载**：需要时才加载播放器
+- **资源清理**：及时释放资源
+- **质量选择**：提供用户可控的质量选项
+- **网络感知**：根据网络条件调整行为
 
-HLS.js 是一个强大的库，使 HLS 视频流能够在各种浏览器中播放。通过掌握其核心概念和最佳实践，可以构建高性能、可靠的视频播放器。关键是要理解 HLS 的工作原理，合理配置缓冲和质量参数，以及实现有效的错误处理。无论是视频点播还是直播应用，HLS.js 都能提供流畅的观看体验。
+## 10. 总结
+
+HLS.js 是一个强大而灵活的 JavaScript 库，使得在现代浏览器中播放高质量 HLS 视频变得简单。它提供了丰富的功能和良好的自定义能力，适合各种应用场景。
+
+关键要点：
+1. **从基础开始**：理解 HLS 和 MSE 的基本概念
+2. **组件化设计**：使用 React 组件化构建播放器
+3. **全面的事件处理**：利用 HLS.js 提供的事件系统
+4. **性能优化**：合理配置以获得最佳性能
+5. **错误处理**：提供健壮的错误恢复机制
+6. **用户体验优化**：提供直观的控制和反馈
+
+希望这份文档能够帮助你快速入门和掌握 HLS.js，为你的项目提供出色的视频播放体验！
