@@ -1,5 +1,5 @@
-import { useCounter } from '../context/useCounter'
-import './Counter.less'
+import { useCounter } from '../../context/useCounter'
+import './index.less'
 
 function Counter() {
   const { state, dispatch } = useCounter()

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import './Home.less'
+import './index.less'
 
 function Home() {
   return (

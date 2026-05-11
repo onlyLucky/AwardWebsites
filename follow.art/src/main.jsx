@@ -5,7 +5,7 @@ import { CounterProvider } from './context/CounterProvider'
 import { LoadingProvider } from './context/LoadingContext'
 import { RouteGuardProvider } from './context/RouteGuardContext'
 import AppRouter from './router'
-import Loading from './components/Loading'
+import Loading from './components/loading'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

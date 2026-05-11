@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useRouteGuard } from '../context/RouteGuardContext'
-import { useLoading } from '../context/LoadingContext'
+import { useRouteGuard } from '../../context/RouteGuardContext'
+import { useLoading } from '../../context/LoadingContext'
 
 function RouteWrapper({ children, beforeGuards = [], afterGuards = [] }) {
   const location = useLocation()

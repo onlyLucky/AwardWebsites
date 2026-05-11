@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import Home from '../pages/Home'
-import About from '../pages/About'
-import Counter from '../pages/Counter'
-import RouteWrapper from '../components/RouteWrapper'
+import Home from '../pages/home'
+import About from '../pages/about'
+import Counter from '../pages/counter'
+import RouteWrapper from '../components/route-wrapper'
 import { useAfterRoute } from '../hooks/useAfterRoute'
 
 function AppRouter() {
