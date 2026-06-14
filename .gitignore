@@ -168,3 +168,7 @@ test-results/
 
 # SolidJS
 solid-dist/
+
+.claude/
+.playwright/
+.playwright-cli/

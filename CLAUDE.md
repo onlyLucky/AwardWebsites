@@ -4,64 +4,123 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-优秀网站前端复刻学习项目，每个子项目独立运行，无根级 package.json。
+网站交互合集项目，收集和复刻有趣的网站交互效果、动画和视觉样式。首页为目录列表，每个 demo 有独立路由页面。
 
-**子项目：**
-- `follow.art/` — [follow.art](https://follow.art/) 复刻，React 19 + Vite SPA
-- `shader.se/` — shader.se 复刻，Next.js 14 App Router + TypeScript（部分实现）
+## 技术栈
+
+- **React 19** + **TypeScript**
+- **Vite** 构建
+- **Tailwind CSS v4** 样式
+- **shadcn/ui** 组件库
+- **Lucide React** 图标
+- **GSAP** 动画
+- **Three.js** WebGL（部分 demo 需要）
+- **React Router DOM v7** 路由
 
 ## 常用命令
 
-### follow.art（使用 pnpm）
 ```bash
-cd follow.art
 pnpm install        # 安装依赖
 pnpm dev            # 开发服务器（Vite，含 --host）
-pnpm build          # 生产构建
+pnpm build          # 生产构建（tsc -b && vite build）
 pnpm lint           # ESLint
 ```
 
-### shader.se（使用 npm）
-```bash
-cd shader.se
-npm install         # 安装依赖
-npm run dev         # 开发服务器 http://localhost:3000
-npm run build       # 生产构建
-npm run lint        # next lint
+## 项目结构
+
+```
+AwardWebsites/
+├── package.json
+├── index.html
+├── vite.config.ts
+├── tsconfig.json
+├── components.json              # shadcn/ui 配置
+├── public/
+│   └── favicon-96x96.png
+├── src/
+│   ├── main.tsx                 # 应用入口
+│   ├── index.css                # Tailwind 入口 + 全局样式
+│   ├── vite-env.d.ts            # Vite 类型声明
+│   ├── lib/
+│   │   └── utils.ts             # shadcn/ui cn() 工具函数
+│   ├── components/
+│   │   ├── ui/                  # shadcn/ui 组件
+│   │   └── header/              # 全局 Header
+│   ├── pages/
+│   │   ├── home/                # 目录页
+│   │   └── demos/
+│   │       └── follow-art/      # follow.art demo 页面
+│   ├── router/
+│   │   └── index.tsx
+│   └── demos/                   # demo 专属组件 + 样式
+│       └── follow-art/
+│           ├── hero-section/
+│           └── webgl-cards/
+└── docs/
 ```
 
-**两个项目均未配置测试框架。**
+## 路由结构
 
-## 依赖管理规则
+| 路径 | 页面 | 说明 |
+|------|------|------|
+| `/` | Home | 目录列表，展示所有 demo |
+| `/demo/follow-art` | FollowArtDemo | follow.art 交互复刻 |
 
-- follow.art 使用 **pnpm**，shader.se 使用 **npm**
-- 安装新依赖时遵循对应项目的包管理器，不要混用
+## 添加新 Demo
 
-## 架构说明
+1. 在 `src/demos/<demo-name>/` 创建 demo 专属组件
+2. 在 `src/pages/demos/<demo-name>/` 创建页面组件
+3. 在 `src/router/index.tsx` 添加路由
+4. 在 `src/pages/home/index.tsx` 的 `demos` 数组中添加条目
 
-### follow.art
-- React 19 SPA，Vite 构建，Less 样式
-- 路由：React Router DOM 7，配置在 `src/router/`
-- 状态管理：React Context + useReducer（`src/context/`），含 Counter、Loading、RouteGuard 三个 context
-- 动画：GSAP，自定义 hooks 在 `src/hooks/`（useAfterRoute、useLoadingAnimation）
-- 加载流程：RouteWrapper 组件配合 RouteGuard context 实现页面切换加载动画
+## 代码规范
 
-### shader.se
-- Next.js 14 App Router，TypeScript（strict: false，strictNullChecks: true）
-- Tailwind CSS 自定义主题：主色 white、辅色 #c4b5a0、背景 black、字体 "Stix Two Text"
-- 组件结构：`components/three/`（3D）、`components/ui/`（UI）、`components/providers/`（上下文）
-- GLSL 着色器文件在 `shaders/` 目录
-- **当前简化状态**：Three.js、Lenis、HLS.js/Mux 均已移除，使用 CSS 占位。完整实现见 `shader.se/README.md`
+- 使用 TypeScript strict 模式
+- 样式使用 Tailwind CSS，demo 专属样式使用普通 CSS
+- 组件使用函数式组件 + Hooks
+- 路径别名：`@/` 指向 `src/`
 
 ## 文档管理
 
-- 子项目文档存放于 `docs/` 目录，命名规则：`<子项目文件夹名>.md`
+- 文档存放于 `docs/` 目录
 - 框架参考文档在 `docs/framework/` 目录
-- 新增/删除/重大变更子项目时，需同步更新 `docs/` 和根 `README.md`
 
-## 工作方式
+## 工作流程规则
 
-- 在对应子项目目录下执行所有命令（`cd follow.art` 或 `cd shader.se`）
-- 修改 shader.se 时参考 `docs/shader-se-交互分析.md` 中的交互设计
-- 修改 follow.art 时参考 `docs/follow.art.md` 中的项目文档
-- 如果项目已有运行中的服务，预览即可，无需重复启动
+### 强制执行流程（每次任务前必须检查）
+
+**执行任何任务前，必须按顺序检查：**
+
+1. **读取规则文件**：`.claude/rules/workflow.md`
+2. **检查 Plan 模式**：是否需要制定计划并等待确认
+3. **检查 Web 功能**：是否需要使用 playwright-cli
+4. **检查产物路径**：确保所有输出存放在正确位置
+
+### 代码规范
+- **禁止使用 emoji 图标**：所有代码和文档中不得使用 emoji
+- 使用纯文本或 ASCII 字符代替
+
+### Plan 模式规则
+- 进入 Plan 模式时，**必须制定详细计划并等待用户确认后才能执行**
+- 计划应包含：实现步骤、涉及文件、预期变更
+- 即使计划简单，也必须等待用户明确确认
+- **违规后果**：直接执行而不等待确认 = 违反规则
+
+### Web 功能调用规则
+- 需要调用 Web 功能时，**必须使用 playwright-cli skill**
+- 所有中间产物按类型分组存放在 `.playwright-cli` 文件夹中
+- 不同类型的输出放在同一个类型文件夹中
+- **截图路径**：必须指定 `--filename=.playwright-cli/screenshots/<task-name>/xxx.png`
+- **禁止**：将截图保存到项目根目录
+
+### 产物组织结构
+```
+.playwright-cli/
+├── logs/                     # 所有日志文件
+├── snapshots/                # 所有快照文件
+├── screenshots/              # 所有截图文件（按任务分组）
+├── tasks/                    # 所有任务文件夹
+└── shared/                   # 共享资源
+```
+
+详细规则见 `.claude/rules/workflow.md`

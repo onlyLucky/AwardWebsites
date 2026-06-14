@@ -1,0 +1,132 @@
+/* Hero Section Styles */
+/* Reference: follow.art title-children-wrapper implementation */
+
+.hero-section {
+  background-color: #FF6B00;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Title container */
+.intro__title {
+  transform: translateY(-80%) scaleY(0);
+  transition: transform 1.5s cubic-bezier(0.55, 0, 0.1, 1);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+}
+
+/* Title show animation */
+.hero-section.intro--show .intro__title {
+  transform: translateY(0) scaleY(1);
+}
+
+.hero-section.intro--show .intro__title-decoration {
+  transform: translate(0);
+}
+
+.hero-section.intro--show .intro__footer {
+  transform: translateY(0);
+}
+
+.hero-section.intro--show .landing-1-intro-webgl__canvas-wrapper canvas {
+  transform: none !important;
+}
+
+/* Title decoration line */
+.intro__title-decoration {
+  position: absolute;
+  top: 54%;
+  left: 54.5%;
+  transform: translateY(300%) rotate(35deg);
+  transition: transform 1.5s cubic-bezier(0.55, 0, 0.1, 1);
+  transition-delay: 1s;
+  width: 19.3835616438vw;
+}
+
+.img-full {
+  width: 100%;
+  height: auto;
+}
+
+/* Title sub-container */
+.title-children-wrapper {
+  width: 100%;
+  max-width: 1420px;
+}
+
+/* SVG title */
+.intro__title svg {
+  width: 100%;
+  height: auto;
+}
+
+.intro__title svg path {
+  transition: transform 0.15s ease-out;
+  transform-origin: bottom center;
+}
+
+/* Footer tagline */
+.intro__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 40px;
+  transform: translateY(120%);
+  transition: transform 1.5s cubic-bezier(0.55, 0, 0.1, 1);
+  transition-delay: 0.5s;
+  z-index: 3;
+}
+
+.hero-tagline p {
+  color: white;
+  font-size: 24px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.hero-visit-btn {
+  background-color: #2D2D2D;
+  color: white;
+  padding: 16px 40px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+}
+
+.hero-visit-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .intro__title-decoration {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .intro__title {
+    padding: 0 20px;
+  }
+
+  .intro__footer {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .hero-tagline p {
+    font-size: 18px;
+  }
+}
