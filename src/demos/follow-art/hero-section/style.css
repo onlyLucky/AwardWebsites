@@ -12,13 +12,15 @@
 }
 
 .hero-section > * {
-  flex: 1;
+  /* flex: 1; */
 }
 
 /* 标题容器 */
 .intro__title {
   transform: translateY(-80%) scaleY(0);
   transition: transform 1.5s cubic-bezier(0.55, 0, 0.1, 1);
+  position: relative;
+  z-index: 2;
 }
 
 /* 显示状态 */
@@ -62,7 +64,9 @@
 /* 标题子容器 */
 .title-children-wrapper {
   width: 100%;
-  max-width: 1420px;
+  padding: 40px;
+  box-sizing: border-box;
+  /* max-width: 1420px; */
 }
 
 /* SVG 标题 - 桌面端 */
@@ -89,6 +93,7 @@
 /* 页脚 */
 .intro__footer {
   display: flex;
+  height: 72px;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: var(--cookie-message-mobile-height, 0);

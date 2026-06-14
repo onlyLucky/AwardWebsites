@@ -3,12 +3,24 @@
 .webgl-cards-container {
   position: absolute;
   inset: 0;
+  pointer-events: none;
 }
 
 .webgl-cards-container canvas {
   display: block;
   position: absolute;
   inset: 0;
+  pointer-events: auto;
+}
+
+/* 第一个 canvas 是阴影，在 SVG 标题后面 */
+.webgl-cards-container canvas:first-child {
+  z-index: 1;
+}
+
+/* 第二个 canvas 是纹理卡片，在 SVG 标题前面 */
+.webgl-cards-container canvas:last-child {
+  z-index: 3;
 }
 
 /* 入场动画 */
