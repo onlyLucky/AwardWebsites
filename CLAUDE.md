@@ -43,6 +43,9 @@ AwardWebsites/
 │   ├── vite-env.d.ts            # Vite 类型声明
 │   ├── lib/
 │   │   └── utils.ts             # shadcn/ui cn() 工具函数
+│   ├── assets/                  # 公共资源
+│   │   └── fonts/               # 字体文件（按 demo 名称组织）
+│   │       └── follow-art/
 │   ├── components/
 │   │   ├── ui/                  # shadcn/ui 组件
 │   │   └── header/              # 全局 Header
@@ -52,10 +55,11 @@ AwardWebsites/
 │   │       └── follow-art/      # follow.art demo 页面
 │   ├── router/
 │   │   └── index.tsx
-│   └── demos/                   # demo 专属组件 + 样式
+│   └── demos/                   # demo 专属组件 + 样式 + 资源
 │       └── follow-art/
 │           ├── hero-section/
 │           └── webgl-cards/
+│               └── images/      # 就近放置的图片资源
 └── docs/
 ```
 
@@ -73,12 +77,32 @@ AwardWebsites/
 3. 在 `src/router/index.tsx` 添加路由
 4. 在 `src/pages/home/index.tsx` 的 `demos` 数组中添加条目
 
+### 资源组织规则
+
+1. **公共资源**：放在 `src/assets/` 目录下，按类型和 demo 名称组织
+   ```
+   src/assets/fonts/<demo-name>/  # 字体文件
+   src/assets/images/<demo-name>/ # 公共图片（如有）
+   ```
+
+2. **Demo 专属资源**：就近放在组件目录下
+   ```
+   src/demos/<demo-name>/<component>/images/  # 组件图片
+   ```
+
+3. **公开静态资源**：放在 `public/` 目录下
+   ```
+   public/favicon-96x96.png       # 网站图标
+   public/robots.txt              # 爬虫配置
+   ```
+
 ## 代码规范
 
 - 使用 TypeScript strict 模式
 - 样式使用 Tailwind CSS，demo 专属样式使用普通 CSS
 - 组件使用函数式组件 + Hooks
 - 路径别名：`@/` 指向 `src/`
+- **代码注释使用中文**：所有代码注释、文档说明必须使用中文
 
 ## 文档管理
 

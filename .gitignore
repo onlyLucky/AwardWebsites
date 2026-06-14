@@ -172,3 +172,4 @@ solid-dist/
 .claude/
 .playwright/
 .playwright-cli/
+.page_source

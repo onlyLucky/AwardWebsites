@@ -2,188 +2,265 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import './style.css'
 
-interface CardData {
-  name: string
-  role: string
-  color: number
+import card1 from './images/Card-1.png'
+import card2 from './images/Card-2.png'
+import card3 from './images/Card-3.png'
+import card4 from './images/Card-4.png'
+import card5 from './images/Card-5.png'
+import card6 from './images/Card-6.png'
+import card7 from './images/Card-7.png'
+import card8 from './images/Card-8.png'
+import card9 from './images/Card-9.png'
+
+const CARD_IMAGES = [card1, card2, card3, card4, card5, card6, card7, card8, card9]
+
+// 源码参数
+const CARD_WIDTH = 9
+const CARD_HEIGHT = 12.6
+const RADIUS = 15
+const ANIMATION_SPEED = -5e-5
+
+// 圆形路径上的点、切线、法线、副法线
+function getCurvePoint(t: number) {
+  const angle = t * Math.PI * 2
+  const pos = new THREE.Vector3(Math.cos(angle) * RADIUS, 0, Math.sin(angle) * RADIUS)
+  const tangent = new THREE.Vector3(-Math.sin(angle), 0, Math.cos(angle)).normalize()
+  const normal = new THREE.Vector3(0, 1, 0)
+  const binormal = new THREE.Vector3().crossVectors(tangent, normal).normalize()
+  return { pos, tangent, normal, binormal }
 }
 
-const cardData: CardData[] = [
-  { name: 'Robert Banat', role: 'Artist, US, Brooklyn', color: 0x1a1a1a },
-  { name: 'Gelly Gryntaki', role: 'Curator, GB, London', color: 0x2a2a2a },
-  { name: 'Martas Valentukonis', role: 'Artist, LT, Vilnius', color: 0x1a1a1a },
-  { name: 'Sophie Wratzfeld', role: 'Curator, DE, Berlin', color: 0x2a2a2a },
-  { name: 'Danny Van der Elst', role: 'Artist, NL, Amsterdam', color: 0x1a1a1a },
-  { name: 'Farouk Alao', role: 'Artist, NG, Lagos', color: 0x2a2a2a },
-  { name: 'Keita Melle', role: 'Artist, FR, Paris', color: 0x1a1a1a },
-  { name: 'Isabela Galeano', role: 'Curator, CO, Bogota', color: 0x2a2a2a },
-  { name: 'Thomas Oosterhof', role: 'Curator, NL, Amsterdam', color: 0x1a1a1a },
-]
+// 为每张卡片创建沿圆形弯曲的几何体
+function createCurvedCardGeometry(
+  width: number,
+  height: number,
+  segments: number,
+  cardT: number
+): THREE.BufferGeometry {
+  const geometry = new THREE.PlaneGeometry(width, height, segments, 1)
+  const pos = geometry.attributes.position
+  const curveLen = Math.PI * 2 * RADIUS // 圆周长
+  const spineOffset = width / 2 // 源码 spineOffset: 161 (卡片中心对齐)
+  const spineLength = curveLen // 源码 spineLength: 400
 
-interface CardUserData {
-  initialPosition: { x: number; y: number; z: number }
-  initialRotation: { x: number; y: number; z: number }
-  index: number
-  floatOffset: number
-  floatSpeed: number
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i)
+    const y = pos.getY(i)
+
+    // 根据顶点 x 坐标计算在曲线上的位置 (源码: spinePortion = (worldPos.x + spineOffset) / spineLength)
+    const spinePortion = (x + spineOffset) / spineLength
+    const curveT = (spinePortion + cardT) % 1
+    const { pos: curvePos, tangent, normal, binormal } = getCurvePoint(curveT)
+
+    // 源码 shader: transformed = basis * vec3(x * xWeight, y, z) + spinePos
+    // xWeight = 0 (bend mode), 所以 x 不参与
+    const basis = new THREE.Matrix3()
+    basis.set(
+      tangent.x, tangent.y, tangent.z,
+      normal.x, normal.y, normal.z,
+      binormal.x, binormal.y, binormal.z
+    )
+
+    const localPos = new THREE.Vector3(0, y, 0) // xWeight=0, x 不参与
+    localPos.applyMatrix3(basis)
+    localPos.add(curvePos)
+
+    pos.setXYZ(i, localPos.x, localPos.y, localPos.z)
+  }
+
+  pos.needsUpdate = true
+  geometry.computeVertexNormals()
+  return geometry
+}
+
+// 卡片在圆形上的位置
+function getCardPosition(t: number): THREE.Vector3 {
+  const { pos } = getCurvePoint(t)
+  return pos.clone()
+}
+
+function isMobile(): boolean {
+  return window.innerWidth <= 667
 }
 
 function WebGLCards() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
-  const sceneRef = useRef<THREE.Scene | null>(null)
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
-  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null)
-  const cardsRef = useRef<THREE.Mesh[]>([])
-  const animationRef = useRef<number>(0)
-  const mouseRef = useRef({ x: 0, y: 0 })
+  const animRef = useRef<number>(0)
+  const mouseRef = useRef({ x: 0.5, y: 0.5 })
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true)
-    }, 1000)
-
-    return () => clearTimeout(timer)
+    const t = setTimeout(() => setIsVisible(true), 1000)
+    return () => clearTimeout(t)
   }, [])
 
   useEffect(() => {
     if (!containerRef.current || !isVisible) return
+    const container = containerRef.current
 
-    // Initialize scene
-    const scene = new THREE.Scene()
-    sceneRef.current = scene
+    // 两个场景
+    const sceneShadow = new THREE.Scene()
+    const sceneTextured = new THREE.Scene()
 
-    // Initialize camera
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      containerRef.current.clientWidth / containerRef.current.clientHeight,
-      0.1,
-      1000
-    )
-    camera.position.z = 8
-    camera.position.y = 1
-    cameraRef.current = camera
+    // 相机 - 源码参数: 阴影 near=69 far=200, 纹理 near=0.1 far=69
+    const cameraShadow = new THREE.PerspectiveCamera(28, container.clientWidth / container.clientHeight, 69, 200)
+    cameraShadow.position.set(0, -14, -70)
+    cameraShadow.rotation.set((Math.PI / 180) * -192, 0, (Math.PI / 180) * -25)
 
-    // Initialize renderer
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      powerPreference: 'high-performance',
+    const cameraTextured = new THREE.PerspectiveCamera(28, container.clientWidth / container.clientHeight, 0.1, 69)
+    cameraTextured.position.set(0, -14, -70)
+    cameraTextured.rotation.set((Math.PI / 180) * -192, 0, (Math.PI / 180) * -25)
+
+    // 渲染器
+    const rendererShadow = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    rendererShadow.setSize(container.clientWidth, container.clientHeight)
+    rendererShadow.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    rendererShadow.setClearColor(0x000000, 0)
+    rendererShadow.domElement.style.position = 'absolute'
+    rendererShadow.domElement.style.inset = '0'
+    container.appendChild(rendererShadow.domElement)
+
+    const rendererTextured = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    rendererTextured.setSize(container.clientWidth, container.clientHeight)
+    rendererTextured.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    rendererTextured.setClearColor(0x000000, 0)
+    rendererTextured.domElement.style.position = 'absolute'
+    rendererTextured.domElement.style.inset = '0'
+    container.appendChild(rendererTextured.domElement)
+
+    const texturedCards: THREE.Mesh[] = []
+    const shadowCards: THREE.Mesh[] = []
+
+    // 阴影材质 (源码: color #B05A2E)
+    const shadowMaterial = new THREE.MeshBasicMaterial({
+      color: new THREE.Color('#B05A2E'),
+      side: THREE.DoubleSide,
     })
-    renderer.setSize(
-      containerRef.current.clientWidth,
-      containerRef.current.clientHeight
+
+    // 加载图片并创建卡片
+    const loadPromises = CARD_IMAGES.map(
+      (src) =>
+        new Promise<HTMLImageElement>((resolve) => {
+          const img = new Image()
+          img.crossOrigin = 'anonymous'
+          img.onload = () => resolve(img)
+          img.onerror = () => {
+            const c = document.createElement('canvas')
+            c.width = 512; c.height = 717
+            const ctx = c.getContext('2d')!
+            ctx.fillStyle = '#333'; ctx.fillRect(0, 0, 512, 717)
+            const fallbackImg = new Image()
+            fallbackImg.src = c.toDataURL()
+            fallbackImg.onload = () => resolve(fallbackImg)
+          }
+          img.src = src
+        })
     )
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.setClearColor(0x000000, 0)
-    containerRef.current.appendChild(renderer.domElement)
-    rendererRef.current = renderer
 
-    // Create cards
-    const cards: THREE.Mesh[] = []
-    const cardWidth = 1.8
-    const cardHeight = 2.6
+    Promise.all(loadPromises).then((images) => {
+      images.forEach((img, idx) => {
+        const cardT = idx / CARD_IMAGES.length
 
-    cardData.forEach((data, index) => {
-      const geometry = new THREE.PlaneGeometry(cardWidth, cardHeight)
-      const material = new THREE.MeshBasicMaterial({
-        color: data.color,
-        side: THREE.DoubleSide,
+        // 纹理卡片
+        const texture = new THREE.Texture(img)
+        texture.colorSpace = THREE.SRGBColorSpace
+        texture.minFilter = THREE.LinearFilter
+        texture.magFilter = THREE.LinearFilter
+        texture.flipY = false // 不翻转 Y 轴
+        texture.needsUpdate = true
+
+        const texturedGeometry = createCurvedCardGeometry(CARD_WIDTH, CARD_HEIGHT, 10, cardT)
+        const texturedMaterial = new THREE.MeshBasicMaterial({
+          map: texture,
+          side: THREE.DoubleSide,
+          transparent: true,
+        })
+        const texturedMesh = new THREE.Mesh(texturedGeometry, texturedMaterial)
+        sceneTextured.add(texturedMesh)
+        texturedCards.push(texturedMesh)
+
+        // 阴影卡片
+        const shadowGeometry = createCurvedCardGeometry(CARD_WIDTH, CARD_HEIGHT, 10, cardT)
+        const shadowMesh = new THREE.Mesh(shadowGeometry, shadowMaterial)
+        sceneShadow.add(shadowMesh)
+        shadowCards.push(shadowMesh)
       })
 
-      const card = new THREE.Mesh(geometry, material)
+      let lastTime = performance.now()
+      let currentOffset = 0
 
-      // Initial stacked position
-      card.position.x = (Math.random() - 0.5) * 2
-      card.position.y = (Math.random() - 0.5) * 1
-      card.position.z = -index * 0.3
+      const animate = () => {
+        animRef.current = requestAnimationFrame(animate)
+        const now = performance.now()
+        const dt = now - lastTime
+        lastTime = now
 
-      // Initial rotation
-      card.rotation.x = (Math.random() - 0.5) * 0.3
-      card.rotation.y = (Math.random() - 0.5) * 0.5
-      card.rotation.z = (Math.random() - 0.5) * 0.2
+        currentOffset += dt * ANIMATION_SPEED
 
-      // Store initial state
-      const userData: CardUserData = {
-        initialPosition: { ...card.position },
-        initialRotation: { ...card.rotation },
-        index,
-        floatOffset: Math.random() * Math.PI * 2,
-        floatSpeed: 0.5 + Math.random() * 0.5,
+        // 重新生成每帧的弯曲几何体 (模拟 shader 动态弯曲)
+        texturedCards.forEach((mesh, idx) => {
+          const cardT = ((idx / CARD_IMAGES.length + currentOffset) % 1 + 1) % 1
+          const newGeom = createCurvedCardGeometry(CARD_WIDTH, CARD_HEIGHT, 10, cardT)
+          mesh.geometry.dispose()
+          mesh.geometry = newGeom
+        })
+
+        shadowCards.forEach((mesh, idx) => {
+          const cardT = ((idx / CARD_IMAGES.length + currentOffset) % 1 + 1) % 1
+          const newGeom = createCurvedCardGeometry(CARD_WIDTH, CARD_HEIGHT, 10, cardT)
+          mesh.geometry.dispose()
+          mesh.geometry = newGeom
+        })
+
+        // 相机旋转 (源码参数)
+        const mobile = isMobile()
+        const rotZ = (Math.PI / 180) * (mobile ? -38 : -25)
+        const rotX = (Math.PI / 180) * (mobile ? -200 : -192)
+        cameraShadow.rotation.z = cameraTextured.rotation.z = rotZ + (mouseRef.current.x - 0.5) * 0.2
+        cameraShadow.rotation.x = cameraTextured.rotation.x = rotX
+
+        const camX = mobile ? 4 : 0
+        const camY = mobile ? -17 : -14
+        cameraShadow.position.x = cameraTextured.position.x = camX
+        cameraShadow.position.y = cameraTextured.position.y = camY
+
+        rendererShadow.render(sceneShadow, cameraShadow)
+        rendererTextured.render(sceneTextured, cameraTextured)
       }
-      card.userData = userData
 
-      scene.add(card)
-      cards.push(card)
+      animate()
     })
 
-    cardsRef.current = cards
-
-    // Add ambient light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1)
-    scene.add(ambientLight)
-
-    // Animation loop
-    let time = 0
-    const animate = () => {
-      animationRef.current = requestAnimationFrame(animate)
-      time += 0.016
-
-      // Card floating animation
-      cards.forEach((card) => {
-        const { initialPosition, floatOffset, floatSpeed } =
-          card.userData as CardUserData
-        card.position.y =
-          initialPosition.y + Math.sin(time * floatSpeed + floatOffset) * 0.1
-      })
-
-      // Mouse parallax
-      const targetRotationX = mouseRef.current.y * 0.1
-      const targetRotationY = mouseRef.current.x * 0.1
-      scene.rotation.x += (targetRotationX - scene.rotation.x) * 0.05
-      scene.rotation.y += (targetRotationY - scene.rotation.y) * 0.05
-
-      renderer.render(scene, camera)
+    const onMouseMove = (e: MouseEvent) => {
+      const r = container.getBoundingClientRect()
+      mouseRef.current.x = (e.clientX - r.left) / r.width
+      mouseRef.current.y = (e.clientY - r.top) / r.height
     }
 
-    animate()
-
-    // Handle mouse move
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return
-      const rect = containerRef.current.getBoundingClientRect()
-      mouseRef.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
-      mouseRef.current.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
+    const onResize = () => {
+      const w = container.clientWidth
+      const h = container.clientHeight
+      cameraShadow.aspect = cameraTextured.aspect = w / h
+      cameraShadow.updateProjectionMatrix()
+      cameraTextured.updateProjectionMatrix()
+      rendererShadow.setSize(w, h)
+      rendererTextured.setSize(w, h)
     }
 
-    // Handle resize
-    const handleResize = () => {
-      if (!containerRef.current) return
-      camera.aspect =
-        containerRef.current.clientWidth / containerRef.current.clientHeight
-      camera.updateProjectionMatrix()
-      renderer.setSize(
-        containerRef.current.clientWidth,
-        containerRef.current.clientHeight
-      )
-    }
-
-    containerRef.current.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('resize', handleResize)
+    container.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('resize', onResize)
 
     return () => {
-      if (containerRef.current) {
-        containerRef.current.removeEventListener('mousemove', handleMouseMove)
+      container.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('resize', onResize)
+      cancelAnimationFrame(animRef.current)
+      rendererShadow.dispose()
+      rendererTextured.dispose()
+      if (container.contains(rendererShadow.domElement)) {
+        container.removeChild(rendererShadow.domElement)
       }
-      window.removeEventListener('resize', handleResize)
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
-      }
-      if (rendererRef.current) {
-        rendererRef.current.dispose()
-      }
-      if (containerRef.current && rendererRef.current) {
-        containerRef.current.removeChild(rendererRef.current.domElement)
+      if (container.contains(rendererTextured.domElement)) {
+        container.removeChild(rendererTextured.domElement)
       }
     }
   }, [isVisible])

@@ -1,8 +1,8 @@
-/* Hero Section Styles */
-/* Reference: follow.art title-children-wrapper implementation */
+/* Hero Section 样式 - 精确复刻 follow.art */
 
+/* 基础布局 */
 .hero-section {
-  background-color: #FF6B00;
+  background-color: #f4793a;
   min-height: 100vh;
   position: relative;
   overflow: hidden;
@@ -11,18 +11,21 @@
   justify-content: space-between;
 }
 
-/* Title container */
+.hero-section > * {
+  flex: 1;
+}
+
+/* 标题容器 */
 .intro__title {
   transform: translateY(-80%) scaleY(0);
   transition: transform 1.5s cubic-bezier(0.55, 0, 0.1, 1);
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 40px;
 }
 
-/* Title show animation */
+/* 显示状态 */
+.hero-section.intro--show {
+  opacity: 1;
+}
+
 .hero-section.intro--show .intro__title {
   transform: translateY(0) scaleY(1);
 }
@@ -35,15 +38,16 @@
   transform: translateY(0);
 }
 
-.hero-section.intro--show .landing-1-intro-webgl__canvas-wrapper canvas {
+/* WebGL canvas 入场动画 */
+.hero-section.intro--show .webgl-cards-container canvas {
   transform: none !important;
 }
 
-/* Title decoration line */
+/* 标题装饰线 */
 .intro__title-decoration {
+  left: 54.5%;
   position: absolute;
   top: 54%;
-  left: 54.5%;
   transform: translateY(300%) rotate(35deg);
   transition: transform 1.5s cubic-bezier(0.55, 0, 0.1, 1);
   transition-delay: 1s;
@@ -55,13 +59,13 @@
   height: auto;
 }
 
-/* Title sub-container */
+/* 标题子容器 */
 .title-children-wrapper {
   width: 100%;
   max-width: 1420px;
 }
 
-/* SVG title */
+/* SVG 标题 - 桌面端 */
 .intro__title svg {
   width: 100%;
   height: auto;
@@ -69,18 +73,28 @@
 
 .intro__title svg path {
   transition: transform 0.15s ease-out;
-  transform-origin: bottom center;
+  /* 使用 fill-box 让 transform-origin 基于元素边界框 */
+  transform-box: fill-box;
+  /* 从顶部中心缩放，顶部固定，向下变长/变短 */
+  transform-origin: top center;
 }
 
-/* Footer tagline */
+/* WebGL canvas 入场 */
+.webgl-cards-container canvas {
+  transform: translateY(100%) rotate(35deg);
+  transition: transform 1.5s cubic-bezier(0.55, 0, 0.1, 1);
+  transition-delay: 1s;
+}
+
+/* 页脚 */
 .intro__footer {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: flex-end;
-  padding: 40px;
+  margin-bottom: var(--cookie-message-mobile-height, 0);
+  position: relative;
   transform: translateY(120%);
   transition: transform 1.5s cubic-bezier(0.55, 0, 0.1, 1);
-  transition-delay: 0.5s;
   z-index: 3;
 }
 
@@ -92,7 +106,7 @@
 }
 
 .hero-visit-btn {
-  background-color: #2D2D2D;
+  background-color: #2d2d2d;
   color: white;
   padding: 16px 40px;
   border-radius: 4px;
@@ -107,26 +121,62 @@
   transform: translateY(-2px);
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .intro__title-decoration {
-    display: none;
-  }
+/* 隐藏类 */
+.is-hidden\:sm-down {
+  display: block;
 }
 
-@media (max-width: 768px) {
+.is-hidden\:md-up {
+  display: none;
+}
+
+/* 响应式 - 移动端 */
+@media (max-width: 667px) {
   .intro__title {
-    padding: 0 20px;
+    max-height: 402px;
+    min-height: 312px;
+  }
+
+  .intro__title-decoration {
+    left: 0;
+    top: 52%;
+    transform: translate(-100%, 150%) rotate(35deg);
+    width: 64.1025641026vw;
   }
 
   .intro__footer {
     flex-direction: column;
-    gap: 20px;
-    align-items: flex-start;
-    padding: 20px;
   }
 
-  .hero-tagline p {
-    font-size: 18px;
+  .webgl-cards-container canvas {
+    transform: translate(-100%, 50%) rotate(35deg);
+  }
+
+  .is-hidden\:sm-down {
+    display: none;
+  }
+
+  .is-hidden\:md-up {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 667px) and (max-height: 730px) {
+  .intro__title {
+    height: 48.75svh !important;
+  }
+}
+
+@media screen and (max-width: 667px) and (min-height: 730px) {
+  .intro__title {
+    height: 51.5384615385svh !important;
+  }
+}
+
+/* 响应式 - 桌面端 */
+@media (min-width: 668px) {
+  .intro__title {
+    position: relative;
+    top: -4px;
   }
 }
