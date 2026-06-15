@@ -180,28 +180,6 @@ function createCurvedCardGeometry(
   return geometry
 }
 
-/**
- * 获取卡片在圆形路径上的位置
- * @param t - 归一化位置（0-1）
- */
-function getCardPosition(t: number): THREE.Vector3 {
-  const { pos } = getCurvePoint(t)
-  return pos.clone()
-}
-
-/**
- * 获取卡片的旋转角度（面向圆心外侧）
- * @param t - 归一化位置（0-1）
- */
-function getCardRotation(t: number): THREE.Euler {
-  const angle = t * Math.PI * 2
-  return new THREE.Euler(
-    0.1,                  // 轻微 X 倾斜（卡片略微俯仰）
-    -angle + Math.PI / 2, // Y 旋转：面向圆心外侧
-    0.05                  // 轻微 Z 倾斜（卡片略微侧倾）
-  )
-}
-
 /** 判断是否为移动设备 */
 function isMobile(): boolean {
   return window.innerWidth <= 667
@@ -318,8 +296,7 @@ function WebGLCards() {
       side: THREE.DoubleSide,
     })
 
-    // 预创建一个弯曲几何体作为模板（所有卡片共用同一个弯曲形状）
-    const curvedGeometry = createCurvedCardGeometry(CARD_WIDTH, CARD_HEIGHT, CARD_SEGMENTS)
+    // 注意：每张卡片需要独立的弯曲几何体（cardT 不同），在加载贴图后创建
 
     // --------------------------------------------------------
     // 5. 加载贴图并创建卡片
@@ -347,25 +324,31 @@ function WebGLCards() {
     Promise.all(loadPromises).then((images) => {
       // 为每张卡片创建纹理版本和阴影版本
       images.forEach((img, idx) => {
+        const cardT = idx / CARD_IMAGES.length
+
         // 纹理卡片
         const texture = new THREE.Texture(img)
         texture.colorSpace = THREE.SRGBColorSpace  // 正确的颜色空间
         texture.minFilter = THREE.LinearFilter     // 线性过滤，避免锯齿
         texture.magFilter = THREE.LinearFilter
+        texture.flipY = false                      // 不翻转 Y 轴
         texture.needsUpdate = true
 
+        // 每张卡片创建独立的弯曲几何体（cardT 决定在圆形路径上的位置）
+        const texturedGeometry = createCurvedCardGeometry(CARD_WIDTH, CARD_HEIGHT, CARD_SEGMENTS, cardT)
         const texturedMaterial = new THREE.MeshBasicMaterial({
           map: texture,
           side: THREE.DoubleSide,    // 双面可见（卡片会旋转到背面）
           transparent: true,         // 透明背景，露出下方的阴影和标题
         })
 
-        const texturedMesh = new THREE.Mesh(curvedGeometry.clone(), texturedMaterial)
+        const texturedMesh = new THREE.Mesh(texturedGeometry, texturedMaterial)
         sceneTextured.add(texturedMesh)
         texturedCards.push(texturedMesh)
 
-        // 阴影卡片（与纹理卡片相同的几何体，不同材质）
-        const shadowMesh = new THREE.Mesh(curvedGeometry.clone(), shadowMaterial)
+        // 阴影卡片（每张卡片独立的弯曲几何体，不同材质）
+        const shadowGeometry = createCurvedCardGeometry(CARD_WIDTH, CARD_HEIGHT, CARD_SEGMENTS, cardT)
+        const shadowMesh = new THREE.Mesh(shadowGeometry, shadowMaterial)
         sceneShadow.add(shadowMesh)
         shadowCards.push(shadowMesh)
       })
@@ -385,23 +368,19 @@ function WebGLCards() {
         // 更新卡片在圆形路径上的偏移（源码: deltaTime * -5e-5）
         currentOffset += dt * ANIMATION_SPEED
 
-        // 更新每张卡片的位置和旋转
-        const updateCards = (cards: THREE.Mesh[]) => {
+        // 每帧重新生成弯曲几何体（模拟 shader 的动态弯曲效果）
+        // 源码中卡片沿圆形路径移动，弯曲形状随位置变化
+        const regenerateCards = (cards: THREE.Mesh[]) => {
           cards.forEach((mesh, idx) => {
-            // 计算该卡片在圆形路径上的当前位置
-            // idx / totalCards 是卡片的初始偏移，currentOffset 是动画偏移
-            const t = ((idx / CARD_IMAGES.length + currentOffset) % 1 + 1) % 1
-
-            // 设置位置和旋转
-            const pos = getCardPosition(t)
-            const rot = getCardRotation(t)
-            mesh.position.copy(pos)
-            mesh.rotation.copy(rot)
+            const cardT = ((idx / CARD_IMAGES.length + currentOffset) % 1 + 1) % 1
+            const newGeom = createCurvedCardGeometry(CARD_WIDTH, CARD_HEIGHT, CARD_SEGMENTS, cardT)
+            mesh.geometry.dispose()
+            mesh.geometry = newGeom
           })
         }
 
-        updateCards(texturedCards)
-        updateCards(shadowCards)
+        regenerateCards(texturedCards)
+        regenerateCards(shadowCards)
 
         // --------------------------------------------------------
         // 7. 相机动画（源码参数）
