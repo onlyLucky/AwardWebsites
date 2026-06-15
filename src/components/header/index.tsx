@@ -5,25 +5,17 @@ function Header() {
   const location = useLocation()
   const isHome = location.pathname === '/'
 
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-14 border-b border-border bg-background/80 backdrop-blur-sm">
-      <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-6">
-        <Link
-          to="/"
-          className="flex items-center gap-2 text-sm font-semibold tracking-tight hover:opacity-70 transition-opacity"
-        >
-          {!isHome && <ArrowLeft className="h-4 w-4" />}
-          {!isHome && <span>Back</span>}
-        </Link>
+  // 首页不显示 header
+  if (isHome) return null
 
-        <Link
-          to="/"
-          className="text-sm font-bold tracking-tight hover:opacity-70 transition-opacity"
-        >
-          Award Websites
-        </Link>
-      </div>
-    </header>
+  return (
+    <Link
+      to="/"
+      className="fixed top-4 left-4 z-50 flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border bg-background/80 backdrop-blur-sm text-sm font-semibold tracking-tight hover:bg-background/90 hover:opacity-80 transition-all"
+    >
+      <ArrowLeft className="h-4 w-4" />
+      Back
+    </Link>
   )
 }
 

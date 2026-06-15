@@ -7,7 +7,7 @@ function AppRouter() {
   return (
     <BrowserRouter>
       <Header />
-      <main className="pt-14">
+      <main>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/demo/follow-art" element={<FollowArtDemo />} />
