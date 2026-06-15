@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import WebGLCards from '../webgl-cards'
-import './style.css'
+import styles from './style.module.css'
 
 /**
  * HeroSection 组件 - 精确复刻 follow.art 的 title-children-wrapper
@@ -39,8 +39,7 @@ const letters: Letter[] = [
     baseScaleY: 0.78162,
     pathDesktop:
       'M1089.31 500L1082.33 337.686H1055.67L1048.69 500H996L1016.31 6H1122.32L1142 500H1089.31ZM1057.57 279.817H1080.43L1075.35 162.669L1074.08 61.7514H1063.92L1062.65 162.669L1057.57 279.817Z',
-    pathMobile:
-      'M167.938 118.785H186V132h-38V2h19.938z',
+    pathMobile: 'M167.938 118.785H186V132h-38V2h19.938z',
   },
   {
     char: 'L',
@@ -180,16 +179,16 @@ function HeroSection() {
 
   return (
     <section
-      className={`hero-section ${isVisible ? 'intro--show' : ''}`}
+      className={`${styles.heroSection} ${isVisible ? styles.introShow : ''}`}
       ref={containerRef}
     >
       {/* 标题区域 */}
-      <div className="intro__title">
-        <div className="title-children-wrapper">
+      <div className={styles.introTitle}>
+        <div className={styles.titleChildrenWrapper}>
           {/* 桌面端 SVG */}
           <svg
             ref={svgRef}
-            className="intro__title is-hidden:sm-down svg-fix"
+            className={`${styles.introTitle} is-hidden:sm-down ${styles.svgFix}`}
             width="1420"
             height="500"
             viewBox="0 0 1420 500"
@@ -215,7 +214,7 @@ function HeroSection() {
             height="402"
             fill="none"
             viewBox="0 0 351 312"
-            className="intro__title is-hidden:md-up svg-fix"
+            className={`${styles.introTitle} is-hidden:md-up ${styles.svgFix}`}
             preserveAspectRatio="none"
           >
             {letters.map((letter, index) => (
@@ -232,9 +231,9 @@ function HeroSection() {
       </div>
 
       {/* 标题装饰线 */}
-      <div className="intro__title-decoration">
+      <div className={styles.introTitleDecoration}>
         <svg
-          className="img-full"
+          className={styles.imgFull}
           viewBox="0 0 100 100"
           preserveAspectRatio="none"
         >
@@ -253,8 +252,8 @@ function HeroSection() {
       <WebGLCards />
 
       {/* 底部标语 */}
-      <div className="intro__footer">
-        <div className="hero-tagline">
+      <div className={styles.introFooter}>
+        <div className={styles.heroTagline}>
           <p>One Card.</p>
           <p>Share it. Be noticed. Be supported</p>
         </div>
@@ -262,7 +261,7 @@ function HeroSection() {
           href="https://follow.art"
           target="_blank"
           rel="noopener noreferrer"
-          className="hero-visit-btn"
+          className={styles.heroVisitBtn}
         >
           Visit follow.art
         </a>

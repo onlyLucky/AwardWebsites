@@ -1,7 +1,7 @@
 /* Hero Section 样式 - 精确复刻 follow.art */
 
 /* 基础布局 */
-.hero-section {
+.heroSection {
   background-color: #f4793a;
   min-height: 100vh;
   position: relative;
@@ -11,12 +11,8 @@
   justify-content: space-between;
 }
 
-.hero-section > * {
-  /* flex: 1; */
-}
-
 /* 标题容器 */
-.intro__title {
+.introTitle {
   transform: translateY(-80%) scaleY(0);
   transition: transform 1.5s cubic-bezier(0.55, 0, 0.1, 1);
   position: relative;
@@ -24,29 +20,29 @@
 }
 
 /* 显示状态 */
-.hero-section.intro--show {
+.introShow {
   opacity: 1;
 }
 
-.hero-section.intro--show .intro__title {
+.introShow .introTitle {
   transform: translateY(0) scaleY(1);
 }
 
-.hero-section.intro--show .intro__title-decoration {
+.introShow .introTitleDecoration {
   transform: translate(0);
 }
 
-.hero-section.intro--show .intro__footer {
+.introShow .introFooter {
   transform: translateY(0);
 }
 
-/* WebGL canvas 入场动画 */
-.hero-section.intro--show .webgl-cards-container canvas {
+/* WebGL canvas 入场动画 - 使用 :global 跨组件引用 */
+.introShow :global(.webgl-cards-container) canvas {
   transform: none !important;
 }
 
 /* 标题装饰线 */
-.intro__title-decoration {
+.introTitleDecoration {
   left: 54.5%;
   position: absolute;
   top: 54%;
@@ -56,26 +52,25 @@
   width: 19.3835616438vw;
 }
 
-.img-full {
+.imgFull {
   width: 100%;
   height: auto;
 }
 
 /* 标题子容器 */
-.title-children-wrapper {
+.titleChildrenWrapper {
   width: 100%;
   padding: 40px;
   box-sizing: border-box;
-  /* max-width: 1420px; */
 }
 
 /* SVG 标题 - 桌面端 */
-.intro__title svg {
+.introTitle svg {
   width: 100%;
   height: auto;
 }
 
-.intro__title svg path {
+.introTitle svg path {
   transition: transform 0.15s ease-out;
   /* 使用 fill-box 让 transform-origin 基于元素边界框 */
   transform-box: fill-box;
@@ -83,15 +78,19 @@
   transform-origin: top center;
 }
 
-/* WebGL canvas 入场 */
-.webgl-cards-container canvas {
+.svgFix {
+  /* SVG 修复样式 */
+}
+
+/* WebGL canvas 入场 - 使用 :global 跨组件引用 */
+:global(.webgl-cards-container) canvas {
   transform: translateY(100%) rotate(35deg);
   transition: transform 1.5s cubic-bezier(0.55, 0, 0.1, 1);
   transition-delay: 1s;
 }
 
 /* 页脚 */
-.intro__footer {
+.introFooter {
   display: flex;
   height: 72px;
   flex-direction: row;
@@ -103,14 +102,14 @@
   z-index: 3;
 }
 
-.hero-tagline p {
+.heroTagline p {
   color: white;
   font-size: 24px;
   margin: 0;
   line-height: 1.4;
 }
 
-.hero-visit-btn {
+.heroVisitBtn {
   background-color: #2d2d2d;
   color: white;
   padding: 16px 40px;
@@ -121,66 +120,66 @@
   transition: transform 0.15s ease-out, opacity 0.15s ease-out;
 }
 
-.hero-visit-btn:hover {
+.heroVisitBtn:hover {
   opacity: 0.9;
   transform: translateY(-2px);
 }
 
-/* 隐藏类 */
-.is-hidden\:sm-down {
+/* 隐藏类 - 使用 :global 因为这些是工具类 */
+:global(.is-hidden\:sm-down) {
   display: block;
 }
 
-.is-hidden\:md-up {
+:global(.is-hidden\:md-up) {
   display: none;
 }
 
 /* 响应式 - 移动端 */
 @media (max-width: 667px) {
-  .intro__title {
+  .introTitle {
     max-height: 402px;
     min-height: 312px;
   }
 
-  .intro__title-decoration {
+  .introTitleDecoration {
     left: 0;
     top: 52%;
     transform: translate(-100%, 150%) rotate(35deg);
     width: 64.1025641026vw;
   }
 
-  .intro__footer {
+  .introFooter {
     flex-direction: column;
   }
 
-  .webgl-cards-container canvas {
+  :global(.webgl-cards-container) canvas {
     transform: translate(-100%, 50%) rotate(35deg);
   }
 
-  .is-hidden\:sm-down {
+  :global(.is-hidden\:sm-down) {
     display: none;
   }
 
-  .is-hidden\:md-up {
+  :global(.is-hidden\:md-up) {
     display: block;
   }
 }
 
 @media screen and (max-width: 667px) and (max-height: 730px) {
-  .intro__title {
+  .introTitle {
     height: 48.75svh !important;
   }
 }
 
 @media screen and (max-width: 667px) and (min-height: 730px) {
-  .intro__title {
+  .introTitle {
     height: 51.5384615385svh !important;
   }
 }
 
 /* 响应式 - 桌面端 */
 @media (min-width: 668px) {
-  .intro__title {
+  .introTitle {
     position: relative;
     top: -4px;
   }

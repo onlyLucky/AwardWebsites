@@ -28,6 +28,15 @@ const demos: DemoItem[] = [
     preview: '/previews/follow-art.svg',
     icon: <MousePointerClick className="h-5 w-5" />,
   },
+  {
+    titleKey: 'demos.shaderSe.title',
+    descKey: 'demos.shaderSe.description',
+    tagKeys: ['home.tags.webgl', 'home.tags.threejs', 'home.tags.gsap'],
+    path: '/demo/shader-se',
+    url: 'https://shader.se',
+    preview: '/previews/shader-se.svg',
+    icon: <MousePointerClick className="h-5 w-5" />,
+  },
 ]
 
 const PAGE_SIZE = 12

@@ -1,0 +1,111 @@
+/* About Section 样式 */
+
+.aboutSection {
+  position: relative;
+  min-height: 100vh;
+  background: #000;
+  padding: 6rem 2rem;
+}
+
+.aboutContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.aboutTitle {
+  font-family: 'STIX Two Text', 'Times New Roman', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4rem 0;
+  text-align: center;
+  line-height: 1.2;
+  opacity: 0;
+}
+
+.highlight {
+  display: block;
+  color: #fff;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+/* 内容布局 */
+.aboutContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.aboutText {
+  opacity: 0;
+}
+
+.aboutText p {
+  font-family: 'STIX Two Text', 'Times New Roman', serif;
+  font-size: 1.1rem;
+  color: #999;
+  line-height: 1.8;
+  margin: 0 0 1.5rem 0;
+}
+
+/* 客户 logo */
+.customersLogos {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: #111;
+  border-radius: 8px;
+}
+
+.customersImage {
+  width: 100%;
+  height: auto;
+  opacity: 0.7;
+  filter: grayscale(100%);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.customersImage:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+/* 团队图片 */
+.aboutImage {
+  opacity: 0;
+}
+
+.teamImage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .aboutSection {
+    padding: 4rem 1rem;
+  }
+
+  .aboutTitle {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .aboutContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .aboutText p {
+    font-size: 1rem;
+  }
+}
+
+/* 大屏幕适配 */
+@media (min-width: 1280px) {
+  .aboutTitle {
+    font-size: 4rem;
+  }
+}

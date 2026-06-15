@@ -26,7 +26,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
-import './style.css'
+import styles from './style.module.css'
 
 // 卡片贴图资源（9 张艺术家卡片）
 import card1 from './images/Card-1.png'
@@ -461,7 +461,7 @@ function WebGLCards() {
 
   return (
     <div
-      className={`webgl-cards-container ${isVisible ? 'visible' : ''}`}
+      className={`${styles.webglCardsContainer} ${isVisible ? styles.visible : ''}`}
       ref={containerRef}
     />
   )

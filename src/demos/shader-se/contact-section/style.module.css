@@ -1,0 +1,155 @@
+/* Contact Section 样式 */
+
+.contactSection {
+  position: relative;
+  min-height: 80vh;
+  background: #000;
+  padding: 6rem 2rem;
+}
+
+.contactContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.contactTitle {
+  font-family: 'STIX Two Text', 'Times New Roman', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4rem 0;
+  text-align: center;
+  line-height: 1.2;
+  opacity: 0;
+}
+
+.highlight {
+  display: block;
+  color: #fff;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+/* 联系内容网格 */
+.contactContent {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+/* 联系卡片 */
+.contactCard {
+  background: #111;
+  padding: 2rem;
+  border-radius: 8px;
+  opacity: 0;
+}
+
+.contactCard.primary {
+  grid-column: span 2;
+  text-align: center;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border: 1px solid #333;
+}
+
+.contactCard h3 {
+  font-family: 'STIX Two Text', 'Times New Roman', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 1rem 0;
+}
+
+.contactEmail {
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.contactEmail:hover {
+  color: #999;
+}
+
+.contactBooking {
+  margin: 1rem 0 0 0;
+}
+
+.contactBooking a {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: #666;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.contactBooking a:hover {
+  color: #fff;
+}
+
+.contactCard address {
+  font-family: 'STIX Two Text', 'Times New Roman', serif;
+  font-size: 1rem;
+  color: #999;
+  line-height: 1.8;
+  font-style: normal;
+}
+
+/* 社交链接 */
+.socialLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.socialLinks a {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.socialLinks a:hover {
+  color: #fff;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .contactSection {
+    padding: 4rem 1rem;
+  }
+
+  .contactTitle {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .contactContent {
+    grid-template-columns: 1fr;
+  }
+
+  .contactCard.primary {
+    grid-column: span 1;
+  }
+
+  .contactEmail {
+    font-size: 1.25rem;
+  }
+}
+
+/* 大屏幕适配 */
+@media (min-width: 1280px) {
+  .contactTitle {
+    font-size: 4rem;
+  }
+
+  .contactContent {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .contactCard.primary {
+    grid-column: span 4;
+  }
+}

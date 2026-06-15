@@ -1,0 +1,167 @@
+/* Loading Screen 样式 */
+
+.loadingScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  opacity: 1;
+  transition: opacity 0.8s ease-out;
+}
+
+.fadeOut {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* CRT 扫描线效果 */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* 内容区域 */
+.loadingContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  z-index: 5;
+}
+
+/* Logo 容器 */
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: flicker 3s infinite;
+}
+
+.logoIcon {
+  width: 80px;
+  height: 80px;
+}
+
+.logoText {
+  font-family: 'STIX Two Text', 'Times New Roman', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.1em;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* 副标题 */
+.subtitle {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  color: #ccc;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.version {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: #999;
+  margin: 0;
+}
+
+/* 进度条 */
+.progressContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.progressBar {
+  width: 300px;
+  height: 4px;
+  background: #222;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #444, #fff);
+  transition: width 0.1s linear;
+}
+
+.progressText {
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0;
+}
+
+/* 版权信息 */
+.loadingFooter {
+  padding-bottom: 1rem;
+  z-index: 5;
+}
+
+.loadingFooter p {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #666;
+  text-align: center;
+  margin: 0;
+}
+
+/* 闪烁动画 */
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.8;
+  }
+  94% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0.9;
+  }
+  96% {
+    opacity: 1;
+  }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .logoIcon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .logoText {
+    font-size: 2.5rem;
+  }
+
+  .progressBar {
+    width: 200px;
+  }
+}

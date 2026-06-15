@@ -57,3 +57,11 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+/* STIX Two Text 字体 - shader-se demo 使用 */
+@font-face {
+  font-family: 'STIX Two Text';
+  src: url('@/assets/fonts/shader-se/stix-two-text.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: swap;
+}

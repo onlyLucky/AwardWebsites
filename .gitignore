@@ -169,8 +169,10 @@ test-results/
 # SolidJS
 solid-dist/
 
+.agents/
 .claude/
 .trae/
 .playwright/
 .playwright-cli/
 .page_source
+skills-lock.json

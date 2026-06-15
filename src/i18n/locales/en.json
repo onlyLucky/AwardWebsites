@@ -14,13 +14,18 @@
       "svg": "SVG Animation",
       "webgl": "WebGL",
       "threejs": "Three.js",
-      "mouse": "Mouse Interaction"
+      "mouse": "Mouse Interaction",
+      "gsap": "GSAP Animation"
     }
   },
   "demos": {
     "followArt": {
       "title": "follow.art",
       "description": "Interactive hero section with SVG letter scaleY animation driven by mouse position, WebGL 3D card stack with floating animation and parallax effect."
+    },
+    "shaderSe": {
+      "title": "shader.se",
+      "description": "Creative development studio portfolio website featuring 3D model rendering, scroll-driven animations, and interactive project showcase."
     }
   },
   "header": {

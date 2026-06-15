@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+  <!-- 背景 -->
+  <rect width="800" height="450" fill="#000"/>
+
+  <!-- 扫描线效果 -->
+  <g opacity="0.1">
+    <line x1="0" y1="0" x2="800" y2="0" stroke="#fff" stroke-width="1"/>
+    <line x1="0" y1="4" x2="800" y2="4" stroke="#fff" stroke-width="1"/>
+    <line x1="0" y1="8" x2="800" y2="8" stroke="#fff" stroke-width="1"/>
+    <line x1="0" y1="12" x2="800" y2="12" stroke="#fff" stroke-width="1"/>
+    <line x1="0" y1="16" x2="800" y2="16" stroke="#fff" stroke-width="1"/>
+  </g>
+
+  <!-- Logo -->
+  <g transform="translate(100, 150)">
+    <!-- 圆形 -->
+    <circle cx="40" cy="40" r="35" stroke="#fff" stroke-width="2" fill="none"/>
+    <!-- 条纹 -->
+    <line x1="10" y1="25" x2="70" y2="25" stroke="#fff" stroke-width="3"/>
+    <line x1="10" y1="35" x2="70" y2="35" stroke="#fff" stroke-width="3"/>
+    <line x1="10" y1="45" x2="70" y2="45" stroke="#fff" stroke-width="3"/>
+    <line x1="15" y1="55" x2="65" y2="55" stroke="#fff" stroke-width="3"/>
+  </g>
+
+  <!-- SHADER 文字 -->
+  <text x="200" y="190" font-family="serif" font-size="72" font-weight="700" fill="#fff" letter-spacing="0.05em">
+    SHADER
+  </text>
+
+  <!-- 副标题 -->
+  <text x="400" y="260" font-family="monospace" font-size="14" fill="#666" text-anchor="middle">
+    Creative Development Studio
+  </text>
+
+  <!-- 3D 模型占位 -->
+  <g transform="translate(500, 100)" opacity="0.3">
+    <rect x="0" y="0" width="200" height="150" stroke="#fff" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
+    <text x="100" y="80" font-family="monospace" font-size="12" fill="#fff" text-anchor="middle">
+      3D Scene
+    </text>
+  </g>
+
+  <!-- 版权 -->
+  <text x="400" y="420" font-family="monospace" font-size="10" fill="#444" text-anchor="middle">
+    Copyright (c) Shader Development Studio AB, 2026
+  </text>
+</svg>

@@ -14,13 +14,18 @@
       "svg": "SVG 动画",
       "webgl": "WebGL",
       "threejs": "Three.js",
-      "mouse": "鼠标交互"
+      "mouse": "鼠标交互",
+      "gsap": "GSAP 动画"
     }
   },
   "demos": {
     "followArt": {
       "title": "follow.art",
       "description": "基于鼠标位置驱动的 SVG 字母 scaleY 动画英雄区域，WebGL 3D 卡片堆叠与浮动动画视差效果。"
+    },
+    "shaderSe": {
+      "title": "shader.se",
+      "description": "创意开发工作室作品集网站，包含 3D 模型渲染、滚动驱动动画和交互式项目展示。"
     }
   },
   "header": {

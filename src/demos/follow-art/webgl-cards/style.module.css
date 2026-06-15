@@ -1,12 +1,12 @@
 /* WebGL 卡片样式 */
 
-.webgl-cards-container {
+.webglCardsContainer {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-.webgl-cards-container canvas {
+.webglCardsContainer canvas {
   display: block;
   position: absolute;
   inset: 0;
@@ -14,29 +14,29 @@
 }
 
 /* 第一个 canvas 是阴影，在 SVG 标题后面 */
-.webgl-cards-container canvas:first-child {
+.webglCardsContainer canvas:first-child {
   z-index: 1;
 }
 
 /* 第二个 canvas 是纹理卡片，在 SVG 标题前面 */
-.webgl-cards-container canvas:last-child {
+.webglCardsContainer canvas:last-child {
   z-index: 3;
 }
 
 /* 入场动画 */
-.webgl-cards-container canvas {
+.webglCardsContainer canvas {
   transform: translateY(100%) rotate(35deg);
   transition: transform 1.5s cubic-bezier(0.55, 0, 0.1, 1);
   transition-delay: 1s;
 }
 
-.webgl-cards-container.visible canvas {
+.visible canvas {
   transform: none !important;
 }
 
 /* 响应式 - 移动端 */
 @media (max-width: 667px) {
-  .webgl-cards-container canvas {
+  .webglCardsContainer canvas {
     transform: translate(-100%, 50%) rotate(35deg);
   }
 }

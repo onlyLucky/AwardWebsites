@@ -3,6 +3,7 @@ import { I18nProvider } from '@/i18n'
 import Header from '@/components/header'
 import Home from '@/pages/home'
 import FollowArtDemo from '@/pages/demos/follow-art'
+import ShaderSeDemo from '@/pages/demos/shader-se'
 
 function AppRouter() {
   return (
@@ -13,6 +14,7 @@ function AppRouter() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/demo/follow-art" element={<FollowArtDemo />} />
+            <Route path="/demo/shader-se" element={<ShaderSeDemo />} />
           </Routes>
         </main>
       </BrowserRouter>
