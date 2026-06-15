@@ -20,6 +20,24 @@
   --font-mono: "SF Mono", "Cascadia Code", "Fira Code", monospace;
 }
 
+/* Dark theme */
+.dark {
+  --color-background: #0a0a0a;
+  --color-foreground: #fafafa;
+  --color-muted: #262626;
+  --color-muted-foreground: #a3a3a3;
+  --color-card: #0a0a0a;
+  --color-card-foreground: #fafafa;
+  --color-border: #262626;
+  --color-primary: #fafafa;
+  --color-primary-foreground: #0a0a0a;
+  --color-secondary: #262626;
+  --color-secondary-foreground: #fafafa;
+  --color-accent: #262626;
+  --color-accent-foreground: #fafafa;
+  --color-ring: #d4d4d4;
+}
+
 *,
 ::after,
 ::before {

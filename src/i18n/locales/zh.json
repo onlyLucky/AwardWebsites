@@ -1,0 +1,29 @@
+{
+  "home": {
+    "collection": "精选集",
+    "title": "Award Websites",
+    "description": "精选的网站交互动画与视觉效果合集。每个 demo 重现了获奖网站的特定交互模式。",
+    "noDemos": "暂无 demo，敬请期待。",
+    "search": "搜索 demo...",
+    "noResults": "未找到匹配结果",
+    "loadMore": "加载更多",
+    "prev": "上一页",
+    "next": "下一页",
+    "visitSite": "访问原站",
+    "tags": {
+      "svg": "SVG 动画",
+      "webgl": "WebGL",
+      "threejs": "Three.js",
+      "mouse": "鼠标交互"
+    }
+  },
+  "demos": {
+    "followArt": {
+      "title": "follow.art",
+      "description": "基于鼠标位置驱动的 SVG 字母 scaleY 动画英雄区域，WebGL 3D 卡片堆叠与浮动动画视差效果。"
+    }
+  },
+  "header": {
+    "back": "返回"
+  }
+}

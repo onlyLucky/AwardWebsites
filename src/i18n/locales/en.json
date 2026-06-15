@@ -1,0 +1,29 @@
+{
+  "home": {
+    "collection": "Collection",
+    "title": "Award Websites",
+    "description": "A curated collection of interesting website interactions, animations, and visual effects. Each demo recreates a specific interaction pattern from award-winning websites.",
+    "noDemos": "No demos yet. Check back soon.",
+    "search": "Search demos...",
+    "noResults": "No results found",
+    "loadMore": "Load more",
+    "prev": "Previous",
+    "next": "Next",
+    "visitSite": "Visit site",
+    "tags": {
+      "svg": "SVG Animation",
+      "webgl": "WebGL",
+      "threejs": "Three.js",
+      "mouse": "Mouse Interaction"
+    }
+  },
+  "demos": {
+    "followArt": {
+      "title": "follow.art",
+      "description": "Interactive hero section with SVG letter scaleY animation driven by mouse position, WebGL 3D card stack with floating animation and parallax effect."
+    }
+  },
+  "header": {
+    "back": "Back"
+  }
+}

@@ -170,6 +170,7 @@ test-results/
 solid-dist/
 
 .claude/
+.trae/
 .playwright/
 .playwright-cli/
 .page_source
