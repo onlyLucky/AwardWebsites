@@ -1,24 +1,16 @@
 import { useRef, Suspense } from 'react'
-import { Canvas, useFrame, useLoader } from '@react-three/fiber'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { useGLTF } from '@react-three/drei'
 import { useMouse } from '../shared/mouse-provider'
 import * as THREE from 'three'
 
-// Draco 解码器路径
-const DRACO_DECODER_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.5.7/'
-
+// 使用 drei 的 useGLTF hook（自动处理 Draco 解码器）
 function ComputerModel() {
   const groupRef = useRef<THREE.Group>(null)
   const { getMouseOffset } = useMouse()
 
-  // 加载 Draco 压缩的 GLB 模型
-  const dracoLoader = new DRACOLoader()
-  dracoLoader.setDecoderPath(DRACO_DECODER_PATH)
-
-  const gltf = useLoader(GLTFLoader, '/src/demos/shader-se/models/computer.glb', (loader) => {
-    loader.setDRACOLoader(dracoLoader)
-  })
+  // 使用 useGLTF 加载模型（drei 内置 Draco 支持）
+  const { scene } = useGLTF('/models/shader-se/computer.glb')
 
   // 鼠标跟随动画
   useFrame(() => {
@@ -40,7 +32,7 @@ function ComputerModel() {
 
   return (
     <group ref={groupRef}>
-      <primitive object={gltf.scene} />
+      <primitive object={scene} />
     </group>
   )
 }
