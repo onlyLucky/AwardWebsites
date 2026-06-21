@@ -174,5 +174,6 @@ solid-dist/
 .trae/
 .playwright/
 .playwright-cli/
-.page_source
+page_source/
 skills-lock.json
+*.zip
