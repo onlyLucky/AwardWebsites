@@ -287,70 +287,71 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
     // ===== 编译 Shader =====
     function createShader(type: number, source: string): WebGLShader | null {
-      const shader = gl.createShader(type)
+      const shader = gl!.createShader(type)
       if (!shader) return null
-      gl.shaderSource(shader, source)
-      gl.compileShader(shader)
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error('[LoadingScreen] shader compile error:', gl.getShaderInfoLog(shader))
-        gl.deleteShader(shader)
+      gl!.shaderSource(shader, source)
+      gl!.compileShader(shader)
+      if (!gl!.getShaderParameter(shader, gl!.COMPILE_STATUS)) {
+        console.error('[LoadingScreen] shader compile error:', gl!.getShaderInfoLog(shader))
+        gl!.deleteShader(shader)
         return null
       }
       return shader
     }
 
-    const vs = createShader(gl.VERTEX_SHADER, vsSource)
-    const fs = createShader(gl.FRAGMENT_SHADER, fsSource)
+    const vs = createShader(gl!.VERTEX_SHADER, vsSource)
+    const fs = createShader(gl!.FRAGMENT_SHADER, fsSource)
     if (!vs || !fs) return
 
-    const program = gl.createProgram()
+    const program = gl!.createProgram()
     if (!program) return
-    gl.attachShader(program, vs)
-    gl.attachShader(program, fs)
-    gl.linkProgram(program)
+    gl!.attachShader(program, vs)
+    gl!.attachShader(program, fs)
+    gl!.linkProgram(program)
 
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error('[LoadingScreen] program link error:', gl.getProgramInfoLog(program))
+    if (!gl!.getProgramParameter(program, gl!.LINK_STATUS)) {
+      console.error('[LoadingScreen] program link error:', gl!.getProgramInfoLog(program))
       return
     }
 
-    gl.useProgram(program)
+    gl!.useProgram(program)
     programRef.current = program
 
     // 缓存 uniform 位置
     uniformLocsRef.current = {
-      tDiffuse: gl.getUniformLocation(program, 'tDiffuse'),
-      tNoise: gl.getUniformLocation(program, 'tNoise'),
-      time: gl.getUniformLocation(program, 'time'),
-      loadingProgress: gl.getUniformLocation(program, 'loadingProgress'),
-      dimensions: gl.getUniformLocation(program, 'dimensions'),
+      tDiffuse: gl!.getUniformLocation(program, 'tDiffuse'),
+      tNoise: gl!.getUniformLocation(program, 'tNoise'),
+      time: gl!.getUniformLocation(program, 'time'),
+      loadingProgress: gl!.getUniformLocation(program, 'loadingProgress'),
+      dimensions: gl!.getUniformLocation(program, 'dimensions'),
     }
 
     // ===== 全屏四边形 =====
-    const buffer = gl.createBuffer()
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+    const buffer = gl!.createBuffer()
+    gl!.bindBuffer(gl!.ARRAY_BUFFER, buffer)
+    gl!.bufferData(gl!.ARRAY_BUFFER, new Float32Array([
       -1, -1, 1, -1, -1, 1,
       -1, 1, 1, -1, 1, 1
-    ]), gl.STATIC_DRAW)
+    ]), gl!.STATIC_DRAW)
 
-    const posLoc = gl.getAttribLocation(program, 'a_position')
-    gl.enableVertexAttribArray(posLoc)
-    gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0)
+    const posLoc = gl!.getAttribLocation(program, 'a_position')
+    gl!.enableVertexAttribArray(posLoc)
+    gl!.vertexAttribPointer(posLoc, 2, gl!.FLOAT, false, 0, 0)
 
     // ===== 加载纹理 =====
     function loadTexture(url: string, wrapRepeat: boolean = false): Promise<WebGLTexture | null> {
       return new Promise((resolve) => {
-        const tex = gl.createTexture()
+        const tex = gl!.createTexture()
         if (!tex) { resolve(null); return }
 
         // 占位黑色
-        gl.bindTexture(gl.TEXTURE_2D, tex)
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 255]))
+        gl!.bindTexture(gl!.TEXTURE_2D, tex)
+        gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGBA, 1, 1, 0, gl!.RGBA, gl!.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 255]))
 
         const img = new Image()
         img.crossOrigin = 'anonymous'
         img.onload = () => {
+          if (!gl) { resolve(null); return }
           gl.bindTexture(gl.TEXTURE_2D, tex)
           gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img)
           gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, wrapRepeat ? gl.REPEAT : gl.CLAMP_TO_EDGE)
@@ -371,12 +372,12 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
     // 加载桌面/移动端纹理和噪点纹理
     const isMobile = window.innerWidth < 1024
     const bootScreenPath = isMobile
-      ? '/assets/images/shader-se/boot_screen_mobile.png'
-      : '/assets/images/shader-se/boot_screen.png'
+      ? new URL('@/assets/shader-se/textures/boot_screen_mobile.png', import.meta.url).href
+      : new URL('@/assets/shader-se/textures/boot_screen.png', import.meta.url).href
 
     Promise.all([
       loadTexture(bootScreenPath),
-      loadTexture('/assets/images/shader-se/rgba_noise.png', true)
+      loadTexture(new URL('@/assets/shader-se/textures/rgba_noise.png', import.meta.url).href, true)
     ]).then(([bootTex, noiseTex]) => {
       if (!bootTex || !noiseTex) return
 
@@ -441,12 +442,17 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
   }, [progress])
 
   useEffect(() => {
+    const startTime = Date.now()
+    const minDisplayTime = 3000 // 最小展示 3 秒
+
     const interval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {
           clearInterval(interval)
-          // 延迟调用 onComplete，让最后的加载条动画展示完成
-          setTimeout(() => onComplete(), 500)
+          const elapsed = Date.now() - startTime
+          const remaining = Math.max(0, minDisplayTime - elapsed)
+          // 延迟调用 onComplete，确保最小展示时间
+          setTimeout(() => onComplete(), remaining + 500)
           return 100
         }
         return prev + 2

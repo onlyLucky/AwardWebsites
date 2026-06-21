@@ -43,23 +43,27 @@ AwardWebsites/
 │   ├── vite-env.d.ts            # Vite 类型声明
 │   ├── lib/
 │   │   └── utils.ts             # shadcn/ui cn() 工具函数
-│   ├── assets/                  # 公共资源
-│   │   └── fonts/               # 字体文件（按 demo 名称组织）
-│   │       └── follow-art/
+│   ├── assets/                  # 静态资源（按 demo 名称 + 资源类型组织）
+│   │   ├── shader-se/
+│   │   │   ├── models/          # 3D 模型（GLB）
+│   │   │   ├── textures/        # 纹理图片
+│   │   │   └── fonts/           # 字体文件
+│   │   ├── follow-art/
+│   │   │   └── fonts/
+│   │   └── shared/              # 共享资源
 │   ├── components/
 │   │   ├── ui/                  # shadcn/ui 组件
 │   │   └── header/              # 全局 Header
 │   ├── pages/
 │   │   ├── home/                # 目录页
 │   │   └── demos/
-│   │       └── follow-art/      # follow.art demo 页面
+│   │       ├── follow-art/      # follow.art demo 页面
+│   │       └── shader-se/       # shader.se demo 页面
 │   ├── router/
 │   │   └── index.tsx
-│   └── demos/                   # demo 专属组件 + 样式 + 资源
-│       └── follow-art/
-│           ├── hero-section/
-│           └── webgl-cards/
-│               └── images/      # 就近放置的图片资源
+│   └── demos/                   # demo 专属组件 + 样式
+│       ├── follow-art/
+│       └── shader-se/
 └── docs/
 ```
 
@@ -79,22 +83,29 @@ AwardWebsites/
 
 ### 资源组织规则
 
-1. **公共资源**：放在 `src/assets/` 目录下，按类型和 demo 名称组织
-   ```
-   src/assets/fonts/<demo-name>/  # 字体文件
-   src/assets/images/<demo-name>/ # 公共图片（如有）
-   ```
+**所有 demo 静态资源必须存储在 `src/assets/` 目录下**，按 demo 网站名称和资源类型分类组织：
 
-2. **Demo 专属资源**：就近放在组件目录下
-   ```
-   src/demos/<demo-name>/<component>/images/  # 组件图片
-   ```
+```
+src/assets/<demo-name>/
+├── models/          # 3D 模型文件（GLB, GLTF, OBJ）
+├── textures/        # 纹理图片（PNG, JPG, WebP, AVIF）
+├── fonts/           # 字体文件（WOFF2, JSON+PNG 位图字体）
+├── videos/          # 视频文件（MP4, WebM）
+└── icons/           # 图标文件（SVG）
+```
 
-3. **公开静态资源**：放在 `public/` 目录下
-   ```
-   public/favicon-96x96.png       # 网站图标
-   public/robots.txt              # 爬虫配置
-   ```
+**引用方式**（Vite 项目）：
+```typescript
+// 3D 模型
+const MODEL_URL = new URL('@/assets/<demo-name>/models/model.glb', import.meta.url).href
+
+// 图片纹理
+import textureUrl from '@/assets/<demo-name>/textures/texture.webp'
+```
+
+**公开静态资源**：仅限网站图标、robots.txt 等全局文件放在 `public/` 目录
+
+详细规则见 `.claude/rules/assets.md`
 
 ## 代码规范
 
