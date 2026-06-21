@@ -445,13 +445,15 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
       setProgress(prev => {
         if (prev >= 100) {
           clearInterval(interval)
+          // 延迟调用 onComplete，让最后的加载条动画展示完成
+          setTimeout(() => onComplete(), 500)
           return 100
         }
         return prev + 2
       })
     }, 30)
     return () => clearInterval(interval)
-  }, [])
+  }, [onComplete])
 
   return (
     <div className={styles.loadingScreen}>
