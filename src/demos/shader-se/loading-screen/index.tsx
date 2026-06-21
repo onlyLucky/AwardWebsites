@@ -197,14 +197,11 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
         // ===== 步骤 8: 绘制进度条（基于 shader.se 源码精确复刻） =====
         // 结构：2px 白色外边框 → 4px 内边距 → 21 段加载条（10px 体 + 4px 间隙）→ 按进度填充
-        // shader.se 使用虚拟像素坐标系统，这里转换为 UV 坐标实现
+        // shader.se 使用虚拟像素坐标系统，基于畸变后的 UV 坐标计算
 
         // 加载条参数（基于 shader.se 源码）
-        // 源码中虚拟分辨率：桌面 720x400，移动 360x260
-        // 加载条尺寸：298x30 虚拟像素
-        // 这里使用 UV 坐标，需要根据屏幕尺寸计算等效比例
         float barWidthPx = 298.0;    // 加载条宽度（虚拟像素）
-        float barHeightPx = 30.0;    // 加载条高度（虚拟像素）
+        float barHeightPx = 20.0;    // 加载条高度（虚拟像素）
         float barOuterBorderPx = 2.0; // 外部边框宽度（shader.se 源码：2px）
         float barPaddingPx = 4.0;     // 内边距（shader.se 源码：4px）
         float segBodyWidth = 10.0;    // 段落宽度（shader.se 源码：10px）
@@ -212,61 +209,68 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
         float segTotalWidth = segBodyWidth + segGapWidth; // 每段总宽：14px
         float segCount = 21.0;        // 段落数量（shader.se 源码：21）
 
-        // 计算加载条在屏幕上的位置
-        // shader.se 源码：barCenter = virtualRes/2, y -= virtualRes.y * 0.18
-        // 即屏幕中心向上偏移 18%
-        vec2 barCenterUV = vec2(0.5, 0.5 - 0.18); // 屏幕中心向上 18%
+        // 虚拟分辨率（shader.se 源码）
+        // 桌面端：720x400，移动端：360x260
+        vec2 virtualRes = vec2(720.0, 400.0);
+        if (dimensions.x < 1024.0) {
+          virtualRes = vec2(520.0, 320.0);
+        }
 
-        // 将虚拟像素尺寸转换为 UV 单位（基于屏幕实际像素）
-        // 使用较小维度作为基准，确保加载条比例一致
-        float screenMinDim = min(dimensions.x, dimensions.y);
-        vec2 barHalfSizeUV = vec2(barWidthPx, barHeightPx) / (screenMinDim * 2.0);
+        // 计算加载条位置（shader.se 源码逻辑）
+        // 源码使用畸变后的 UV 坐标（screenUV 畸变后）
+        // C = floor(virtualRes * 0.5); C.y -= virtualRes.y * 0.18
+        vec2 barCenter = floor(virtualRes * 0.5);
+        barCenter.y -= virtualRes.y * (-0.20);  // 向下偏移 20%
 
-        // 加载条边界
-        vec2 barMinUV = barCenterUV - barHalfSizeUV;
-        vec2 barMaxUV = barCenterUV + barHalfSizeUV;
+        // 加载条边界（虚拟像素坐标）
+        vec2 barMin = barCenter - vec2(barWidthPx, barHeightPx) * 0.5;
+        vec2 barMax = barCenter + vec2(barWidthPx, barHeightPx) * 0.5;
+
+        // 将畸变后的 UV 坐标转换为虚拟像素坐标
+        // 源码：v = floor(s * virtualRes)，其中 s 是畸变后的 UV
+        vec2 pixelCoord = floor(distortedUV * virtualRes);
 
         // 判断当前像素是否在加载条区域内
-        if (screenUV.x >= barMinUV.x && screenUV.x <= barMaxUV.x &&
-            screenUV.y >= barMinUV.y && screenUV.y <= barMaxUV.y) {
-          // 计算在加载条内的相对坐标（像素单位）
-          vec2 barLocalPx = (screenUV - barMinUV) * screenMinDim;
+        if (pixelCoord.x >= barMin.x && pixelCoord.x < barMax.x &&
+            pixelCoord.y >= barMin.y && pixelCoord.y < barMax.y) {
+          // 计算在加载条内的相对坐标（虚拟像素）
+          vec2 barLocal = pixelCoord - barMin;
 
           // 外边框区域（2px 白色）
-          if (barLocalPx.x < barOuterBorderPx || barLocalPx.x >= barWidthPx - barOuterBorderPx ||
-              barLocalPx.y < barOuterBorderPx || barLocalPx.y >= barHeightPx - barOuterBorderPx) {
+          if (barLocal.x < barOuterBorderPx || barLocal.x >= barWidthPx - barOuterBorderPx ||
+              barLocal.y < barOuterBorderPx || barLocal.y >= barHeightPx - barOuterBorderPx) {
             color = vec3(1.0); // 白色外边框
           }
           // 内边距区域（4px 黑色）
-          else if (barLocalPx.x < barPaddingPx || barLocalPx.x >= barWidthPx - barPaddingPx ||
-                   barLocalPx.y < barPaddingPx || barLocalPx.y >= barHeightPx - barPaddingPx) {
-            color = vec3(0.0); // 黑色内边距
+          else if (barLocal.x < barPaddingPx || barLocal.x >= barWidthPx - barPaddingPx ||
+                   barLocal.y < barPaddingPx || barLocal.y >= barHeightPx - barPaddingPx) {
+            // color = vec3(0.0); // 黑色内边距
           }
           // 段落区域
           else {
             // 段落区域内的 X 坐标（相对内边距后）
-            float innerX = barLocalPx.x - barPaddingPx;
+            float innerX = barLocal.x - barPaddingPx;
 
             // 计算当前像素属于哪个段落
+            // 源码：d = floor(n / o), c = fract(n / o) * o
+            // 其中 o = segBodyWidth + segGapWidth = 14
             float segIndex = floor(innerX / segTotalWidth);
-            // 计算在当前段落内的位置
             float segPosition = innerX - segIndex * segTotalWidth;
 
             // 计算已填充的段落数量
-            // shader.se 源码：(progress + 0.1) / 100 * 21
-            // +0.1 是为了让加载条在 progress=0 时也有微量填充（视觉平滑）
-            float filledSegments = (loadingProgress + 0.1) / 100.0 * segCount;
+            // shader.se 源码：u = floor((t + 0.1) / 100 * 21)
+            // t 是 loadingProgress (0-100)
+            float filledSegments = floor((loadingProgress + 0.1) / 100.0 * segCount);
 
             // 判断段落状态
-            if (segPosition >= segBodyWidth) {
-              // 在间隙区域：黑色
-              color = vec3(0.0);
-            } else if (segIndex < filledSegments) {
+            // 源码：if d < u AND c < a then filled
+            // 其中 a = segBodyWidth = 10
+            if (segIndex < filledSegments && segPosition < segBodyWidth) {
               // 已填充段落：白色
               color = vec3(1.0);
             } else {
-              // 未填充段落：黑色
-              color = vec3(0.0);
+              // 未填充段落或间隙：黑色
+              // color = vec3(0.0);
             }
           }
         }
