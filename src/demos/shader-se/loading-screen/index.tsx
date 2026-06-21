@@ -109,15 +109,29 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
           return;
         }
 
-        // ===== 步骤 2: 将 UV 映射到屏幕区域内 =====
-        vec2 screenUV = (vUv - screenMin) / screenSize;
+        // ===== 步骤 2: 屏幕边框和内容区域 =====
+        // 边框 2px + 内边距 2px，内容区域缩小 4px
+        float borderWidthPx = 2.0;  // 边框宽度（像素）
+        float contentPaddingPx = 2.0; // 内容与边框间距（像素）
 
-        // ===== 步骤 3: 径向渐变背景 =====
-        // 最里面 #49449a，最外面 #242255
-        vec3 innerColor = vec3(0.286, 0.267, 0.604);  // #49449a
-        vec3 outerColor = vec3(0.141, 0.133, 0.333);  // #242255
-        float gradDist = length(screenUV - 0.5) * 1.4; // 距离中心的距离
-        vec3 bgColor = mix(innerColor, outerColor, clamp(gradDist, 0.0, 1.0));
+        // 计算内容区域边界（向内收缩 边框+内边距）
+        float totalOffsetPx = borderWidthPx + contentPaddingPx;
+        vec2 contentMin = screenMin + vec2(totalOffsetPx / dimensions.x, totalOffsetPx / dimensions.y);
+        vec2 contentMax = screenMax - vec2(totalOffsetPx / dimensions.x, totalOffsetPx / dimensions.y);
+        vec2 contentSize = contentMax - contentMin;
+
+        // 判断是否在边框区域内（屏幕内，内容区外）
+        float distToContent = roundedBoxSDF(
+          (vUv - (contentMin + contentMax) * 0.5) * vec2(dimensions.x, dimensions.y),
+          contentSize * vec2(dimensions.x, dimensions.y) * 0.5,
+          cornerRadiusPx - totalOffsetPx
+        );
+
+        // ===== 步骤 3: 将 UV 映射到内容区域内 =====
+        vec2 screenUV = (vUv - contentMin) / contentSize;
+
+        // ===== 步骤 4: 纯色背景 =====
+        vec3 bgColor = vec3(0.247, 0.227, 0.604);  // #3f3a9a
 
         // ===== 步骤 4: 矩形噪点效果（参考 shader.se 源码实现） =====
         // 使用逐像素哈希函数生成矩形噪点块
@@ -125,7 +139,7 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
         // smoothstep 阈值 0.49 使约 50% 像素显示噪点，形成矩形块状效果
         // 白色噪点透明（不影响原色），黑色噪点偏向背景渐变色
         float noiseVelocity = 0.25;
-        float noiseScale = 3.0;     // UV 缩放，值越大噪点颗粒越小
+        float noiseScale = 6.0;     // UV 缩放，值越大噪点颗粒越小（增加密度）
         float noiseIntensity = 0.5;
 
         // 逐像素哈希噪点
@@ -160,49 +174,94 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
         float vignetteFactor = vignette(vignetteUV, 0.5, 0.5);
         color *= mix(1.0, vignetteFactor, vignetteIntensity);
 
-        // ===== 步骤 8: 绘制进度条（在屏幕区域内） =====
-        // 21 段，宽度 25%，高度 4%，居中偏下 65%
-        float barCenterY = 0.65;     // 进度条垂直位置（0-1）
-        float barHeight = 0.04;      // 进度条高度（UV 单位，约 4%）
-        float barWidth = 0.25;       // 进度条宽度（UV 单位，约 25%）
-        float borderWidth = 0.003;   // 边框宽度（UV 单位）
-        float segments = 21.0;       // 段落数量
+        // ===== 步骤 8: CRT 屏幕边框反射效果 =====
+        // 顶部蓝色高光（天空光/环境光反射）- 紧贴上边缘
+        // 底部暖色暗部（内部反射/老化）- 紧贴下边缘
+        // 使用 screenUV（线性 0-1）精确计算像素宽度
 
-        vec2 barCenter = vec2(0.5, barCenterY);
-        vec2 barHalfSize = vec2(barWidth * 0.5, barHeight * 0.5);
-        vec2 barStart = barCenter - barHalfSize;
-        vec2 barEnd = barCenter + barHalfSize;
+        float edgeWidthPx = 10.0; // 边框光效宽度（像素）
+        float screenHeightPx = dimensions.y - 2.0 * marginPx; // 屏幕实际像素高度
+        float edgeWidthUV = edgeWidthPx / screenHeightPx; // 像素转换为屏幕 UV 单位
 
-        // 检查当前点是否在进度条区域内
-        if (screenUV.x >= barStart.x && screenUV.x <= barEnd.x &&
-            screenUV.y >= barStart.y && screenUV.y <= barEnd.y) {
-          // 计算在进度条内的相对位置 (0-1)
-          vec2 localUV = (screenUV - barStart) / (barEnd - barStart);
+        // 顶部蓝色高光：紧贴屏幕上边缘
+        // step(edge, x): x < edge 返回 0，x >= edge 返回 1
+        // screenUV.y=0 是顶部，=1 是底部
+        float topEdge = 1.0 - step(edgeWidthUV, screenUV.y); // screenUV.y < edgeWidthUV 时为 1
+        vec3 topBlueTint = vec3(0.3, 0.45, 0.85); // 蓝色反射
+        color = mix(color, color + topBlueTint * 0.5, topEdge * 0.7);
 
-          // 边框区域（白色边框）
-          if (localUV.x < borderWidth || localUV.x > 1.0 - borderWidth ||
-              localUV.y < borderWidth || localUV.y > 1.0 - borderWidth) {
-            color = vec3(1.0);
-          } else {
-            // 内部区域：计算段落
-            float innerWidth = 1.0 - 2.0 * borderWidth;
-            float innerX = (localUV.x - borderWidth) / innerWidth;
+        // 底部暖色暗部：紧贴屏幕下边缘
+        float bottomEdge = step(1.0 - edgeWidthUV, screenUV.y); // screenUV.y >= 1-edgeWidthUV 时为 1
+        vec3 bottomWarmTint = vec3(0.6, 0.45, 0.25); // 暖黄色调
+        color = mix(color, bottomWarmTint * 0.8, bottomEdge * 0.7); // 直接混合暖色
 
-            // 计算当前像素在哪个段落
-            float segX = innerX * segments;
-            float seg = floor(segX);
-            float segFrac = fract(segX);
+        // ===== 步骤 8: 绘制进度条（基于 shader.se 源码精确复刻） =====
+        // 结构：2px 白色外边框 → 4px 内边距 → 21 段加载条（10px 体 + 4px 间隙）→ 按进度填充
+        // shader.se 使用虚拟像素坐标系统，这里转换为 UV 坐标实现
 
-            float filledSegments = loadingProgress / 100.0 * segments;
+        // 加载条参数（基于 shader.se 源码）
+        // 源码中虚拟分辨率：桌面 720x400，移动 360x260
+        // 加载条尺寸：298x30 虚拟像素
+        // 这里使用 UV 坐标，需要根据屏幕尺寸计算等效比例
+        float barWidthPx = 298.0;    // 加载条宽度（虚拟像素）
+        float barHeightPx = 30.0;    // 加载条高度（虚拟像素）
+        float barOuterBorderPx = 2.0; // 外部边框宽度（shader.se 源码：2px）
+        float barPaddingPx = 4.0;     // 内边距（shader.se 源码：4px）
+        float segBodyWidth = 10.0;    // 段落宽度（shader.se 源码：10px）
+        float segGapWidth = 4.0;      // 段落间隙（shader.se 源码：4px）
+        float segTotalWidth = segBodyWidth + segGapWidth; // 每段总宽：14px
+        float segCount = 21.0;        // 段落数量（shader.se 源码：21）
 
-            // 分隔线：每个段落之间有明显的黑色间隙
-            // 分隔线宽度约占段落宽度的 15%
-            float dividerWidth = 0.15;
+        // 计算加载条在屏幕上的位置
+        // shader.se 源码：barCenter = virtualRes/2, y -= virtualRes.y * 0.18
+        // 即屏幕中心向上偏移 18%
+        vec2 barCenterUV = vec2(0.5, 0.5 - 0.18); // 屏幕中心向上 18%
 
-            if (segFrac < dividerWidth) {
-              // 段落左侧分隔线：黑色
+        // 将虚拟像素尺寸转换为 UV 单位（基于屏幕实际像素）
+        // 使用较小维度作为基准，确保加载条比例一致
+        float screenMinDim = min(dimensions.x, dimensions.y);
+        vec2 barHalfSizeUV = vec2(barWidthPx, barHeightPx) / (screenMinDim * 2.0);
+
+        // 加载条边界
+        vec2 barMinUV = barCenterUV - barHalfSizeUV;
+        vec2 barMaxUV = barCenterUV + barHalfSizeUV;
+
+        // 判断当前像素是否在加载条区域内
+        if (screenUV.x >= barMinUV.x && screenUV.x <= barMaxUV.x &&
+            screenUV.y >= barMinUV.y && screenUV.y <= barMaxUV.y) {
+          // 计算在加载条内的相对坐标（像素单位）
+          vec2 barLocalPx = (screenUV - barMinUV) * screenMinDim;
+
+          // 外边框区域（2px 白色）
+          if (barLocalPx.x < barOuterBorderPx || barLocalPx.x >= barWidthPx - barOuterBorderPx ||
+              barLocalPx.y < barOuterBorderPx || barLocalPx.y >= barHeightPx - barOuterBorderPx) {
+            color = vec3(1.0); // 白色外边框
+          }
+          // 内边距区域（4px 黑色）
+          else if (barLocalPx.x < barPaddingPx || barLocalPx.x >= barWidthPx - barPaddingPx ||
+                   barLocalPx.y < barPaddingPx || barLocalPx.y >= barHeightPx - barPaddingPx) {
+            color = vec3(0.0); // 黑色内边距
+          }
+          // 段落区域
+          else {
+            // 段落区域内的 X 坐标（相对内边距后）
+            float innerX = barLocalPx.x - barPaddingPx;
+
+            // 计算当前像素属于哪个段落
+            float segIndex = floor(innerX / segTotalWidth);
+            // 计算在当前段落内的位置
+            float segPosition = innerX - segIndex * segTotalWidth;
+
+            // 计算已填充的段落数量
+            // shader.se 源码：(progress + 0.1) / 100 * 21
+            // +0.1 是为了让加载条在 progress=0 时也有微量填充（视觉平滑）
+            float filledSegments = (loadingProgress + 0.1) / 100.0 * segCount;
+
+            // 判断段落状态
+            if (segPosition >= segBodyWidth) {
+              // 在间隙区域：黑色
               color = vec3(0.0);
-            } else if (seg < filledSegments) {
+            } else if (segIndex < filledSegments) {
               // 已填充段落：白色
               color = vec3(1.0);
             } else {
@@ -212,10 +271,11 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
           }
         }
 
-        // ===== 步骤 9: 屏幕边缘柔化 =====
-        // 在屏幕边缘添加轻微的柔化，避免硬边
-        // float edgeSoftness = smoothstep(0.0, 0.005, -distToScreen);
-        // color *= edgeSoftness;
+        // ===== 步骤 9: 绘制边框 =====
+        // 在内容区域外、屏幕区域内绘制白色边框
+        if (distToContent > 0.0) {
+          color = vec3(1.0); // 白色边框
+        }
 
         gl_FragColor = vec4(color, 1.0);
       }
