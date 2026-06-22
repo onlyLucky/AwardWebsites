@@ -37,6 +37,15 @@ const demos: DemoItem[] = [
     preview: '/previews/shader-se.svg',
     icon: <MousePointerClick className="h-5 w-5" />,
   },
+  {
+    titleKey: 'demos.animejs.title',
+    descKey: 'demos.animejs.description',
+    tagKeys: ['home.tags.animation', 'home.tags.gsap', 'home.tags.scroll'],
+    path: '/demo/animejs',
+    url: 'https://animejs.com',
+    preview: '/previews/animejs.svg',
+    icon: <MousePointerClick className="h-5 w-5" />,
+  },
 ]
 
 const PAGE_SIZE = 12

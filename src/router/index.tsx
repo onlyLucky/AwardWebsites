@@ -4,6 +4,7 @@ import Header from '@/components/header'
 import Home from '@/pages/home'
 import FollowArtDemo from '@/pages/demos/follow-art'
 import ShaderSeDemo from '@/pages/demos/shader-se'
+import AnimejsDemo from '@/pages/demos/animejs'
 
 function AppRouter() {
   return (
@@ -15,6 +16,7 @@ function AppRouter() {
             <Route path="/" element={<Home />} />
             <Route path="/demo/follow-art" element={<FollowArtDemo />} />
             <Route path="/demo/shader-se" element={<ShaderSeDemo />} />
+            <Route path="/demo/animejs" element={<AnimejsDemo />} />
           </Routes>
         </main>
       </BrowserRouter>

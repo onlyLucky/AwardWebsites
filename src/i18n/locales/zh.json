@@ -15,7 +15,9 @@
       "webgl": "WebGL",
       "threejs": "Three.js",
       "mouse": "鼠标交互",
-      "gsap": "GSAP 动画"
+      "gsap": "GSAP 动画",
+      "animation": "动画",
+      "scroll": "滚动动画"
     }
   },
   "demos": {
@@ -26,6 +28,10 @@
     "shaderSe": {
       "title": "shader.se",
       "description": "创意开发工作室作品集网站，包含 3D 模型渲染、滚动驱动动画和交互式项目展示。"
+    },
+    "animejs": {
+      "title": "Anime.js",
+      "description": "快速、多功能且轻量级的 JavaScript 动画库，具有直观的 API、滚动驱动动画和模块化架构。"
     }
   },
   "header": {

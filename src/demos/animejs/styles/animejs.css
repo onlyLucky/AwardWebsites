@@ -1,0 +1,612 @@
+/* ===== Animejs Demo 样式 ===== */
+/* 复刻 animejs.com 首页的视觉效果 */
+
+/* ===== CSS 变量定义 ===== */
+:root {
+  /* 颜色变量 */
+  --animejs-bg: #252423;
+  --animejs-bg-light: #2c2a28;
+  --animejs-fg: #f6f4f2;
+  --animejs-fg-muted: #85837e;
+  --animejs-accent: #ff4b4b;
+  --animejs-accent-secondary: #00ffaa;
+
+  /* 间距变量 */
+  --animejs-spacing-xs: 0.5rem;
+  --animejs-spacing-sm: 1rem;
+  --animejs-spacing-md: 2rem;
+  --animejs-spacing-lg: 4rem;
+  --animejs-spacing-xl: 8rem;
+
+  /* 字体变量 */
+  --animejs-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, sans-serif;
+  --animejs-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ===== Demo 容器 ===== */
+.animejs-demo {
+  background-color: var(--animejs-bg);
+  color: var(--animejs-fg);
+  font-family: var(--animejs-font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== 滚动进度指示器 ===== */
+.animejs-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.animejs-scroll-progress__track {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.animejs-scroll-progress__fill {
+  height: 100%;
+  background-color: var(--animejs-accent);
+  will-change: width;
+}
+
+/* ===== Hero 区域 ===== */
+.animejs-hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: var(--animejs-spacing-xl) var(--animejs-spacing-lg);
+  position: relative;
+  gap: var(--animejs-spacing-lg);
+}
+
+.animejs-hero__content {
+  max-width: 600px;
+  text-align: left;
+}
+
+.animejs-hero__animation-wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  position: relative;
+}
+
+.animejs-hero__animation {
+  width: 100%;
+  height: 100%;
+}
+
+.animejs-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--animejs-spacing-sm);
+}
+
+.animejs-hero__title {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: var(--animejs-spacing-md);
+  letter-spacing: -0.02em;
+}
+
+.animejs-hero__dot {
+  color: var(--animejs-accent);
+}
+
+.animejs-hero__subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--animejs-fg-muted);
+  line-height: 1.6;
+  margin-bottom: var(--animejs-spacing-lg);
+}
+
+.animejs-hero__highlight {
+  color: var(--animejs-fg);
+  position: relative;
+}
+
+.animejs-hero__highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--animejs-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.animejs-hero__highlight:hover::after {
+  transform: scaleX(1);
+}
+
+.animejs-hero__npm {
+  display: inline-block;
+  background-color: var(--animejs-bg-light);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: var(--animejs-spacing-sm) var(--animejs-spacing-md);
+  font-family: var(--animejs-font-mono);
+  font-size: 1rem;
+  color: var(--animejs-fg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.animejs-hero__npm:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.animejs-hero__learn-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: var(--animejs-spacing-sm) var(--animejs-spacing-md);
+  font-family: var(--animejs-font-sans);
+  font-size: 0.875rem;
+  color: var(--animejs-fg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.animejs-hero__learn-more:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.animejs-hero__scroll-hint {
+  position: absolute;
+  bottom: var(--animejs-spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--animejs-spacing-xs);
+  color: var(--animejs-fg-muted);
+  font-size: 0.875rem;
+}
+
+.animejs-hero__scroll-hint svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ===== 特性展示区域 ===== */
+.animejs-features {
+  padding: var(--animejs-spacing-xl) var(--animejs-spacing-lg);
+}
+
+.animejs-features__header {
+  max-width: 600px;
+  margin: 0 auto var(--animejs-spacing-xl);
+  text-align: center;
+}
+
+.animejs-features__title {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--animejs-spacing-md);
+}
+
+.animejs-features__subtitle {
+  font-size: 1.125rem;
+  color: var(--animejs-fg-muted);
+  line-height: 1.6;
+}
+
+.animejs-features__grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--animejs-spacing-xl);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ===== 特性卡片 ===== */
+.animejs-feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--animejs-spacing-lg);
+  align-items: center;
+  min-height: 400px;
+}
+
+.animejs-feature:nth-child(even) {
+  direction: rtl;
+}
+
+.animejs-feature:nth-child(even) > * {
+  direction: ltr;
+}
+
+.animejs-feature__left {
+  padding: var(--animejs-spacing-md);
+}
+
+.animejs-feature__right {
+  width: 100%;
+  height: 100%;
+  min-height: 350px;
+  background-color: var(--animejs-bg-light);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.animejs-feature__scene {
+  width: 100%;
+  height: 100%;
+}
+
+.animejs-feature__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: var(--animejs-spacing-sm);
+}
+
+.animejs-feature__description {
+  font-size: 1rem;
+  color: var(--animejs-fg-muted);
+  line-height: 1.6;
+  margin-bottom: var(--animejs-spacing-md);
+}
+
+.animejs-feature__code {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: var(--animejs-spacing-md);
+  overflow-x: auto;
+}
+
+.animejs-feature__pre {
+  margin: 0;
+  font-family: var(--animejs-font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--animejs-fg);
+}
+
+.animejs-feature__pre code {
+  white-space: pre;
+}
+
+/* ===== 特性颜色变体 ===== */
+.animejs-feature--getting-started {
+  border-left: 3px solid var(--animejs-accent);
+}
+
+.animejs-feature--animation {
+  border-left: 3px solid #ff7d36;
+}
+
+.animejs-feature--turquoise {
+  border-left: 3px solid var(--animejs-accent-secondary);
+}
+
+.animejs-feature--utils {
+  border-left: 3px solid #f9f640;
+}
+
+.animejs-feature--svg {
+  border-left: 3px solid #8dff55;
+}
+
+.animejs-feature--draggable {
+  border-left: 3px solid #26f2d5;
+}
+
+/* ===== 模块可视化区域 ===== */
+.animejs-modules {
+  padding: var(--animejs-spacing-xl) var(--animejs-spacing-md);
+  background-color: var(--animejs-bg-light);
+}
+
+.animejs-modules__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.animejs-modules__header {
+  text-align: center;
+  margin-bottom: var(--animejs-spacing-xl);
+}
+
+.animejs-modules__title {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--animejs-spacing-md);
+}
+
+.animejs-modules__subtitle {
+  font-size: 1.125rem;
+  color: var(--animejs-fg-muted);
+  line-height: 1.6;
+}
+
+.animejs-modules__card {
+  background-color: var(--animejs-bg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: var(--animejs-spacing-md);
+}
+
+.animejs-modules__card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--animejs-spacing-md);
+  padding-bottom: var(--animejs-spacing-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.animejs-modules__card-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.animejs-modules__total {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.animejs-modules__size {
+  color: var(--animejs-accent);
+}
+
+/* ===== 柱状图 ===== */
+.animejs-modules__chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 120px;
+  margin-bottom: var(--animejs-spacing-md);
+  padding-bottom: var(--animejs-spacing-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.animejs-modules__bar {
+  flex: 1;
+  min-height: 4px;
+  border-radius: 2px 2px 0 0;
+  transition: opacity 0.2s ease;
+  will-change: transform, opacity;
+}
+
+.animejs-modules__bar:hover {
+  opacity: 0.8;
+}
+
+/* ===== 柱状图颜色 ===== */
+.animejs-modules__bar--timer {
+  background-color: #ff4b4b;
+}
+
+.animejs-modules__bar--animation {
+  background-color: #ff7d36;
+}
+
+.animejs-modules__bar--timeline {
+  background-color: #ffa828;
+}
+
+.animejs-modules__bar--animatable {
+  background-color: #ffcc2a;
+}
+
+.animejs-modules__bar--draggable {
+  background-color: #f9f640;
+}
+
+.animejs-modules__bar--events {
+  background-color: #b7ff54;
+}
+
+.animejs-modules__bar--scope {
+  background-color: #8dff55;
+}
+
+.animejs-modules__bar--svg {
+  background-color: #00ffaa;
+}
+
+.animejs-modules__bar--utils {
+  background-color: #26f2d5;
+}
+
+.animejs-modules__bar--easings {
+  background-color: #26c9b1;
+}
+
+.animejs-modules__bar--waapi {
+  background-color: #248273;
+}
+
+/* ===== 模块列表 ===== */
+.animejs-modules__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.animejs-modules__item {
+  display: flex;
+  align-items: center;
+  gap: var(--animejs-spacing-sm);
+  padding: var(--animejs-spacing-xs) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.animejs-modules__item:last-child {
+  border-bottom: none;
+}
+
+.animejs-modules__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ===== 模块列表颜色 ===== */
+.animejs-modules__dot--timer {
+  background-color: #ff4b4b;
+}
+
+.animejs-modules__dot--animation {
+  background-color: #ff7d36;
+}
+
+.animejs-modules__dot--timeline {
+  background-color: #ffa828;
+}
+
+.animejs-modules__dot--animatable {
+  background-color: #ffcc2a;
+}
+
+.animejs-modules__dot--draggable {
+  background-color: #f9f640;
+}
+
+.animejs-modules__dot--events {
+  background-color: #b7ff54;
+}
+
+.animejs-modules__dot--scope {
+  background-color: #8dff55;
+}
+
+.animejs-modules__dot--svg {
+  background-color: #00ffaa;
+}
+
+.animejs-modules__dot--utils {
+  background-color: #26f2d5;
+}
+
+.animejs-modules__dot--easings {
+  background-color: #26c9b1;
+}
+
+.animejs-modules__dot--waapi {
+  background-color: #248273;
+}
+
+.animejs-modules__name {
+  flex: 1;
+  font-size: 0.875rem;
+}
+
+.animejs-modules__value {
+  font-size: 0.875rem;
+  color: var(--animejs-fg-muted);
+  font-family: var(--animejs-font-mono);
+}
+
+/* ===== 响应式设计 ===== */
+@media (max-width: 1024px) {
+  .animejs-hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .animejs-hero__content {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .animejs-hero__actions {
+    justify-content: center;
+  }
+
+  .animejs-hero__animation-wrapper {
+    min-height: 350px;
+  }
+
+  .animejs-feature {
+    grid-template-columns: 1fr;
+  }
+
+  .animejs-feature:nth-child(even) {
+    direction: ltr;
+  }
+
+  .animejs-feature__left {
+    order: 1;
+  }
+
+  .animejs-feature__right {
+    order: 2;
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .animejs-hero {
+    padding: var(--animejs-spacing-lg) var(--animejs-spacing-sm);
+  }
+
+  .animejs-hero__animation-wrapper {
+    min-height: 300px;
+  }
+
+  .animejs-features {
+    padding: var(--animejs-spacing-lg) var(--animejs-spacing-sm);
+  }
+
+  .animejs-feature__title {
+    font-size: 1.5rem;
+  }
+
+  .animejs-feature__right {
+    min-height: 250px;
+  }
+
+  .animejs-modules {
+    padding: var(--animejs-spacing-lg) var(--animejs-spacing-sm);
+  }
+
+  .animejs-modules__chart {
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .animejs-hero__title {
+    font-size: 2rem;
+  }
+
+  .animejs-hero__subtitle {
+    font-size: 0.875rem;
+  }
+
+  .animejs-hero__actions {
+    flex-direction: column;
+    gap: var(--animejs-spacing-sm);
+  }
+
+  .animejs-hero__npm {
+    font-size: 0.875rem;
+    padding: var(--animejs-spacing-xs) var(--animejs-spacing-sm);
+  }
+
+  .animejs-hero__learn-more {
+    width: 100%;
+    justify-content: center;
+  }
+}

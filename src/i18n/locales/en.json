@@ -15,7 +15,9 @@
       "webgl": "WebGL",
       "threejs": "Three.js",
       "mouse": "Mouse Interaction",
-      "gsap": "GSAP Animation"
+      "gsap": "GSAP Animation",
+      "animation": "Animation",
+      "scroll": "Scroll Animation"
     }
   },
   "demos": {
@@ -26,6 +28,10 @@
     "shaderSe": {
       "title": "shader.se",
       "description": "Creative development studio portfolio website featuring 3D model rendering, scroll-driven animations, and interactive project showcase."
+    },
+    "animejs": {
+      "title": "Anime.js",
+      "description": "A fast, multipurpose and lightweight JavaScript animation library with intuitive API, scroll-driven animations, and modular architecture."
     }
   },
   "header": {
