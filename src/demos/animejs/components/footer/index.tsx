@@ -22,6 +22,8 @@ export default function Footer() {
                   href="https://github.com/sponsors/juliangarnier"
                   target="_blank"
                   title="Become a sponsor"
+                  data-url-params=""
+                  data-url-params-docs=""
                 >
                   <img
                     src={SPONSOR_PLACEHOLDER_URL}
