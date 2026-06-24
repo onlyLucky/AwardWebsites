@@ -93,20 +93,18 @@ npm start
 // app/page.tsx
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Welcome to Next.js!
-        </h1>
-        <p className="text-xl text-gray-600 mb-8">
-          Get started by editing <code className="bg-gray-200 px-2 py-1 rounded">app/page.tsx</code>
+    <div className='flex min-h-screen items-center justify-center bg-gray-100'>
+      <div className='text-center'>
+        <h1 className='mb-4 text-4xl font-bold text-gray-900'>Welcome to Next.js!</h1>
+        <p className='mb-8 text-xl text-gray-600'>
+          Get started by editing <code className='rounded bg-gray-200 px-2 py-1'>app/page.tsx</code>
         </p>
-        <button className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors">
+        <button className='rounded-lg bg-blue-500 px-6 py-3 text-white transition-colors hover:bg-blue-600'>
           Click me
         </button>
       </div>
     </div>
-  );
+  )
 }
 ```
 
@@ -140,35 +138,43 @@ app/
 
 ```tsx
 // app/layout.tsx
-import './globals.css';
+import './globals.css'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-gray-50">
-        <header className="bg-white shadow-sm">
-          <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 className="text-xl font-bold text-gray-900">My Next.js App</h1>
+    <html lang='en'>
+      <body className='min-h-screen bg-gray-50'>
+        <header className='bg-white shadow-sm'>
+          <div className='container mx-auto flex items-center justify-between px-4 py-4'>
+            <h1 className='text-xl font-bold text-gray-900'>My Next.js App</h1>
             <nav>
-              <ul className="flex space-x-6">
-                <li><a href="/" className="text-gray-600 hover:text-gray-900">Home</a></li>
-                <li><a href="/about" className="text-gray-600 hover:text-gray-900">About</a></li>
-                <li><a href="/blog" className="text-gray-600 hover:text-gray-900">Blog</a></li>
+              <ul className='flex space-x-6'>
+                <li>
+                  <a href='/' className='text-gray-600 hover:text-gray-900'>
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a href='/about' className='text-gray-600 hover:text-gray-900'>
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a href='/blog' className='text-gray-600 hover:text-gray-900'>
+                    Blog
+                  </a>
+                </li>
               </ul>
             </nav>
           </div>
         </header>
-        <main className="container mx-auto px-4 py-8">
-          {children}
-        </main>
-        <footer className="bg-gray-100 border-t mt-12">
-          <div className="container mx-auto px-4 py-8 text-center text-gray-600">
-            © 2024 My Next.js App
-          </div>
+        <main className='container mx-auto px-4 py-8'>{children}</main>
+        <footer className='mt-12 border-t bg-gray-100'>
+          <div className='container mx-auto px-4 py-8 text-center text-gray-600'>© 2024 My Next.js App</div>
         </footer>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -180,16 +186,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 // app/about/page.tsx
 export default function AboutPage() {
   return (
-    <div className="max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">About Us</h1>
-      <p className="text-gray-600 mb-4">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    <div className='mx-auto max-w-3xl'>
+      <h1 className='mb-6 text-3xl font-bold text-gray-900'>About Us</h1>
+      <p className='mb-4 text-gray-600'>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua.
       </p>
-      <p className="text-gray-600">
+      <p className='text-gray-600'>
         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
       </p>
     </div>
-  );
+  )
 }
 ```
 
@@ -205,25 +212,25 @@ export default function BlogPage() {
   const posts = [
     { id: 1, title: 'First Post', slug: 'first-post' },
     { id: 2, title: 'Second Post', slug: 'second-post' },
-  ];
+  ]
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Blog</h1>
-      <ul className="space-y-4">
-        {posts.map(post => (
+    <div className='mx-auto max-w-3xl'>
+      <h1 className='mb-6 text-3xl font-bold text-gray-900'>Blog</h1>
+      <ul className='space-y-4'>
+        {posts.map((post) => (
           <li key={post.id}>
-            <a 
-              href={`/blog/${post.slug}`} 
-              className="block p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
+            <a
+              href={`/blog/${post.slug}`}
+              className='block rounded-lg bg-white p-4 shadow-sm transition-shadow hover:shadow-md'
             >
-              <h2 className="text-xl font-semibold text-gray-900">{post.title}</h2>
+              <h2 className='text-xl font-semibold text-gray-900'>{post.title}</h2>
             </a>
           </li>
         ))}
       </ul>
     </div>
-  );
+  )
 }
 ```
 
@@ -236,9 +243,9 @@ React Server Components 允许你在服务器端渲染组件，减少客户端�
 // 服务器组件，在服务器端运行
 
 interface Post {
-  id: number;
-  title: string;
-  content: string;
+  id: number
+  title: string
+  content: string
 }
 
 // 模拟数据获取
@@ -248,21 +255,19 @@ async function getPost(slug: string): Promise<Post> {
     id: 1,
     title: 'First Post',
     content: 'This is the content of the first post.',
-  };
+  }
 }
 
 export default async function PostPage({ params }: { params: { slug: string } }) {
   // 直接在服务器端获取数据
-  const post = await getPost(params.slug);
+  const post = await getPost(params.slug)
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">{post.title}</h1>
-      <div className="prose prose-lg text-gray-600">
-        {post.content}
-      </div>
+    <div className='mx-auto max-w-3xl'>
+      <h1 className='mb-6 text-3xl font-bold text-gray-900'>{post.title}</h1>
+      <div className='prose prose-lg text-gray-600'>{post.content}</div>
     </div>
-  );
+  )
 }
 ```
 
@@ -273,30 +278,24 @@ export default async function PostPage({ params }: { params: { slug: string } })
 ```tsx
 // app/components/Counter.tsx
 // 客户端组件，在浏览器中运行
-'use client';
+'use client'
 
-import { useState } from 'react';
+import { useState } from 'react'
 
 export function Counter() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   return (
-    <div className="flex items-center space-x-4">
-      <button 
-        onClick={() => setCount(count - 1)}
-        className="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300"
-      >
+    <div className='flex items-center space-x-4'>
+      <button onClick={() => setCount(count - 1)} className='rounded-lg bg-gray-200 px-4 py-2 hover:bg-gray-300'>
         -
       </button>
-      <span className="text-xl font-semibold">{count}</span>
-      <button 
-        onClick={() => setCount(count + 1)}
-        className="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300"
-      >
+      <span className='text-xl font-semibold'>{count}</span>
+      <button onClick={() => setCount(count + 1)} className='rounded-lg bg-gray-200 px-4 py-2 hover:bg-gray-300'>
         +
       </button>
     </div>
-  );
+  )
 }
 ```
 
@@ -306,21 +305,21 @@ Next.js 内置了 API 路由功能，允许你创建后端 API 端点。
 
 ```tsx
 // app/api/hello/route.ts
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
   return NextResponse.json({
     message: 'Hello from API',
     time: new Date().toISOString(),
-  });
+  })
 }
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
+  const body = await request.json()
   return NextResponse.json({
     message: 'Received data',
     data: body,
-  });
+  })
 }
 ```
 
@@ -332,93 +331,89 @@ Server Actions 允许你在客户端组件中调用服务器端函数，简化�
 
 ```tsx
 // app/actions.ts
-'use server';
+'use server'
 
 export async function submitForm(data: { name: string; email: string }) {
   // 服务器端验证和处理
-  console.log('Form submitted:', data);
-  
+  console.log('Form submitted:', data)
+
   // 模拟数据库操作
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  return { success: true, message: 'Form submitted successfully!' };
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+
+  return { success: true, message: 'Form submitted successfully!' }
 }
 
 // app/page.tsx
-'use client';
+;('use client')
 
-import { useState } from 'react';
-import { submitForm } from './actions';
+import { useState } from 'react'
+import { submitForm } from './actions'
 
 export default function Home() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState('');
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [message, setMessage] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
+    e.preventDefault()
+    setIsSubmitting(true)
+
     try {
-      const result = await submitForm({ name, email });
-      setMessage(result.message);
+      const result = await submitForm({ name, email })
+      setMessage(result.message)
     } catch (error) {
-      setMessage('An error occurred');
+      setMessage('An error occurred')
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
-  };
+  }
 
   return (
-    <div className="max-w-md mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Contact Form</h1>
-      
-      {message && (
-        <div className="mb-4 p-4 bg-green-100 text-green-700 rounded-lg">
-          {message}
-        </div>
-      )}
-      
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className='mx-auto max-w-md'>
+      <h1 className='mb-6 text-3xl font-bold text-gray-900'>Contact Form</h1>
+
+      {message && <div className='mb-4 rounded-lg bg-green-100 p-4 text-green-700'>{message}</div>}
+
+      <form onSubmit={handleSubmit} className='space-y-4'>
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor='name' className='mb-1 block text-sm font-medium text-gray-700'>
             Name
           </label>
           <input
-            type="text"
-            id="name"
+            type='text'
+            id='name'
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className='w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500'
             required
           />
         </div>
-        
+
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor='email' className='mb-1 block text-sm font-medium text-gray-700'>
             Email
           </label>
           <input
-            type="email"
-            id="email"
+            type='email'
+            id='email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className='w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500'
             required
           />
         </div>
-        
+
         <button
-          type="submit"
+          type='submit'
           disabled={isSubmitting}
-          className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 disabled:bg-gray-400"
+          className='w-full rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:bg-gray-400'
         >
           {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
       </form>
     </div>
-  );
+  )
 }
 ```
 
@@ -428,26 +423,26 @@ export default function Home() {
 
 ```tsx
 // middleware.ts
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(request: NextRequest) {
   // 检查是否有认证令牌
-  const token = request.cookies.get('auth-token')?.value;
-  
+  const token = request.cookies.get('auth-token')?.value
+
   // 保护 /dashboard 路由
   if (request.nextUrl.pathname.startsWith('/dashboard')) {
     if (!token) {
       // 重定向到登录页
-      return NextResponse.redirect(new URL('/login', request.url));
+      return NextResponse.redirect(new URL('/login', request.url))
     }
   }
-  
-  return NextResponse.next();
+
+  return NextResponse.next()
 }
 
 export const config = {
   matcher: ['/dashboard/:path*'],
-};
+}
 ```
 
 ### 路由组
@@ -480,15 +475,15 @@ export default function BlogPage() {
   const posts = [
     { id: 1, title: 'First Post' },
     { id: 2, title: 'Second Post' },
-  ];
-  
+  ]
+
   return (
     <div>
-      {posts.map(post => (
+      {posts.map((post) => (
         <div key={post.id}>{post.title}</div>
       ))}
     </div>
-  );
+  )
 }
 ```
 
@@ -498,14 +493,14 @@ export default function BlogPage() {
 // app/blog/[slug]/page.tsx
 // 每次请求时生成，适合动态内容
 export default async function PostPage({ params }: { params: { slug: string } }) {
-  const post = await fetch(`https://api.example.com/posts/${params.slug}`).then(res => res.json());
-  
+  const post = await fetch(`https://api.example.com/posts/${params.slug}`).then((res) => res.json())
+
   return (
     <div>
       <h1>{post.title}</h1>
       <div>{post.content}</div>
     </div>
-  );
+  )
 }
 ```
 
@@ -514,17 +509,17 @@ export default async function PostPage({ params }: { params: { slug: string } })
 ```tsx
 // app/blog/[slug]/page.tsx
 // 构建时生成，然后定期再生，适合频繁更新的内容
-export const revalidate = 60; // 每60秒再生一次
+export const revalidate = 60 // 每60秒再生一次
 
 export default async function PostPage({ params }: { params: { slug: string } }) {
-  const post = await fetch(`https://api.example.com/posts/${params.slug}`).then(res => res.json());
-  
+  const post = await fetch(`https://api.example.com/posts/${params.slug}`).then((res) => res.json())
+
   return (
     <div>
       <h1>{post.title}</h1>
       <div>{post.content}</div>
     </div>
-  );
+  )
 }
 ```
 
@@ -533,32 +528,32 @@ export default async function PostPage({ params }: { params: { slug: string } })
 ```tsx
 // app/components/Comments.tsx
 // 客户端渲染，适合用户特定内容
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 export function Comments({ postId }: { postId: string }) {
-  const [comments, setComments] = useState([]);
-  const [loading, setLoading] = useState(true);
-  
+  const [comments, setComments] = useState([])
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     fetch(`/api/comments?postId=${postId}`)
-      .then(res => res.json())
-      .then(data => {
-        setComments(data);
-        setLoading(false);
-      });
-  }, [postId]);
-  
-  if (loading) return <div>Loading comments...</div>;
-  
+      .then((res) => res.json())
+      .then((data) => {
+        setComments(data)
+        setLoading(false)
+      })
+  }, [postId])
+
+  if (loading) return <div>Loading comments...</div>
+
   return (
     <div>
-      {comments.map(comment => (
+      {comments.map((comment) => (
         <div key={comment.id}>{comment.content}</div>
       ))}
     </div>
-  );
+  )
 }
 ```
 
@@ -590,24 +585,22 @@ export default function Home() {
   return (
     <div>
       {/* Hero 区域 */}
-      <section className="relative h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-purple-700 text-white">
-        <div className="text-center z-10">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            Creative Solutions for Your Business
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+      <section className='relative flex h-screen items-center justify-center bg-gradient-to-br from-blue-600 to-purple-700 text-white'>
+        <div className='z-10 text-center'>
+          <h1 className='mb-6 text-5xl font-bold md:text-7xl'>Creative Solutions for Your Business</h1>
+          <p className='mx-auto mb-8 max-w-3xl text-xl md:text-2xl'>
             We help companies build amazing digital experiences that drive results.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a 
-              href="/services" 
-              className="bg-white text-blue-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+          <div className='flex flex-col justify-center gap-4 sm:flex-row'>
+            <a
+              href='/services'
+              className='rounded-lg bg-white px-8 py-3 font-semibold text-blue-700 transition-colors hover:bg-gray-100'
             >
               Our Services
             </a>
-            <a 
-              href="/contact" 
-              className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-700 transition-colors"
+            <a
+              href='/contact'
+              className='rounded-lg border-2 border-white bg-transparent px-8 py-3 font-semibold text-white transition-colors hover:bg-white hover:text-blue-700'
             >
               Get in Touch
             </a>
@@ -616,18 +609,23 @@ export default function Home() {
       </section>
 
       {/* 服务区域 */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Services</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+      <section className='bg-white py-20'>
+        <div className='container mx-auto px-4'>
+          <h2 className='mb-12 text-center text-3xl font-bold md:text-4xl'>Our Services</h2>
+          <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
+            <div className='rounded-lg bg-gray-50 p-6 shadow-sm transition-shadow hover:shadow-md'>
+              <div className='mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100'>
+                <svg className='h-8 w-8 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z'
+                  />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-3">Web Development</h3>
-              <p className="text-gray-600">
+              <h3 className='mb-3 text-xl font-semibold'>Web Development</h3>
+              <p className='text-gray-600'>
                 We build modern, responsive websites that deliver exceptional user experiences.
               </p>
             </div>
@@ -638,7 +636,7 @@ export default function Home() {
 
       {/* 其他区域 */}
     </div>
-  );
+  )
 }
 ```
 
@@ -665,11 +663,11 @@ app/
 ```tsx
 // app/products/[id]/page.tsx
 interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  images: string[];
+  id: string
+  name: string
+  description: string
+  price: number
+  images: string[]
 }
 
 async function getProduct(id: string): Promise<Product> {
@@ -679,44 +677,42 @@ async function getProduct(id: string): Promise<Product> {
     name: 'Premium Headphones',
     description: 'High-quality wireless headphones with noise cancellation.',
     price: 299.99,
-    images: [
-      'https://example.com/headphones1.jpg',
-      'https://example.com/headphones2.jpg',
-    ],
-  };
+    images: ['https://example.com/headphones1.jpg', 'https://example.com/headphones2.jpg'],
+  }
 }
 
 export default async function ProductPage({ params }: { params: { id: string } }) {
-  const product = await getProduct(params.id);
+  const product = await getProduct(params.id)
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className='container mx-auto px-4 py-12'>
+      <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
         <div>
-          <img 
-            src={product.images[0]} 
-            alt={product.name} 
-            className="w-full h-auto rounded-lg shadow-md"
-          />
+          <img src={product.images[0]} alt={product.name} className='h-auto w-full rounded-lg shadow-md' />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.name}</h1>
-          <p className="text-2xl font-semibold text-gray-900 mb-6">${product.price.toFixed(2)}</p>
-          <p className="text-gray-600 mb-8">{product.description}</p>
-          <div className="flex space-x-4">
-            <button className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors flex-1">
+          <h1 className='mb-4 text-3xl font-bold text-gray-900'>{product.name}</h1>
+          <p className='mb-6 text-2xl font-semibold text-gray-900'>${product.price.toFixed(2)}</p>
+          <p className='mb-8 text-gray-600'>{product.description}</p>
+          <div className='flex space-x-4'>
+            <button className='flex-1 rounded-lg bg-blue-500 px-6 py-3 text-white transition-colors hover:bg-blue-600'>
               Add to Cart
             </button>
-            <button className="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            <button className='rounded-lg bg-gray-200 px-6 py-3 text-gray-800 transition-colors hover:bg-gray-300'>
+              <svg className='h-6 w-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
+                />
               </svg>
             </button>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
 ```
 
@@ -742,12 +738,12 @@ app/
 ```tsx
 // app/blog/page.tsx
 interface Post {
-  id: number;
-  title: string;
-  excerpt: string;
-  slug: string;
-  date: string;
-  author: string;
+  id: number
+  title: string
+  excerpt: string
+  slug: string
+  date: string
+  author: string
 }
 
 async function getPosts(): Promise<Post[]> {
@@ -769,35 +765,35 @@ async function getPosts(): Promise<Post[]> {
       date: '2024-01-10',
       author: 'Jane Smith',
     },
-  ];
+  ]
 }
 
 export default async function BlogPage() {
-  const posts = await getPosts();
+  const posts = await getPosts()
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl md:text-4xl font-bold mb-12">Blog</h1>
-      <div className="space-y-8">
-        {posts.map(post => (
-          <article key={post.id} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="text-2xl font-semibold text-gray-900">
-                <a href={`/blog/${post.slug}`} className="hover:text-blue-600 transition-colors">
+    <div className='container mx-auto px-4 py-12'>
+      <h1 className='mb-12 text-3xl font-bold md:text-4xl'>Blog</h1>
+      <div className='space-y-8'>
+        {posts.map((post) => (
+          <article key={post.id} className='rounded-lg bg-white p-6 shadow-sm transition-shadow hover:shadow-md'>
+            <div className='mb-4 flex items-start justify-between'>
+              <h2 className='text-2xl font-semibold text-gray-900'>
+                <a href={`/blog/${post.slug}`} className='transition-colors hover:text-blue-600'>
                   {post.title}
                 </a>
               </h2>
-              <span className="text-sm text-gray-500">{post.date}</span>
+              <span className='text-sm text-gray-500'>{post.date}</span>
             </div>
-            <p className="text-gray-600 mb-4">{post.excerpt}</p>
-            <div className="flex items-center text-sm text-gray-500">
+            <p className='mb-4 text-gray-600'>{post.excerpt}</p>
+            <div className='flex items-center text-sm text-gray-500'>
               <span>By {post.author}</span>
             </div>
           </article>
         ))}
       </div>
     </div>
-  );
+  )
 }
 ```
 
@@ -830,11 +826,11 @@ app/
 
 interface DashboardData {
   metrics: {
-    users: number;
-    revenue: number;
-    conversions: number;
-    sessions: number;
-  };
+    users: number
+    revenue: number
+    conversions: number
+    sessions: number
+  }
 }
 
 async function getDashboardData(): Promise<DashboardData> {
@@ -846,45 +842,45 @@ async function getDashboardData(): Promise<DashboardData> {
       conversions: 24,
       sessions: 567,
     },
-  };
+  }
 }
 
 export default async function DashboardPage() {
-  const data = await getDashboardData();
+  const data = await getDashboardData()
 
   return (
-    <div className="space-y-8">
-      <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <div className="text-sm font-medium text-gray-500 mb-1">Total Users</div>
-          <div className="text-2xl font-bold text-gray-900">{data.metrics.users}</div>
-          <div className="text-green-500 text-sm mt-1">+12% from last month</div>
+    <div className='space-y-8'>
+      <h1 className='text-2xl font-bold text-gray-900'>Dashboard</h1>
+
+      <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
+        <div className='rounded-lg bg-white p-6 shadow-sm'>
+          <div className='mb-1 text-sm font-medium text-gray-500'>Total Users</div>
+          <div className='text-2xl font-bold text-gray-900'>{data.metrics.users}</div>
+          <div className='mt-1 text-sm text-green-500'>+12% from last month</div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <div className="text-sm font-medium text-gray-500 mb-1">Revenue</div>
-          <div className="text-2xl font-bold text-gray-900">${data.metrics.revenue.toLocaleString()}</div>
-          <div className="text-green-500 text-sm mt-1">+8% from last month</div>
+        <div className='rounded-lg bg-white p-6 shadow-sm'>
+          <div className='mb-1 text-sm font-medium text-gray-500'>Revenue</div>
+          <div className='text-2xl font-bold text-gray-900'>${data.metrics.revenue.toLocaleString()}</div>
+          <div className='mt-1 text-sm text-green-500'>+8% from last month</div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <div className="text-sm font-medium text-gray-500 mb-1">Conversions</div>
-          <div className="text-2xl font-bold text-gray-900">{data.metrics.conversions}%</div>
-          <div className="text-red-500 text-sm mt-1">-3% from last month</div>
+        <div className='rounded-lg bg-white p-6 shadow-sm'>
+          <div className='mb-1 text-sm font-medium text-gray-500'>Conversions</div>
+          <div className='text-2xl font-bold text-gray-900'>{data.metrics.conversions}%</div>
+          <div className='mt-1 text-sm text-red-500'>-3% from last month</div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <div className="text-sm font-medium text-gray-500 mb-1">Active Sessions</div>
-          <div className="text-2xl font-bold text-gray-900">{data.metrics.sessions}</div>
-          <div className="text-green-500 text-sm mt-1">+5% from last month</div>
+        <div className='rounded-lg bg-white p-6 shadow-sm'>
+          <div className='mb-1 text-sm font-medium text-gray-500'>Active Sessions</div>
+          <div className='text-2xl font-bold text-gray-900'>{data.metrics.sessions}</div>
+          <div className='mt-1 text-sm text-green-500'>+5% from last month</div>
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
+      <div className='rounded-lg bg-white p-6 shadow-sm'>
+        <h2 className='mb-4 text-lg font-semibold text-gray-900'>Recent Activity</h2>
         {/* 活动列表 */}
       </div>
     </div>
-  );
+  )
 }
 ```
 
@@ -894,18 +890,21 @@ export default async function DashboardPage() {
 
 **问题**：页面刷新后 404
 **解决方案**：
+
 - 确保生产服务器配置正确，使用 `npm run start` 启动
 - 对于 Nginx/Apache，配置重写规则将所有请求指向 `index.html`
 - 检查路由文件是否存在于正确的位置
 
 **问题**：动态路由参数获取
 **解决方案**：
+
 - 使用 `params` 对象获取路由参数
 - 确保文件名使用 `[slug]` 格式
 - 检查参数类型是否正确
 
 **问题**：嵌套路由不工作
 **解决方案**：
+
 - 确保每个路由都有对应的 `page.tsx` 文件
 - 检查目录结构是否正确
 - 验证布局组件是否正确传递 `children`
@@ -914,18 +913,21 @@ export default async function DashboardPage() {
 
 **问题**：客户端数据获取
 **解决方案**：
+
 - 使用 `useEffect` 钩子
 - 考虑使用 SWR 或 React Query 进行数据管理
 - 确保 API 端点正确配置
 
 **问题**：服务器端数据获取失败
 **解决方案**：
+
 - 添加错误处理和重试机制
 - 检查 API 端点是否可访问
 - 验证环境变量是否正确设置
 
 **问题**：ISR 不更新
 **解决方案**：
+
 - 检查 `revalidate` 配置是否正确
 - 确保数据来源确实发生了变化
 - 尝试手动触发重新生成
@@ -934,6 +936,7 @@ export default async function DashboardPage() {
 
 **问题**：首屏加载慢
 **解决方案**：
+
 - 使用 SSG 或 ISR 预渲染页面
 - 优化图片大小和格式
 - 启用代码分割
@@ -941,6 +944,7 @@ export default async function DashboardPage() {
 
 **问题**：客户端包体积大
 **解决方案**：
+
 - 使用动态导入
 - 优化依赖
 - 移除未使用的代码
@@ -948,6 +952,7 @@ export default async function DashboardPage() {
 
 **问题**：内存泄漏
 **解决方案**：
+
 - 清理 `useEffect` 中的订阅和事件监听器
 - 确保组件卸载时取消异步操作
 - 使用 `AbortController` 取消 fetch 请求
@@ -960,21 +965,21 @@ Next.js 提供了内置的 `Image` 组件，自动优化图片：
 
 ```tsx
 // app/page.tsx
-import Image from 'next/image';
+import Image from 'next/image'
 
 export default function Home() {
   return (
     <div>
       <Image
-        src="/hero.jpg"
-        alt="Hero image"
+        src='/hero.jpg'
+        alt='Hero image'
         width={1200}
         height={600}
         priority // 首屏图片
-        className="w-full h-auto"
+        className='h-auto w-full'
       />
     </div>
-  );
+  )
 }
 ```
 
@@ -984,16 +989,16 @@ Next.js 提供了内置的字体优化：
 
 ```tsx
 // app/layout.tsx
-import { Inter } from 'next/font/google';
+import { Inter } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang='en' className={inter.className}>
       <body>{children}</body>
     </html>
-  );
+  )
 }
 ```
 
@@ -1003,24 +1008,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ```tsx
 // app/page.tsx
-import { useState } from 'react';
+import { useState } from 'react'
 
 export default function Home() {
-  const [heavyComponent, setHeavyComponent] = useState<React.ReactNode>(null);
+  const [heavyComponent, setHeavyComponent] = useState<React.ReactNode>(null)
 
   const loadHeavyComponent = async () => {
-    const { HeavyComponent } = await import('@/components/HeavyComponent');
-    setHeavyComponent(<HeavyComponent />);
-  };
+    const { HeavyComponent } = await import('@/components/HeavyComponent')
+    setHeavyComponent(<HeavyComponent />)
+  }
 
   return (
     <div>
-      <button onClick={loadHeavyComponent} className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+      <button onClick={loadHeavyComponent} className='rounded-lg bg-blue-500 px-4 py-2 text-white'>
         Load Heavy Component
       </button>
       {heavyComponent}
     </div>
-  );
+  )
 }
 ```
 
@@ -1045,11 +1050,11 @@ const nextConfig = {
           },
         ],
       },
-    ];
+    ]
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 #### 静态资源缓存
@@ -1058,15 +1063,15 @@ module.exports = nextConfig;
 
 ```tsx
 // app/page.tsx
-import Image from 'next/image';
+import Image from 'next/image'
 
 export default function Home() {
   return (
     <div>
       {/* Next.js 自动处理版本控制 */}
-      <Image src="/logo.png" alt="Logo" width={100} height={100} />
+      <Image src='/logo.png' alt='Logo' width={100} height={100} />
     </div>
-  );
+  )
 }
 ```
 
@@ -1078,7 +1083,7 @@ export default function Home() {
 
 ```tsx
 // app/api/hello/route.ts
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
   return NextResponse.json(
@@ -1088,7 +1093,7 @@ export async function GET(request: NextRequest) {
         'Cache-Control': 's-maxage=86400, stale-while-revalidate',
       },
     }
-  );
+  )
 }
 ```
 
@@ -1141,32 +1146,34 @@ export async function GET(request: NextRequest) {
 ### 代码示例
 
 **旧语法**：
+
 ```tsx
 // pages/index.tsx
-import Link from 'next/link';
+import Link from 'next/link'
 
 export default function Home() {
   return (
     <div>
-      <Link href="/about">
+      <Link href='/about'>
         <a>About</a>
       </Link>
     </div>
-  );
+  )
 }
 ```
 
 **新语法**：
+
 ```tsx
 // app/page.tsx
-import Link from 'next/link';
+import Link from 'next/link'
 
 export default function Home() {
   return (
     <div>
-      <Link href="/about">About</Link>
+      <Link href='/about'>About</Link>
     </div>
-  );
+  )
 }
 ```
 

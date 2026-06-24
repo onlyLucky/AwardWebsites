@@ -1,9 +1,12 @@
-import { useState, useEffect, useMemo } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+'use client'
+
+import { Suspense, useState, useEffect, useMemo } from 'react'
+import Link from 'next/link'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ArrowUpRight, MousePointerClick, Sparkles, ExternalLink } from 'lucide-react'
-import { useI18n } from '@/i18n'
+import { useTranslations } from 'next-intl'
 import SearchInput from '@/components/search-input'
 import Pagination from '@/components/pagination'
 import { useInfiniteScroll } from '@/hooks/use-infinite-scroll'
@@ -26,7 +29,7 @@ const demos: DemoItem[] = [
     path: '/demo/follow-art',
     url: 'https://follow.art',
     preview: '/previews/follow-art.svg',
-    icon: <MousePointerClick className="h-5 w-5" />,
+    icon: <MousePointerClick className='h-5 w-5' />,
   },
   {
     titleKey: 'demos.shaderSe.title',
@@ -35,7 +38,7 @@ const demos: DemoItem[] = [
     path: '/demo/shader-se',
     url: 'https://shader.se',
     preview: '/previews/shader-se.svg',
-    icon: <MousePointerClick className="h-5 w-5" />,
+    icon: <MousePointerClick className='h-5 w-5' />,
   },
   {
     titleKey: 'demos.animejs.title',
@@ -44,15 +47,17 @@ const demos: DemoItem[] = [
     path: '/demo/animejs',
     url: 'https://animejs.com',
     preview: '/previews/animejs.svg',
-    icon: <MousePointerClick className="h-5 w-5" />,
+    icon: <MousePointerClick className='h-5 w-5' />,
   },
 ]
 
 const PAGE_SIZE = 12
 
-function Home() {
-  const { t } = useI18n()
-  const [searchParams, setSearchParams] = useSearchParams()
+function HomeContent() {
+  const t = useTranslations()
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
   const [page, setPage] = useState(1)
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const [isMobile, setIsMobile] = useState(false)
@@ -103,86 +108,85 @@ function Home() {
   const displayDemos = isMobile ? mobileDemos : pagedDemos
 
   const handleSearchChange = (value: string) => {
+    const params = new URLSearchParams(searchParams.toString())
     if (value) {
-      setSearchParams({ q: value })
+      params.set('q', value)
     } else {
-      setSearchParams({})
+      params.delete('q')
     }
+    router.push(`${pathname}?${params.toString()}`)
   }
 
   return (
-    <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
-      <div className="mx-auto max-w-7xl">
+    <div className='min-h-screen px-4 py-8 sm:px-6 sm:py-16 lg:px-8'>
+      <div className='mx-auto max-w-7xl'>
         {/* Header */}
-        <div className="mb-8 sm:mb-12">
-          <div className="flex items-center gap-2 mb-2 sm:mb-3">
-            <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
-            <span className="text-xs sm:text-sm text-muted-foreground font-medium tracking-wide uppercase">
+        <div className='mb-8 sm:mb-12'>
+          <div className='mb-2 flex items-center gap-2 sm:mb-3'>
+            <Sparkles className='text-muted-foreground h-4 w-4 sm:h-5 sm:w-5' />
+            <span className='text-muted-foreground text-xs font-medium tracking-wide uppercase sm:text-sm'>
               {t('home.collection')}
             </span>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-bold tracking-tight mb-2 sm:mb-3">
-            {t('home.title')}
-          </h1>
-          <p className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-3xl">
+          <h1 className='mb-2 text-2xl font-bold tracking-tight sm:mb-3 sm:text-4xl'>{t('home.title')}</h1>
+          <p className='text-muted-foreground max-w-3xl text-base leading-relaxed sm:text-lg'>
             {t('home.description')}
           </p>
         </div>
 
         {/* Mobile search (desktop uses toolbar search) */}
-        <div className="mb-6 sm:hidden">
-          <SearchInput
-            value={searchQuery}
-            onChange={handleSearchChange}
-            placeholder={t('home.search')}
-          />
+        <div className='mb-6 sm:hidden'>
+          <SearchInput value={searchQuery} onChange={handleSearchChange} placeholder={t('home.search')} />
         </div>
 
         {/* Demo Grid */}
         {displayDemos.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3'>
             {displayDemos.map((demo) => (
-              <Card key={demo.path} className="group transition-all hover:shadow-lg hover:border-foreground/20 overflow-hidden">
+              <Card
+                key={demo.path}
+                className='group hover:border-foreground/20 overflow-hidden transition-all hover:shadow-lg'
+              >
                 {/* Mobile: horizontal layout */}
                 {isMobile ? (
-                  <div className="flex">
+                  <div className='flex'>
                     {/* Preview - Left */}
-                    <Link to={demo.path} className="block w-32 shrink-0">
-                      <div className="h-full overflow-hidden bg-muted">
+                    <Link href={demo.path} className='block w-32 shrink-0'>
+                      <div className='bg-muted h-full overflow-hidden'>
                         <img
                           src={demo.preview}
                           alt={t(demo.titleKey)}
-                          className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                          loading="lazy"
+                          className='h-full w-full object-cover transition-transform group-hover:scale-105'
+                          loading='lazy'
                         />
                       </div>
                     </Link>
 
                     {/* Content - Right */}
-                    <div className="flex-1 p-3 flex flex-col justify-between">
+                    <div className='flex flex-1 flex-col justify-between p-3'>
                       <div>
                         {/* Title as link to original site */}
                         <a
                           href={demo.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-sm font-semibold leading-tight text-primary underline underline-offset-2 decoration-primary/40 hover:decoration-primary mb-1"
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='text-primary decoration-primary/40 hover:decoration-primary mb-1 inline-flex items-center gap-1 text-sm leading-tight font-semibold underline underline-offset-2'
                         >
                           {t(demo.titleKey)}
-                          <ExternalLink className="h-3 w-3 shrink-0" />
+                          <ExternalLink className='h-3 w-3 shrink-0' />
                         </a>
-                        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2 mb-2">
+                        <p className='text-muted-foreground mb-2 line-clamp-2 text-xs leading-relaxed'>
                           {t(demo.descKey)}
                         </p>
                       </div>
-                      <div className="flex flex-wrap gap-1">
+                      <div className='flex flex-wrap gap-1'>
                         {demo.tagKeys.slice(0, 2).map((tagKey) => (
-                          <Badge key={tagKey} variant="secondary" className="font-normal text-[10px] px-1.5 py-0">
+                          <Badge key={tagKey} variant='secondary' className='px-1.5 py-0 text-[10px] font-normal'>
                             {t(tagKey)}
                           </Badge>
                         ))}
                         {demo.tagKeys.length > 2 && (
-                          <Badge variant="secondary" className="font-normal text-[10px] px-1.5 py-0">
+                          <Badge variant='secondary' className='px-1.5 py-0 text-[10px] font-normal'>
                             +{demo.tagKeys.length - 2}
                           </Badge>
                         )}
@@ -192,47 +196,43 @@ function Home() {
                 ) : (
                   <>
                     {/* Desktop: vertical layout */}
-                    <Link to={demo.path} className="block">
-                      <div className="aspect-video overflow-hidden bg-muted">
+                    <Link href={demo.path} className='block'>
+                      <div className='bg-muted aspect-video overflow-hidden'>
                         <img
                           src={demo.preview}
                           alt={t(demo.titleKey)}
-                          className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                          loading="lazy"
+                          className='h-full w-full object-cover transition-transform group-hover:scale-105'
+                          loading='lazy'
                         />
                       </div>
                     </Link>
 
-                    <div className="p-4 space-y-2">
+                    <div className='space-y-2 p-4'>
                       {/* Title row with icon and visit link */}
-                      <div className="flex items-center justify-between">
-                        <Link to={demo.path} className="flex items-center gap-2">
-                          <div className="flex h-7 w-7 items-center justify-center rounded-md border bg-muted">
+                      <div className='flex items-center justify-between'>
+                        <Link href={demo.path} className='flex items-center gap-2'>
+                          <div className='bg-muted flex h-7 w-7 items-center justify-center rounded-md border'>
                             {demo.icon}
                           </div>
-                          <span className="text-sm font-semibold">
-                            {t(demo.titleKey)}
-                          </span>
-                          <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                          <span className='text-sm font-semibold'>{t(demo.titleKey)}</span>
+                          <ArrowUpRight className='text-muted-foreground h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
                         </Link>
                         <a
                           href={demo.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs transition-colors'
                         >
-                          <ExternalLink className="h-3 w-3" />
+                          <ExternalLink className='h-3 w-3' />
                           {t('home.visitSite')}
                         </a>
                       </div>
 
-                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
-                        {t(demo.descKey)}
-                      </p>
+                      <p className='text-muted-foreground line-clamp-2 text-xs leading-relaxed'>{t(demo.descKey)}</p>
 
-                      <div className="flex flex-wrap gap-1 pt-1">
+                      <div className='flex flex-wrap gap-1 pt-1'>
                         {demo.tagKeys.map((tagKey) => (
-                          <Badge key={tagKey} variant="secondary" className="font-normal text-xs">
+                          <Badge key={tagKey} variant='secondary' className='text-xs font-normal'>
                             {t(tagKey)}
                           </Badge>
                         ))}
@@ -244,17 +244,17 @@ function Home() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 sm:py-20 text-muted-foreground">
+          <div className='text-muted-foreground py-12 text-center sm:py-20'>
             <p>{t('home.noResults')}</p>
           </div>
         )}
 
         {/* Infinite Scroll Sentinel (mobile) */}
         {isMobile && hasMore && (
-          <div ref={sentinelRef} className="py-8 text-center">
+          <div ref={sentinelRef} className='py-8 text-center'>
             <button
               onClick={loadMore}
-              className="px-4 py-2 rounded-md border border-border text-sm hover:bg-accent transition-colors"
+              className='border-border hover:bg-accent rounded-md border px-4 py-2 text-sm transition-colors'
             >
               {t('home.loadMore')}
             </button>
@@ -263,7 +263,7 @@ function Home() {
 
         {/* Pagination (desktop) */}
         {!isMobile && totalPages > 1 && (
-          <div className="mt-8 sm:mt-12">
+          <div className='mt-8 sm:mt-12'>
             <Pagination
               page={page}
               totalPages={totalPages}
@@ -278,4 +278,10 @@ function Home() {
   )
 }
 
-export default Home
+export default function Home() {
+  return (
+    <Suspense fallback={<div className='min-h-screen flex items-center justify-center'>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
+  )
+}

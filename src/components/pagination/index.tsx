@@ -30,27 +30,27 @@ function Pagination({ page, totalPages, onPageChange, prevLabel, nextLabel }: Pa
   }
 
   return (
-    <nav className="flex items-center justify-center gap-1.5" aria-label="Pagination">
+    <nav className='flex items-center justify-center gap-1.5' aria-label='Pagination'>
       <button
         onClick={() => onPageChange(page - 1)}
         disabled={page === 1}
-        className="flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-border bg-background text-sm hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className='border-border bg-background hover:bg-accent flex items-center gap-1 rounded-md border px-2.5 py-1.5 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-50'
       >
-        <ChevronLeft className="h-3.5 w-3.5" />
-        <span className="hidden sm:inline">{prevLabel}</span>
+        <ChevronLeft className='h-3.5 w-3.5' />
+        <span className='hidden sm:inline'>{prevLabel}</span>
       </button>
 
       {getVisiblePages().map((p, i) =>
         p === '...' ? (
-          <span key={`dots-${i}`} className="px-1.5 text-muted-foreground">...</span>
+          <span key={`dots-${i}`} className='text-muted-foreground px-1.5'>
+            ...
+          </span>
         ) : (
           <button
             key={p}
             onClick={() => onPageChange(p)}
-            className={`min-w-[32px] px-2 py-1.5 rounded-md text-sm transition-colors ${
-              p === page
-                ? 'bg-primary text-primary-foreground'
-                : 'border border-border hover:bg-accent'
+            className={`min-w-[32px] rounded-md px-2 py-1.5 text-sm transition-colors ${
+              p === page ? 'bg-primary text-primary-foreground' : 'border-border hover:bg-accent border'
             }`}
           >
             {p}
@@ -61,10 +61,10 @@ function Pagination({ page, totalPages, onPageChange, prevLabel, nextLabel }: Pa
       <button
         onClick={() => onPageChange(page + 1)}
         disabled={page === totalPages}
-        className="flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-border bg-background text-sm hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className='border-border bg-background hover:bg-accent flex items-center gap-1 rounded-md border px-2.5 py-1.5 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-50'
       >
-        <span className="hidden sm:inline">{nextLabel}</span>
-        <ChevronRight className="h-3.5 w-3.5" />
+        <span className='hidden sm:inline'>{nextLabel}</span>
+        <ChevronRight className='h-3.5 w-3.5' />
       </button>
     </nav>
   )

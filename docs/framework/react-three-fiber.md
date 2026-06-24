@@ -36,7 +36,7 @@ React Three Fiber (R3F) 是一个高性能的 React 渲染器，用于 Three.js�
 
 ### 2.1 环境要求
 
-- Node.js 16+ 
+- Node.js 16+
 - 现代浏览器支持 WebGL 2.0
 - 推荐使用 React 18+
 
@@ -83,7 +83,7 @@ import { OrbitControls, Box } from '@react-three/drei'
 function AnimatedBox() {
   return (
     <Box args={[1, 1, 1]} position={[0, 0, 0]}>
-      <meshStandardMaterial color="hotpink" />
+      <meshStandardMaterial color='hotpink' />
     </Box>
   )
 }
@@ -134,7 +134,7 @@ function AnimatedBox() {
 
   return (
     <Box ref={meshRef} args={[1, 1, 1]} position={[0, 0, 0]}>
-      <meshStandardMaterial color="hotpink" />
+      <meshStandardMaterial color='hotpink' />
     </Box>
   )
 }
@@ -156,21 +156,21 @@ function App() {
     <Canvas
       // 相机配置
       camera={{
-        position: [0, 0, 5],    // 相机位置
-        fov: 75,                 // 视野角度
-        near: 0.1,               // 近裁剪面
-        far: 1000                // 远裁剪面
+        position: [0, 0, 5], // 相机位置
+        fov: 75, // 视野角度
+        near: 0.1, // 近裁剪面
+        far: 1000, // 远裁剪面
       }}
       // WebGL 渲染器配置
       gl={{
-        antialias: true,         // 抗锯齿
+        antialias: true, // 抗锯齿
         toneMapping: 'ACESFilmicToneMapping',
-        outputColorSpace: 'srgb'
+        outputColorSpace: 'srgb',
       }}
       // 其他配置
-      dpr={[1, 2]}              // 设备像素比范围
-      shadows                  // 启用阴影
-      className="canvas"        // CSS 类名
+      dpr={[1, 2]} // 设备像素比范围
+      shadows // 启用阴影
+      className='canvas' // CSS 类名
       style={{ background: '#111' }}
     >
       {/* 场景内容 */}
@@ -190,8 +190,8 @@ function Lights() {
   return (
     <>
       {/* 环境光：提供基础照明 */}
-      <ambientLight intensity={0.5} color="white" />
-      
+      <ambientLight intensity={0.5} color='white' />
+
       {/* 平行光：模拟太阳光 */}
       <directionalLight
         position={[5, 5, 5]}
@@ -200,30 +200,15 @@ function Lights() {
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
-      
+
       {/* 点光源：从一个点向四周发射光线 */}
-      <pointLight
-        position={[-5, 5, -5]}
-        intensity={0.5}
-        color="orange"
-        distance={10}
-        decay={2}
-      />
-      
+      <pointLight position={[-5, 5, -5]} intensity={0.5} color='orange' distance={10} decay={2} />
+
       {/* 聚光灯：像手电筒一样的光源 */}
-      <spotLight
-        position={[5, 10, 5]}
-        intensity={1}
-        angle={0.3}
-        penumbra={1}
-        castShadow
-      />
-      
+      <spotLight position={[5, 10, 5]} intensity={1} angle={0.3} penumbra={1} castShadow />
+
       {/* 半球光：天空和地面的渐变光照 */}
-      <hemisphereLight
-        groundColor="darkgreen"
-        intensity={0.3}
-      />
+      <hemisphereLight groundColor='darkgreen' intensity={0.3} />
     </>
   )
 }
@@ -244,37 +229,37 @@ function Geometries() {
       {/* 立方体 */}
       <mesh position={[-3, 0, 0]}>
         <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="blue" />
+        <meshStandardMaterial color='blue' />
       </mesh>
-      
+
       {/* 球体 */}
       <mesh position={[-1, 0, 0]}>
         <sphereGeometry args={[0.5, 32, 32]} />
-        <meshStandardMaterial color="red" />
+        <meshStandardMaterial color='red' />
       </mesh>
-      
+
       {/* 圆柱体 */}
       <mesh position={[1, 0, 0]}>
         <cylinderGeometry args={[0.5, 0.5, 1, 32]} />
-        <meshStandardMaterial color="green" />
+        <meshStandardMaterial color='green' />
       </mesh>
-      
+
       {/* 圆锥体 */}
       <mesh position={[3, 0, 0]}>
         <coneGeometry args={[0.5, 1, 32]} />
-        <meshStandardMaterial color="yellow" />
+        <meshStandardMaterial color='yellow' />
       </mesh>
-      
+
       {/* 圆环 */}
       <mesh position={[0, 2, 0]}>
         <torusGeometry args={[0.5, 0.2, 16, 100]} />
-        <meshStandardMaterial color="purple" />
+        <meshStandardMaterial color='purple' />
       </mesh>
-      
+
       {/* 二十面体 */}
       <mesh position={[0, -2, 0]}>
         <icosahedronGeometry args={[0.5]} />
-        <meshStandardMaterial color="orange" wireframe={false} />
+        <meshStandardMaterial color='orange' wireframe={false} />
       </mesh>
     </group>
   )
@@ -296,43 +281,33 @@ function Materials() {
       {/* 基础材质：不受光照影响 */}
       <mesh position={[-2, 0, 0]}>
         <boxGeometry args={[0.8, 0.8, 0.8]} />
-        <meshBasicMaterial color="red" wireframe={false} />
+        <meshBasicMaterial color='red' wireframe={false} />
       </mesh>
-      
+
       {/* 标准材质：受光照影响，支持金属度和粗糙度 */}
       <mesh position={[0, 0, 0]}>
         <sphereGeometry args={[0.5, 32, 32]} />
-        <meshStandardMaterial
-          color="blue"
-          metalness={0.5}
-          roughness={0.5}
-        />
+        <meshStandardMaterial color='blue' metalness={0.5} roughness={0.5} />
       </mesh>
-      
+
       {/* 物理材质：更真实的材质模拟 */}
       <mesh position={[2, 0, 0]}>
         <torusKnotGeometry args={[0.4, 0.15, 128, 32]} />
-        <meshPhysicalMaterial
-          color="gold"
-          metalness={1}
-          roughness={0.1}
-          clearcoat={1}
-          clearcoatRoughness={0.1}
-        />
+        <meshPhysicalMaterial color='gold' metalness={1} roughness={0.1} clearcoat={1} clearcoatRoughness={0.1} />
       </mesh>
-      
+
       {/* 法线材质：显示法线方向 */}
       <mesh position={[-2, -2, 0]}>
         <coneGeometry args={[0.5, 1, 32]} />
         <meshNormalMaterial />
       </mesh>
-      
+
       {/* 线框材质 */}
       <mesh position={[0, -2, 0]}>
         <dodecahedronGeometry args={[0.5]} />
-        <meshBasicMaterial color="green" wireframe={true} />
+        <meshBasicMaterial color='green' wireframe={true} />
       </mesh>
-      
+
       {/* 深度材质 */}
       <mesh position={[2, -2, 0]}>
         <octahedronGeometry args={[0.5]} />
@@ -358,17 +333,17 @@ function ControlsExample() {
   // FirstPersonControls：第一人称控制器，适合游戏
   // FlyControls：飞行控制器
   // TrackballControls：轨迹球控制器
-  
+
   return (
     <OrbitControls
-      enableDamping={true}        // 启用阻尼效果
-      dampingFactor={0.05}        // 阻尼系数
-      enableZoom={true}          // 启用缩放
-      enablePan={true}           // 启用平移
-      minDistance={2}            // 最小距离
-      maxDistance={20}           // 最大距离
-      minPolarAngle={0}          // 最小极角
-      maxPolarAngle={Math.PI}    // 最大极角
+      enableDamping={true} // 启用阻尼效果
+      dampingFactor={0.05} // 阻尼系数
+      enableZoom={true} // 启用缩放
+      enablePan={true} // 启用平移
+      minDistance={2} // 最小距离
+      maxDistance={20} // 最大距离
+      minPolarAngle={0} // 最小极角
+      maxPolarAngle={Math.PI} // 最大极角
     />
   )
 }
@@ -403,20 +378,20 @@ function DreiExample() {
       <Box args={[1, 1, 1]} position={[-2, 0, 0]}>
         <meshStandardMaterial color="blue" />
       </Box>
-      
+
       <Sphere args={[0.5, 32, 32]} position={[0, 0, 0]}>
         <meshStandardMaterial color="red" />
       </Sphere>
-      
+
       <Cylinder args={[0.5, 0.5, 1, 32]} position={[2, 0, 0]}>
         <meshStandardMaterial color="green" />
       </Sphere>
-      
+
       {/* 平面 */}
       <Plane args={[10, 10]} rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
         <meshStandardMaterial color="gray" />
       </Plane>
-      
+
       {/* 3D 文字 */}
       <Text
         position={[0, 2, 0]}
@@ -427,20 +402,20 @@ function DreiExample() {
       >
         Hello R3F!
       </Text>
-      
+
       {/* 星星背景 */}
       <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-      
+
       {/* 环境贴图 */}
       <Environment preset="city" />
-      
+
       {/* 浮动动画 */}
       <Float speed={2} rotationIntensity={1} floatIntensity={2}>
         <Sphere args={[0.3, 32, 32]} position={[0, 1, 0]}>
           <meshStandardMaterial color="yellow" />
         </Sphere>
       </Float>
-      
+
       {/* 接触阴影 */}
       <ContactShadows
         resolution={1024}
@@ -450,10 +425,10 @@ function DreiExample() {
         far={10}
         color="#000000"
       />
-      
+
       {/* 火花效果 */}
       <Sparkles count={50} scale={10} size={4} speed={0.4} opacity={0.5} color="#ff00ff" />
-      
+
       {/* 控制器 */}
       <OrbitControls />
     </>
@@ -530,14 +505,14 @@ function App() {
       <Canvas camera={{ position: [0, 0, 5] }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
-        
+
         <CustomBox
           ref={boxRef}
           position={[0, 0, 0]}
           color="hotpink"
           animate={true}
         />
-        
+
         <OrbitControls />
       </Canvas>
       <button
@@ -615,7 +590,7 @@ function ProceduralTexture() {
     const canvas = document.createElement('canvas')
     canvas.width = canvas.height = size
     const context = canvas.getContext('2d')
-    
+
     const tileSize = 64
     for (let y = 0; y < size; y += tileSize) {
       for (let x = 0; x < size; x += tileSize) {
@@ -623,7 +598,7 @@ function ProceduralTexture() {
         context.fillRect(x, y, tileSize, tileSize)
       }
     }
-    
+
     const texture = new THREE.CanvasTexture(canvas)
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping
     texture.repeat.set(4, 4)
@@ -720,9 +695,9 @@ function App() {
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
       />
-      
+
       <Environment preset="city" />
-      
+
       <Suspense fallback={<Loading />}>
         <Model
           url="/models/product.glb"
@@ -731,7 +706,7 @@ function App() {
           animate={true}
         />
       </Suspense>
-      
+
       <ContactShadows
         resolution={1024}
         scale={10}
@@ -739,7 +714,7 @@ function App() {
         opacity={0.5}
         far={10}
       />
-      
+
       <OrbitControls
         enableDamping={true}
         dampingFactor={0.05}
@@ -769,24 +744,14 @@ function PostProcessing() {
   return (
     <EffectComposer>
       {/* 深度场效果：模拟相机景深 */}
-      <DepthOfField
-        focusDistance={0}
-        focalLength={0.02}
-        bokehScale={3}
-        height={480}
-      />
-      
+      <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={3} height={480} />
+
       {/* 光晕效果：让明亮区域发光 */}
-      <Bloom
-        intensity={1.5}
-        luminanceThreshold={0.8}
-        luminanceSmoothing={0.9}
-        height={300}
-      />
-      
+      <Bloom intensity={1.5} luminanceThreshold={0.8} luminanceSmoothing={0.9} height={300} />
+
       {/* 噪点效果：增加胶片感 */}
       <Noise opacity={0.02} />
-      
+
       {/* 暗角效果：突出中心区域 */}
       <Vignette eskil={false} offset={0.1} darkness={1.1} />
     </EffectComposer>
@@ -805,21 +770,15 @@ function App() {
       {/* 场景内容 */}
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} intensity={2} />
-      
+
       {/* 一些发光物体 */}
       {Array.from({ length: 20 }).map((_, i) => (
-        <mesh key={i} position={[
-          (Math.random() - 0.5) * 10,
-          (Math.random() - 0.5) * 10,
-          (Math.random() - 0.5) * 10
-        ]}>
+        <mesh key={i} position={[(Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10]}>
           <sphereGeometry args={[0.2, 16, 16]} />
-          <meshBasicMaterial
-            color={`hsl(${Math.random() * 360}, 100%, 50%)`}
-          />
+          <meshBasicMaterial color={`hsl(${Math.random() * 360}, 100%, 50%)`} />
         </mesh>
       ))}
-      
+
       {/* 后处理 */}
       <PostProcessing />
     </Canvas>
@@ -840,10 +799,10 @@ function InteractiveObject({ children }) {
   const meshRef = useRef()
   const [hovered, setHovered] = useState(false)
   const [clicked, setClicked] = useState(false)
-  
+
   // 鼠标悬停时改变光标
   useCursor(hovered)
-  
+
   // 高亮效果
   const highlight = useHighlight(meshRef, hovered, {
     color: 'yellow',
@@ -901,19 +860,19 @@ function App() {
     <Canvas>
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} />
-      
+
       {/* 可交互对象 */}
       <InteractiveObject position={[-2, 0, 0]}>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color="blue" />
       </InteractiveObject>
-      
+
       {/* 可拖拽对象 */}
       <Draggable position={[2, 0, 0]}>
         <sphereGeometry args={[0.5, 32, 32]} />
         <meshStandardMaterial color="red" />
       </Draggable>
-      
+
       <OrbitControls />
     </Canvas>
   )
@@ -936,13 +895,13 @@ function Floor() {
   const [ref] = usePlane(() => ({
     rotation: [-Math.PI / 2, 0, 0],
     position: [0, -1, 0],
-    material: { friction: 0.5, restitution: 0.3 }
+    material: { friction: 0.5, restitution: 0.3 },
   }))
 
   return (
     <mesh ref={ref} receiveShadow>
       <planeGeometry args={[20, 20]} />
-      <meshStandardMaterial color="#333" />
+      <meshStandardMaterial color='#333' />
     </mesh>
   )
 }
@@ -952,16 +911,11 @@ function Box({ position, color }) {
     mass: 1,
     position,
     args: [1, 1, 1],
-    material: { friction: 0.5, restitution: 0.3 }
+    material: { friction: 0.5, restitution: 0.3 },
   }))
 
   return (
-    <mesh
-      ref={ref}
-      castShadow
-      receiveShadow
-      onClick={() => api.applyImpulse([0, 5, 0], [0, 0, 0])}
-    >
+    <mesh ref={ref} castShadow receiveShadow onClick={() => api.applyImpulse([0, 5, 0], [0, 0, 0])}>
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial color={color} />
     </mesh>
@@ -973,16 +927,11 @@ function Ball({ position, color }) {
     mass: 1,
     position,
     args: [0.5],
-    material: { friction: 0.5, restitution: 0.7 }
+    material: { friction: 0.5, restitution: 0.7 },
   }))
 
   return (
-    <mesh
-      ref={ref}
-      castShadow
-      receiveShadow
-      onClick={() => api.applyImpulse([0, 5, 0], [0, 0, 0])}
-    >
+    <mesh ref={ref} castShadow receiveShadow onClick={() => api.applyImpulse([0, 5, 0], [0, 0, 0])}>
       <sphereGeometry args={[0.5, 32, 32]} />
       <meshStandardMaterial color={color} />
     </mesh>
@@ -993,10 +942,10 @@ function PhysicsExample() {
   return (
     <Physics gravity={[0, -9.81, 0]}>
       <Floor />
-      <Box position={[-2, 2, 0]} color="blue" />
-      <Box position={[0, 3, 0]} color="red" />
-      <Box position={[2, 4, 0]} color="green" />
-      <Ball position={[0, 6, 0]} color="yellow" />
+      <Box position={[-2, 2, 0]} color='blue' />
+      <Box position={[0, 3, 0]} color='red' />
+      <Box position={[2, 4, 0]} color='green' />
+      <Ball position={[0, 6, 0]} color='yellow' />
     </Physics>
   )
 }
@@ -1019,7 +968,7 @@ function App() {
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
       />
-      
+
       <PhysicsExample />
       <OrbitControls />
     </Canvas>
@@ -1044,7 +993,7 @@ const MATERIALS = {
   silver: { color: '#c0c0c0', metalness: 1, roughness: 0.3 },
   black: { color: '#333333', metalness: 0.8, roughness: 0.4 },
   red: { color: '#ff4444', metalness: 0.5, roughness: 0.5 },
-  blue: { color: '#4444ff', metalness: 0.5, roughness: 0.5 }
+  blue: { color: '#4444ff', metalness: 0.5, roughness: 0.5 },
 }
 
 function Product({ material }) {
@@ -1062,13 +1011,9 @@ function ProductViewer() {
   const [selectedMaterial, setSelectedMaterial] = useState('gold')
 
   return (
-    <div className="product-viewer" style={{ width: '100vw', height: '100vh', position: 'relative' }}>
+    <div className='product-viewer' style={{ width: '100vw', height: '100vh', position: 'relative' }}>
       {/* 3D 场景 */}
-      <Canvas
-        camera={{ position: [0, 0, 5], fov: 50 }}
-        shadows
-        className="product-canvas"
-      >
+      <Canvas camera={{ position: [0, 0, 5], fov: 50 }} shadows className='product-canvas'>
         <ambientLight intensity={0.5} />
         <directionalLight
           position={[5, 5, 5]}
@@ -1077,41 +1022,32 @@ function ProductViewer() {
           shadow-mapSize-width={2048}
           shadow-mapSize-height={2048}
         />
-        
-        <Environment preset="city" />
-        
+
+        <Environment preset='city' />
+
         <Product material={MATERIALS[selectedMaterial]} />
-        
-        <ContactShadows
-          resolution={1024}
-          scale={10}
-          blur={2}
-          opacity={0.5}
-          far={5}
-        />
-        
-        <OrbitControls
-          enableDamping={true}
-          dampingFactor={0.05}
-          minDistance={2}
-          maxDistance={10}
-          enablePan={false}
-        />
+
+        <ContactShadows resolution={1024} scale={10} blur={2} opacity={0.5} far={5} />
+
+        <OrbitControls enableDamping={true} dampingFactor={0.05} minDistance={2} maxDistance={10} enablePan={false} />
       </Canvas>
 
       {/* 材质选择器 */}
-      <div className="material-selector" style={{
-        position: 'absolute',
-        bottom: '30px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        display: 'flex',
-        gap: '10px',
-        background: 'rgba(255, 255, 255, 0.9)',
-        padding: '15px',
-        borderRadius: '10px',
-        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
-      }}>
+      <div
+        className='material-selector'
+        style={{
+          position: 'absolute',
+          bottom: '30px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          gap: '10px',
+          background: 'rgba(255, 255, 255, 0.9)',
+          padding: '15px',
+          borderRadius: '10px',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+        }}
+      >
         {Object.entries(MATERIALS).map(([name, props]) => (
           <button
             key={name}
@@ -1123,22 +1059,24 @@ function ProductViewer() {
               border: selectedMaterial === name ? '3px solid #333' : '2px solid #ddd',
               background: props.color,
               cursor: 'pointer',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
             }}
           />
         ))}
       </div>
 
       {/* 标题 */}
-      <h1 style={{
-        position: 'absolute',
-        top: '30px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        color: 'white',
-        fontSize: '2rem',
-        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'
-      }}>
+      <h1
+        style={{
+          position: 'absolute',
+          top: '30px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          color: 'white',
+          fontSize: '2rem',
+          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+        }}
+      >
         3D 产品展示
       </h1>
     </div>
@@ -1166,7 +1104,7 @@ const generateData = (count) => {
     y: Math.random() * 5,
     z: (Math.random() - 0.5) * 10,
     value: Math.random(),
-    category: Math.floor(Math.random() * 3)
+    category: Math.floor(Math.random() * 3),
   }))
 }
 
@@ -1209,12 +1147,7 @@ function DataPoint({ data, onHover }) {
 }
 
 function Grid() {
-  return (
-    <gridHelper
-      args={[20, 20, '#444', '#222']}
-      position={[0, -0.01, 0]}
-    />
-  )
+  return <gridHelper args={[20, 20, '#444', '#222']} position={[0, -0.01, 0]} />
 }
 
 function DataVisualization() {
@@ -1227,37 +1160,35 @@ function DataVisualization() {
   }
 
   return (
-    <div className="data-viz" style={{ width: '100vw', height: '100vh', position: 'relative' }}>
+    <div className='data-viz' style={{ width: '100vw', height: '100vh', position: 'relative' }}>
       <Canvas camera={{ position: [10, 8, 10], fov: 50 }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={1} />
-        <pointLight position={[-10, 10, -10]} intensity={0.5} color="#4ecdc4" />
-        
+        <pointLight position={[-10, 10, -10]} intensity={0.5} color='#4ecdc4' />
+
         <Grid />
-        
+
         {/* 数据点 */}
         {data.map((item) => (
           <DataPoint key={item.id} data={item} onHover={setHoveredData} />
         ))}
-        
-        <OrbitControls
-          enableDamping={true}
-          dampingFactor={0.05}
-          minDistance={5}
-          maxDistance={30}
-        />
+
+        <OrbitControls enableDamping={true} dampingFactor={0.05} minDistance={5} maxDistance={30} />
       </Canvas>
 
       {/* 控制面板 */}
-      <div className="controls" style={{
-        position: 'absolute',
-        top: '20px',
-        left: '20px',
-        background: 'rgba(255, 255, 255, 0.95)',
-        padding: '20px',
-        borderRadius: '10px',
-        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
-      }}>
+      <div
+        className='controls'
+        style={{
+          position: 'absolute',
+          top: '20px',
+          left: '20px',
+          background: 'rgba(255, 255, 255, 0.95)',
+          padding: '20px',
+          borderRadius: '10px',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+        }}
+      >
         <h3 style={{ margin: '0 0 15px 0', fontSize: '1.2rem' }}>数据可视化</h3>
         <button
           onClick={regenerateData}
@@ -1268,7 +1199,7 @@ function DataVisualization() {
             padding: '10px 20px',
             borderRadius: '5px',
             cursor: 'pointer',
-            fontSize: '1rem'
+            fontSize: '1rem',
           }}
         >
           重新生成数据
@@ -1277,24 +1208,21 @@ function DataVisualization() {
 
       {/* 信息面板 */}
       {hoveredData && (
-        <div className="info-panel" style={{
-          position: 'absolute',
-          bottom: '20px',
-          right: '20px',
-          background: 'rgba(255, 255, 255, 0.95)',
-          padding: '20px',
-          borderRadius: '10px',
-          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
-        }}>
-          <h4 style={{ margin: '0 0 10px 0', color: COLORS[hoveredData.category] }}>
-            数据点 #{hoveredData.id}
-          </h4>
-          <p style={{ margin: '5px 0', fontSize: '0.9rem' }}>
-            值: {hoveredData.value.toFixed(3)}
-          </p>
-          <p style={{ margin: '5px 0', fontSize: '0.9rem' }}>
-            类别: {hoveredData.category + 1}
-          </p>
+        <div
+          className='info-panel'
+          style={{
+            position: 'absolute',
+            bottom: '20px',
+            right: '20px',
+            background: 'rgba(255, 255, 255, 0.95)',
+            padding: '20px',
+            borderRadius: '10px',
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+          }}
+        >
+          <h4 style={{ margin: '0 0 10px 0', color: COLORS[hoveredData.category] }}>数据点 #{hoveredData.id}</h4>
+          <p style={{ margin: '5px 0', fontSize: '0.9rem' }}>值: {hoveredData.value.toFixed(3)}</p>
+          <p style={{ margin: '5px 0', fontSize: '0.9rem' }}>类别: {hoveredData.category + 1}</p>
           <p style={{ margin: '5px 0', fontSize: '0.9rem' }}>
             位置: ({hoveredData.x.toFixed(2)}, {hoveredData.y.toFixed(2)}, {hoveredData.z.toFixed(2)})
           </p>
@@ -1302,25 +1230,30 @@ function DataVisualization() {
       )}
 
       {/* 图例 */}
-      <div className="legend" style={{
-        position: 'absolute',
-        top: '20px',
-        right: '20px',
-        background: 'rgba(255, 255, 255, 0.95)',
-        padding: '15px',
-        borderRadius: '10px',
-        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
-      }}>
+      <div
+        className='legend'
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          background: 'rgba(255, 255, 255, 0.95)',
+          padding: '15px',
+          borderRadius: '10px',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+        }}
+      >
         <h4 style={{ margin: '0 0 10px 0' }}>图例</h4>
         {COLORS.map((color, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center', margin: '5px 0' }}>
-            <div style={{
-              width: '20px',
-              height: '20px',
-              borderRadius: '50%',
-              background: color,
-              marginRight: '10px'
-            }} />
+            <div
+              style={{
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                background: color,
+                marginRight: '10px',
+              }}
+            />
             <span>类别 {i + 1}</span>
           </div>
         ))}
@@ -1378,7 +1311,7 @@ function ParticleSystem({ mousePosition }) {
       // 旋转粒子系统
       meshRef.current.rotation.y += delta * 0.1
       meshRef.current.rotation.x += delta * 0.05
-      
+
       // 鼠标交互
       if (particleRef.current) {
         const positions = particleRef.current.attributes.position.array
@@ -1389,7 +1322,7 @@ function ParticleSystem({ mousePosition }) {
           const dy = mousePosition.y * 10 - positions[i3 + 1]
           const dz = -positions[i3 + 2]
           const distance = Math.sqrt(dx * dx + dy * dy + dz * dz)
-          
+
           if (distance < 5) {
             positions[i3] += dx * 0.01
             positions[i3 + 1] += dy * 0.01
@@ -1404,18 +1337,8 @@ function ParticleSystem({ mousePosition }) {
   return (
     <points ref={meshRef}>
       <bufferGeometry ref={particleRef}>
-        <bufferAttribute
-          attach="attributes-position"
-          count={PARTICLE_COUNT}
-          array={particlePositions}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          count={PARTICLE_COUNT}
-          array={particleColors}
-          itemSize={3}
-        />
+        <bufferAttribute attach='attributes-position' count={PARTICLE_COUNT} array={particlePositions} itemSize={3} />
+        <bufferAttribute attach='attributes-color' count={PARTICLE_COUNT} array={particleColors} itemSize={3} />
       </bufferGeometry>
       <pointsMaterial
         size={0.1}
@@ -1437,7 +1360,7 @@ function CentralObject({ time }) {
       meshRef.current.rotation.x += delta * 0.5
       meshRef.current.rotation.y += delta * 0.7
       meshRef.current.rotation.z += delta * 0.3
-      
+
       // 缩放动画
       const scale = 1 + Math.sin(state.clock.elapsedTime) * 0.2
       meshRef.current.scale.set(scale, scale, scale)
@@ -1448,10 +1371,10 @@ function CentralObject({ time }) {
     <mesh ref={meshRef}>
       <icosahedronGeometry args={[1, 1]} />
       <meshStandardMaterial
-        color="#ff6b6b"
+        color='#ff6b6b'
         metalness={0.8}
         roughness={0.2}
-        emissive="#ff6b6b"
+        emissive='#ff6b6b'
         emissiveIntensity={0.3}
         wireframe={Math.sin(time * 2) > 0}
       />
@@ -1466,73 +1389,66 @@ function InteractiveArt() {
   const handleMouseMove = (e) => {
     setMousePosition({
       x: (e.clientX / window.innerWidth) * 2 - 1,
-      y: -(e.clientY / window.innerHeight) * 2 + 1
+      y: -(e.clientY / window.innerHeight) * 2 + 1,
     })
   }
 
   return (
     <div
-      className="interactive-art"
+      className='interactive-art'
       style={{ width: '100vw', height: '100vh', background: '#0a0a0a' }}
       onMouseMove={handleMouseMove}
     >
       <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
         {/* 背景光 */}
         <ambientLight intensity={0.3} />
-        <pointLight position={[10, 10, 10]} intensity={1} color="#ff6b6b" />
-        <pointLight position={[-10, -10, -10]} intensity={1} color="#4ecdc4" />
-        
+        <pointLight position={[10, 10, 10]} intensity={1} color='#ff6b6b' />
+        <pointLight position={[-10, -10, -10]} intensity={1} color='#4ecdc4' />
+
         {/* 星星背景 */}
         <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-        
+
         {/* 粒子系统 */}
         <ParticleSystem mousePosition={mousePosition} />
-        
+
         {/* 中央物体 */}
         <CentralObject time={time} />
-        
+
         {/* 浮动文字 */}
         <Float speed={3} rotationIntensity={0.5} floatIntensity={1}>
-          <Text
-            position={[0, 2.5, 0]}
-            fontSize={0.5}
-            color="white"
-            anchorX="center"
-            anchorY="middle"
-          >
+          <Text position={[0, 2.5, 0]} fontSize={0.5} color='white' anchorX='center' anchorY='middle'>
             移动鼠标来交互
           </Text>
         </Float>
-        
+
         {/* 火花效果 */}
-        <Sparkles count={100} scale={15} size={4} speed={0.5} opacity={0.6} color="#4ecdc4" />
-        
-        <OrbitControls
-          enableDamping={true}
-          dampingFactor={0.05}
-          minDistance={3}
-          maxDistance={15}
-        />
+        <Sparkles count={100} scale={15} size={4} speed={0.5} opacity={0.6} color='#4ecdc4' />
+
+        <OrbitControls enableDamping={true} dampingFactor={0.05} minDistance={3} maxDistance={15} />
       </Canvas>
 
       {/* 装饰性 UI */}
-      <div style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        pointerEvents: 'none'
-      }}>
-        <div style={{
-          width: '200px',
-          height: '200px',
-          border: '2px solid rgba(255, 255, 255, 0.2)',
-          borderRadius: '50%',
+      <div
+        style={{
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(-50%, -50%)'
-        }} />
+          transform: 'translate(-50%, -50%)',
+          pointerEvents: 'none',
+        }}
+      >
+        <div
+          style={{
+            width: '200px',
+            height: '200px',
+            border: '2px solid rgba(255, 255, 255, 0.2)',
+            borderRadius: '50%',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
       </div>
     </div>
   )
@@ -1548,6 +1464,7 @@ export default InteractiveArt
 **问题：场景显示黑色，什么都看不到**
 
 解决方案：
+
 1. 检查是否添加了光源
 2. 确认相机位置是否正确
 3. 检查物体是否在相机视锥内
@@ -1567,6 +1484,7 @@ export default InteractiveArt
 **问题：材质看起来不正确**
 
 解决方案：
+
 1. 确保使用了合适的材质类型（meshStandardMaterial 需要光照）
 2. 检查纹理是否正确加载
 3. 确认材质属性设置正确
@@ -1574,12 +1492,13 @@ export default InteractiveArt
 ```jsx
 // 使用环境贴图改善材质效果
 import { Environment } from '@react-three/drei'
-<Environment preset="city" />
+;<Environment preset='city' />
 ```
 
 **问题：模型加载失败**
 
 解决方案：
+
 1. 检查模型文件路径是否正确
 2. 使用 Suspense 处理加载状态
 3. 验证模型文件格式是否支持
@@ -1588,8 +1507,8 @@ import { Environment } from '@react-three/drei'
 ```jsx
 import { Suspense } from 'react'
 
-<Suspense fallback={<div>Loading...</div>}>
-  <Model url="/models/model.glb" />
+;<Suspense fallback={<div>Loading...</div>}>
+  <Model url='/models/model.glb' />
 </Suspense>
 ```
 
@@ -1598,6 +1517,7 @@ import { Suspense } from 'react'
 **问题：场景卡顿，帧率低**
 
 解决方案：
+
 1. 减少几何体面数
 2. 使用实例化渲染
 3. 优化材质和纹理
@@ -1608,14 +1528,13 @@ import { Suspense } from 'react'
 import { InstancedMesh } from '@react-three/drei'
 
 // 使用实例化渲染
-<InstancedMesh args={[geometry, material, 1000]}>
-  {/* ... */}
-</InstancedMesh>
+;<InstancedMesh args={[geometry, material, 1000]}>{/* ... */}</InstancedMesh>
 ```
 
 **问题：内存使用高**
 
 解决方案：
+
 1. 及时释放不需要的资源
 2. 使用纹理压缩
 3. 优化模型文件大小
@@ -1626,6 +1545,7 @@ import { InstancedMesh } from '@react-three/drei'
 **问题：点击检测不工作**
 
 解决方案：
+
 1. 确保对象有几何体
 2. 检查 raycaster 配置
 3. 确认对象在相机视锥内
@@ -1633,7 +1553,11 @@ import { InstancedMesh } from '@react-three/drei'
 
 ```jsx
 // 正确处理事件
-<mesh onClick={(e) => { e.stopPropagation(); /* ... */ }}>
+<mesh
+  onClick={(e) => {
+    e.stopPropagation() /* ... */
+  }}
+>
   {/* ... */}
 </mesh>
 ```
@@ -1641,6 +1565,7 @@ import { InstancedMesh } from '@react-three/drei'
 **问题：拖拽不流畅**
 
 解决方案：
+
 1. 优化拖拽逻辑
 2. 减少不必要的渲染
 3. 使用防抖和节流
@@ -1651,6 +1576,7 @@ import { InstancedMesh } from '@react-three/drei'
 **问题：动画不流畅**
 
 解决方案：
+
 1. 使用 useFrame Hook 正确计时
 2. 避免在动画中创建新对象
 3. 使用 lerp 进行平滑过渡
@@ -1666,6 +1592,7 @@ useFrame((state, delta) => {
 **问题：动画卡顿**
 
 解决方案：
+
 1. 检查是否有性能瓶颈
 2. 使用 React.memo 优化组件
 3. 避免不必要的重渲染
@@ -1708,7 +1635,7 @@ function InstancedCubes({ count = 1000 }) {
       particle.t += particle.speed
       particle.mx += (state.mouse.x * 5 - particle.mx) * 0.1
       particle.my += (state.mouse.y * 5 - particle.my) * 0.1
-      
+
       dummy.position.set(
         particle.x + Math.cos(particle.t) * particle.factor * 0.01 + particle.mx,
         particle.y + Math.sin(particle.t) * particle.factor * 0.01 + particle.my,
@@ -1725,7 +1652,7 @@ function InstancedCubes({ count = 1000 }) {
   return (
     <instancedMesh ref={meshRef} args={[null, null, count]} castShadow receiveShadow>
       <boxGeometry args={[0.5, 0.5, 0.5]} />
-      <meshStandardMaterial color="#ff6b6b" />
+      <meshStandardMaterial color='#ff6b6b' />
     </instancedMesh>
   )
 }
@@ -1747,19 +1674,19 @@ function DetailedObject() {
       {/* 高细节模型（近距离） */}
       <mesh distance={0}>
         <boxGeometry args={[1, 1, 1, 4, 4, 4]} />
-        <meshStandardMaterial color="blue" />
+        <meshStandardMaterial color='blue' />
       </mesh>
-      
+
       {/* 中等细节模型 */}
       <mesh distance={5}>
         <boxGeometry args={[1, 1, 1, 2, 2, 2]} />
-        <meshStandardMaterial color="blue" />
+        <meshStandardMaterial color='blue' />
       </mesh>
-      
+
       {/* 低细节模型（远距离） */}
       <mesh distance={10}>
         <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="blue" />
+        <meshStandardMaterial color='blue' />
       </mesh>
     </LOD>
   )
@@ -1786,16 +1713,9 @@ export default DetailedObject
     shadow-camera-top={10}
     shadow-camera-bottom={-10}
   />
-  
   {/* 使用接触阴影代替真实阴影 */}
-  import { ContactShadows } from '@react-three/drei'
-  <ContactShadows
-    resolution={1024}
-    scale={10}
-    blur={2}
-    opacity={0.5}
-    far={10}
-  />
+  import {ContactShadows} from '@react-three/drei'
+  <ContactShadows resolution={1024} scale={10} blur={2} opacity={0.5} far={10} />
 </Canvas>
 ```
 
@@ -1807,19 +1727,16 @@ export default DetailedObject
 import { useTexture } from '@react-three/drei'
 
 function OptimizedTextures() {
-  const textures = useTexture([
-    '/textures/color.jpg',
-    '/textures/normal.jpg'
-  ])
-  
+  const textures = useTexture(['/textures/color.jpg', '/textures/normal.jpg'])
+
   // 配置纹理参数
-  textures.forEach(texture => {
-    texture.anisotropy = 8  // 各向异性过滤
+  textures.forEach((texture) => {
+    texture.anisotropy = 8 // 各向异性过滤
     texture.minFilter = THREE.LinearMipmapLinearFilter
     texture.magFilter = THREE.LinearFilter
     texture.generateMipmaps = true
   })
-  
+
   return (
     <mesh>
       <boxGeometry args={[1, 1, 1]} />
@@ -1847,14 +1764,10 @@ import React, { memo, useMemo } from 'react'
 const OptimizedComponent = memo(({ data }) => {
   // 使用 useMemo 缓存计算结果
   const expensiveValue = useMemo(() => {
-    return data.map(item => item * 2)
+    return data.map((item) => item * 2)
   }, [data])
-  
-  return (
-    <mesh>
-      {/* ... */}
-    </mesh>
-  )
+
+  return <mesh>{/* ... */}</mesh>
 })
 
 OptimizedComponent.displayName = 'OptimizedComponent'
@@ -1873,7 +1786,7 @@ function OptimizedAnimation() {
     // 避免在 useFrame 中创建新对象
     // 使用 delta 时间确保动画速度一致
   })
-  
+
   return <mesh />
 }
 ```
@@ -1942,6 +1855,7 @@ function OptimizedAnimation() {
 React Three Fiber 为 Three.js 带来了 React 的声明式编程模型，使 3D 开发变得更加直观和组件化。通过合理使用其特性，可以构建各种复杂的 3D 应用，从简单的产品展示到复杂的交互式体验。
 
 关键要点：
+
 1. **理解 Three.js 基础**：掌握 Three.js 的核心概念是使用 R3F 的前提
 2. **组件化思维**：将 3D 场景拆分为可复用的组件
 3. **性能优化**：注意渲染性能，使用合适的优化技术

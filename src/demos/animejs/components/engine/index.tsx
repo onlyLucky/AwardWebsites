@@ -7,7 +7,7 @@ import styles from '@/demos/animejs/styles/animejs.module.css'
 
 export default function Engine() {
   return (
-    <div id="engine" className={styles['animejs-engine']}>
+    <div id='engine' className={styles['animejs-engine']}>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
         style={{ background: 'transparent' }}

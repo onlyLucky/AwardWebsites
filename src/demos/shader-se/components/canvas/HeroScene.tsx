@@ -47,24 +47,12 @@ export function HeroScene() {
     const targetX = normalizedX * 0.5
     const targetY = normalizedY * 0.3
 
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(
-      groupRef.current.rotation.y,
-      targetX,
-      0.05
-    )
-    groupRef.current.rotation.x = THREE.MathUtils.lerp(
-      groupRef.current.rotation.x,
-      targetY,
-      0.05
-    )
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetX, 0.05)
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetY, 0.05)
 
     // 滚动驱动动画
     const scrollOffset = scrollProgress * 2
-    groupRef.current.position.y = THREE.MathUtils.lerp(
-      groupRef.current.position.y,
-      -scrollOffset,
-      0.1
-    )
+    groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, -scrollOffset, 0.1)
 
     // 轻微浮动动画
     groupRef.current.position.y += Math.sin(state.clock.elapsedTime * 0.5) * 0.02
@@ -75,10 +63,10 @@ export function HeroScene() {
       {/* 环境光 */}
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 5, 5]} intensity={1} castShadow />
-      <pointLight position={[-5, 5, -5]} intensity={0.5} color="#4488ff" />
+      <pointLight position={[-5, 5, -5]} intensity={0.5} color='#4488ff' />
 
       {/* 环境贴图 */}
-      <Environment preset="city" />
+      <Environment preset='city' />
 
       {/* 电脑模型 */}
       <group ref={groupRef} position={[0, 0, 0]} scale={1.5}>
@@ -115,18 +103,9 @@ function Particles() {
   return (
     <points ref={particlesRef}>
       <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-        />
+        <bufferAttribute attach='attributes-position' args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial
-        size={0.02}
-        color="#ffffff"
-        transparent
-        opacity={0.6}
-        sizeAttenuation
-      />
+      <pointsMaterial size={0.02} color='#ffffff' transparent opacity={0.6} sizeAttenuation />
     </points>
   )
 }

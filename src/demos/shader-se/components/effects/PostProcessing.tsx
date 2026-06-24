@@ -1,12 +1,6 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import {
-  EffectComposer,
-  Bloom,
-  Noise,
-  Vignette,
-  ChromaticAberration,
-} from '@react-three/postprocessing'
+import { EffectComposer, Bloom, Noise, Vignette, ChromaticAberration } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
 import * as THREE from 'three'
 import { usePagesStore } from '../../store/usePagesStore'
@@ -61,16 +55,10 @@ export function PostProcessing() {
       />
 
       {/* 暗角效果 */}
-      <Vignette
-        offset={POST_PROCESSING_CONFIG.vignette.offset}
-        darkness={POST_PROCESSING_CONFIG.vignette.darkness}
-      />
+      <Vignette offset={POST_PROCESSING_CONFIG.vignette.offset} darkness={POST_PROCESSING_CONFIG.vignette.darkness} />
 
       {/* 色差效果 */}
-      <ChromaticAberration
-        ref={chromaticAberrationRef}
-        offset={POST_PROCESSING_CONFIG.chromaticAberration.offset}
-      />
+      <ChromaticAberration ref={chromaticAberrationRef} offset={POST_PROCESSING_CONFIG.chromaticAberration.offset} />
     </EffectComposer>
   )
 }

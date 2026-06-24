@@ -26,29 +26,29 @@ const itemVariants = {
 
 export function AboutSection() {
   return (
-    <section className="shader-se-section shader-se-about" id="about">
+    <section className='shader-se-section shader-se-about' id='about'>
       <motion.div
-        className="shader-se-about__content"
+        className='shader-se-about__content'
         variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
+        initial='hidden'
+        whileInView='visible'
         viewport={{ once: true, amount: 0.3 }}
         style={{
           position: 'relative',
           zIndex: 10,
         }}
       >
-        <motion.h2 className="shader-se-about__title" variants={itemVariants}>
+        <motion.h2 className='shader-se-about__title' variants={itemVariants}>
           Making Digital Storytelling More Playful, Powerful, and Alive
         </motion.h2>
 
-        <motion.p className="shader-se-about__description" variants={itemVariants}>
+        <motion.p className='shader-se-about__description' variants={itemVariants}>
           Shader is a Swedish creative development studio specializing in interactive 3D and AI-powered web solutions.
           We blend cutting-edge technology with artistic vision to create immersive digital experiences that captivate
           and engage audiences.
         </motion.p>
 
-        <motion.p className="shader-se-about__description" variants={itemVariants}>
+        <motion.p className='shader-se-about__description' variants={itemVariants}>
           Our team of designers, 3D artists, copywriters, animators, and creative technologists work together to push
           the boundaries of what's possible on the web. From WebGL experiments to interactive product visualizations,
           mobile apps to AI-driven experiences, we bring ideas to life in ways that surprise and delight.
@@ -134,7 +134,7 @@ export function AboutSection() {
           >
             How We Work
           </h3>
-          <p className="shader-se-about__description">
+          <p className='shader-se-about__description'>
             We operate as a modular team, assembling the right expertise for each project. Our collaborative approach
             ensures that every aspect of your digital experience is crafted with care and precision. Whether you need a
             complete website, an interactive installation, or a standalone 3D component, we adapt to your needs.
@@ -143,10 +143,10 @@ export function AboutSection() {
 
         <motion.div variants={itemVariants}>
           <a
-            href="https://cal.com/simon-hedlund-kglzne"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shader-se-about__cta"
+            href='https://cal.com/simon-hedlund-kglzne'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='shader-se-about__cta'
           >
             Book a Call Today
           </a>

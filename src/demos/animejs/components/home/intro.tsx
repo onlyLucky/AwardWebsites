@@ -7,26 +7,23 @@ import SponsorsList from '../web-components/sponsors-list'
 
 export default function IntroSection() {
   return (
-    <section id="intro" className={styles['animejs-intro']} data-chapter="intro" data-label="HEADING">
+    <section id='intro' className={styles['animejs-intro']} data-chapter='intro' data-label='HEADING'>
       <div className={`${styles['home-section']} ${styles['text-layout']}`}>
         <div className={styles['home-section-content']}>
           {/* 左侧文字内容 */}
           <div className={`${styles['home-section-text']} ${styles['home-section-text-short']}`}>
             <h2>
-              All-in-one{' '}
-              <br />
-              animation{' '}
-              <br />
+              All-in-one <br />
+              animation <br />
               engine
               <span className={`animation-engine ${styles['red-dot']}`}>.</span>
             </h2>
             <p>
-              A fast and flexible JavaScript{' '}
-              <br />
+              A fast and flexible JavaScript <br />
               library to animate{' '}
               <span className={styles['animate-anything-wrapper']}>
                 <span className={styles['animate-anything']}>the web</span>
-                <span className="animate-anything-dot">.</span>
+                <span className='animate-anything-dot'>.</span>
               </span>
             </p>
             <p></p>
@@ -41,21 +38,29 @@ export default function IntroSection() {
                 </pre>
                 <button className={`${styles['learn-more']} ui-input ui-button`}>
                   Learn more
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={styles.icon}>
-                    <g fill="none" fillRule="evenodd">
-                      <polygon fill="currentColor" fillRule="nonzero" points="12 18 17.237 12.763 16 11.525 12.875 14.651 12.875 6.763 11.125 6.763 11.125 14.651 8 11.525 6.763 12.763" />
+                  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' className={styles.icon}>
+                    <g fill='none' fillRule='evenodd'>
+                      <polygon
+                        fill='currentColor'
+                        fillRule='nonzero'
+                        points='12 18 17.237 12.763 16 11.525 12.875 14.651 12.875 6.763 11.125 6.763 11.125 14.651 8 11.525 6.763 12.763'
+                      />
                     </g>
                   </svg>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={styles.icon}>
-                    <g fill="none" fillRule="evenodd">
-                      <polygon fill="currentColor" fillRule="nonzero" points="12 18 17.237 12.763 16 11.525 12.875 14.651 12.875 6.763 11.125 6.763 11.125 14.651 8 11.525 6.763 12.763" />
+                  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' className={styles.icon}>
+                    <g fill='none' fillRule='evenodd'>
+                      <polygon
+                        fill='currentColor'
+                        fillRule='nonzero'
+                        points='12 18 17.237 12.763 16 11.525 12.875 14.651 12.875 6.763 11.125 6.763 11.125 14.651 8 11.525 6.763 12.763'
+                      />
                     </g>
                   </svg>
                 </button>
               </div>
               <div className={`${styles['heading-sponsors']} ${styles['text-layout']}`}>
-                <span className="text-xxs">Sponsored by</span>
-                <SponsorsList path="platinum-sponsors" size="small" />
+                <span className='text-xxs'>Sponsored by</span>
+                <SponsorsList path='platinum-sponsors' size='small' />
               </div>
             </div>
           </div>

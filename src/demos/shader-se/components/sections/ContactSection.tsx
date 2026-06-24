@@ -69,33 +69,29 @@ const socialLinks = [
 
 export function ContactSection() {
   return (
-    <section className="shader-se-section shader-se-contact" id="contact">
+    <section className='shader-se-section shader-se-contact' id='contact'>
       <motion.div
-        className="shader-se-contact__content"
+        className='shader-se-contact__content'
         variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
+        initial='hidden'
+        whileInView='visible'
         viewport={{ once: true, amount: 0.3 }}
         style={{
           position: 'relative',
           zIndex: 10,
         }}
       >
-        <motion.h2 className="shader-se-contact__title" variants={itemVariants}>
+        <motion.h2 className='shader-se-contact__title' variants={itemVariants}>
           Get in Touch
         </motion.h2>
 
-        <motion.div className="shader-se-contact__grid" variants={itemVariants}>
+        <motion.div className='shader-se-contact__grid' variants={itemVariants}>
           {contactInfo.map((item, index) => (
-            <motion.div
-              key={index}
-              className="shader-se-contact__item"
-              variants={itemVariants}
-            >
-              <div className="shader-se-contact__item-label">{item.label}</div>
-              <div className="shader-se-contact__item-value">
+            <motion.div key={index} className='shader-se-contact__item' variants={itemVariants}>
+              <div className='shader-se-contact__item-label'>{item.label}</div>
+              <div className='shader-se-contact__item-value'>
                 {item.href ? (
-                  <a href={item.href} target="_blank" rel="noopener noreferrer">
+                  <a href={item.href} target='_blank' rel='noopener noreferrer'>
                     {item.value}
                   </a>
                 ) : (
@@ -106,14 +102,14 @@ export function ContactSection() {
           ))}
         </motion.div>
 
-        <motion.div className="shader-se-contact__social" variants={itemVariants}>
+        <motion.div className='shader-se-contact__social' variants={itemVariants}>
           {socialLinks.map((link, index) => (
             <motion.a
               key={index}
               href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="shader-se-contact__social-link"
+              target='_blank'
+              rel='noopener noreferrer'
+              className='shader-se-contact__social-link'
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               title={link.name}
@@ -142,7 +138,7 @@ export function ContactSection() {
             &copy; {new Date().getFullYear()} Shader Development Studio. All rights reserved.
           </p>
           <a
-            href="/accessibility-statement"
+            href='/accessibility-statement'
             style={{
               fontSize: '0.75rem',
               color: '#fff',

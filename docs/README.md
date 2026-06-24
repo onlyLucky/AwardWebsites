@@ -47,6 +47,7 @@ pnpm build          # 生产构建
 ## Demo 列表
 
 ### follow.art
+
 - 来源：https://follow.art/
 - 交互效果：SVG 字母 scaleY 鼠标驱动动画 + WebGL 3D 卡片浮动视差
 - 技术：SVG Path Animation, Three.js, Mouse Interaction
@@ -55,6 +56,7 @@ pnpm build          # 生产构建
 ## 开发日志
 
 ### 2026-06-14
+
 - 项目重构：从子项目结构改为统一的网站交互合集
 - 技术栈升级：React 19 + TypeScript + Tailwind CSS v4 + shadcn/ui
 - 迁移 follow.art demo（JSX → TSX, Less → CSS）

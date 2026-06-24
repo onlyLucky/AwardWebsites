@@ -59,6 +59,7 @@ pnpm build          # 生产构建
 ## 开发日志
 
 ### 2026-06-23
+
 - 完成源码细分对比（排除 3D 引擎部分）
 - 对比结果：HTML 结构、CSS 样式、响应式设计均 100% 还原
 - 修复 3 个差异项：
@@ -68,6 +69,7 @@ pnpm build          # 生产构建
 - 详细对比报告：`.claude/documents/animejs-source-compare.md`
 
 ### 2026-06-22
+
 - 初版复刻完成
 - 实现所有 section 组件（Header、Intro、Toolbox、Features、Modules、Sponsors、GetStarted、SubNav、Footer）
 - 实现 CSS 变量系统和响应式设计

@@ -60,11 +60,7 @@ export function ProjectsScene() {
     const { normalizedX } = mouseRef.current
 
     // 鼠标跟随效果
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(
-      groupRef.current.rotation.y,
-      normalizedX * 0.3,
-      0.05
-    )
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, normalizedX * 0.3, 0.05)
 
     // 滚动驱动旋转
     groupRef.current.rotation.z = scrollProgress * Math.PI * 0.1
@@ -78,10 +74,10 @@ export function ProjectsScene() {
       {/* 环境光 */}
       <ambientLight intensity={0.4} />
       <directionalLight position={[5, 5, 5]} intensity={1.2} castShadow />
-      <spotLight position={[-5, 10, 5]} intensity={0.8} angle={0.3} penumbra={0.5} color="#ff8844" />
+      <spotLight position={[-5, 10, 5]} intensity={0.8} angle={0.3} penumbra={0.5} color='#ff8844' />
 
       {/* 环境贴图 */}
-      <Environment preset="studio" />
+      <Environment preset='studio' />
 
       {/* 场景组 */}
       <group ref={groupRef}>
@@ -99,12 +95,7 @@ export function ProjectsScene() {
       {/* 地面反射 */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.5, 0]} receiveShadow>
         <planeGeometry args={[20, 20]} />
-        <meshStandardMaterial
-          color="#111111"
-          metalness={0.9}
-          roughness={0.1}
-          envMapIntensity={0.5}
-        />
+        <meshStandardMaterial color='#111111' metalness={0.9} roughness={0.1} envMapIntensity={0.5} />
       </mesh>
     </>
   )

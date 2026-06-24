@@ -30,11 +30,11 @@ export function HeroSection() {
   const isInitialAnimationDone = usePagesStore((state) => state.isInitialAnimationDone)
 
   return (
-    <section className="shader-se-hero" id="home">
+    <section className='shader-se-hero' id='home'>
       <motion.div
-        className="shader-se-hero__content"
+        className='shader-se-hero__content'
         variants={containerVariants}
-        initial="hidden"
+        initial='hidden'
         animate={isInitialAnimationDone ? 'visible' : 'hidden'}
         style={{
           position: 'relative',
@@ -43,13 +43,13 @@ export function HeroSection() {
           padding: '0 2rem',
         }}
       >
-        <motion.h1 className="shader-se-hero__title" variants={itemVariants}>
+        <motion.h1 className='shader-se-hero__title' variants={itemVariants}>
           A Creative Development Studio,
           <br />
           Plugged into the Future
         </motion.h1>
 
-        <motion.p className="shader-se-hero__subtitle" variants={itemVariants}>
+        <motion.p className='shader-se-hero__subtitle' variants={itemVariants}>
           We build immersive digital experiences that blend art, technology, and storytelling.
         </motion.p>
 
@@ -63,7 +63,7 @@ export function HeroSection() {
           }}
         >
           <a
-            href="#selected-work"
+            href='#selected-work'
             style={{
               padding: '0.875rem 2rem',
               background: '#fff',
@@ -80,7 +80,7 @@ export function HeroSection() {
             View Our Work
           </a>
           <a
-            href="#contact"
+            href='#contact'
             style={{
               padding: '0.875rem 2rem',
               background: 'transparent',

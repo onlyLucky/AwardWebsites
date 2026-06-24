@@ -42,24 +42,24 @@ export default function ToolboxSection() {
   return (
     <section
       ref={sectionRef}
-      id="toolbox"
+      id='toolbox'
       className={`home-section-container ${styles['home-section-light']}`}
-      data-chapter="toolbox"
-      data-label="TOOLBOX"
-      data-enter-offset="-=100lvh"
-      data-leave-offset="-=10lvh"
+      data-chapter='toolbox'
+      data-label='TOOLBOX'
+      data-enter-offset='-=100lvh'
+      data-leave-offset='-=10lvh'
     >
       <div className={`${styles['home-section']} ${styles['fixed-section']}`}>
         <div className={styles['home-section-content']}>
-          <div className={`${styles['home-section-text']} ${styles['text-layout']} ${styles['home-section-text-short']}`}>
+          <div
+            className={`${styles['home-section-text']} ${styles['text-layout']} ${styles['home-section-text-short']}`}
+          >
             <h2 className={`${styles['section-heading']} ${styles['text-xxl']}`}>
-              The complete{' '}
-              <br />
+              The complete <br />
               animator's toolbox
             </h2>
             <p className={styles['section-sub-heading']}>
-              Break free from browser limitations and animate anything on the
-              web with a single API.
+              Break free from browser limitations and animate anything on the web with a single API.
             </p>
           </div>
           <div className={`${styles['toolbox-labels-container']} ${styles['layout-container']}`}>

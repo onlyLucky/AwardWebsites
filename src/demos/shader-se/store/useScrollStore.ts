@@ -19,7 +19,10 @@ interface ScrollState {
   setDirection: (direction: 1 | -1) => void
   setIsScrolling: (scrolling: boolean) => void
   setContainerRef: (ref: HTMLElement | null) => void
-  scrollTo: (target: number | string, options?: { offset?: number; duration?: number; easing?: (t: number) => number }) => void
+  scrollTo: (
+    target: number | string,
+    options?: { offset?: number; duration?: number; easing?: (t: number) => number }
+  ) => void
 }
 
 export const useScrollStore = create<ScrollState>((set, get) => ({

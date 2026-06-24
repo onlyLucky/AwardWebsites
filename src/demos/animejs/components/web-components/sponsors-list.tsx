@@ -17,16 +17,12 @@ export interface SponsorsListProps {
 
 // 占位赞助商数据
 const PLACEHOLDER_SPONSORS: Record<string, Array<{ name: string; url: string }>> = {
-  'platinum-sponsors': [
-    { name: 'Sponsor', url: 'https://github.com/sponsors/juliangarnier' },
-  ],
+  'platinum-sponsors': [{ name: 'Sponsor', url: 'https://github.com/sponsors/juliangarnier' }],
   'silver-sponsors': [
     { name: 'Silver Sponsor 1', url: 'https://github.com/sponsors/juliangarnier' },
     { name: 'Silver Sponsor 2', url: 'https://github.com/sponsors/juliangarnier' },
   ],
-  'gold-sponsors': [
-    { name: 'Gold Sponsor 1', url: 'https://github.com/sponsors/juliangarnier' },
-  ],
+  'gold-sponsors': [{ name: 'Gold Sponsor 1', url: 'https://github.com/sponsors/juliangarnier' }],
 }
 
 /**
@@ -45,7 +41,7 @@ export default function SponsorsList({
     if (isSmall) {
       return (
         <li key={index} className={`sponsor-item ${styles['sponsor-item-small']}`}>
-          <a href={sponsor.url} target="_blank" rel="noopener noreferrer" title={sponsor.name}>
+          <a href={sponsor.url} target='_blank' rel='noopener noreferrer' title={sponsor.name}>
             {sponsor.name}
           </a>
         </li>
@@ -53,7 +49,7 @@ export default function SponsorsList({
     }
     return (
       <li key={index} className={`sponsor-item ${styles['sponsor-item-large']}`}>
-        <a href={sponsor.url} target="_blank" rel="noopener noreferrer" title={sponsor.name}>
+        <a href={sponsor.url} target='_blank' rel='noopener noreferrer' title={sponsor.name}>
           {sponsor.name}
         </a>
       </li>
@@ -61,13 +57,10 @@ export default function SponsorsList({
   }
 
   return (
-    <sponsors-list
-      path={path}
-      size={size}
-      boxed={boxed ? '' : undefined}
-      class={className}
-    >
-      <ul className={`${styles['sponsors-list']} ${styles[`sponsors-list-${size}`]}${boxed ? ` ${styles['sponsors-list-boxed']}` : ''}`}>
+    <sponsors-list path={path} size={size} boxed={boxed ? '' : undefined} class={className}>
+      <ul
+        className={`${styles['sponsors-list']} ${styles[`sponsors-list-${size}`]}${boxed ? ` ${styles['sponsors-list-boxed']}` : ''}`}
+      >
         {sponsors.map(renderSponsor)}
       </ul>
     </sponsors-list>

@@ -43,11 +43,7 @@ export function ContactScene() {
     const { normalizedX } = mouseRef.current
 
     // 鼠标跟随效果
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(
-      groupRef.current.rotation.y,
-      normalizedX * 0.25,
-      0.04
-    )
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, normalizedX * 0.25, 0.04)
 
     // 滚动驱动旋转
     groupRef.current.rotation.x = scrollProgress * 0.3
@@ -61,11 +57,11 @@ export function ContactScene() {
       {/* 环境光 */}
       <ambientLight intensity={0.3} />
       <directionalLight position={[5, 3, 5]} intensity={1} castShadow />
-      <pointLight position={[-5, 2, -5]} intensity={0.6} color="#4488ff" />
-      <pointLight position={[3, -1, 2]} intensity={0.3} color="#ff4488" />
+      <pointLight position={[-5, 2, -5]} intensity={0.6} color='#4488ff' />
+      <pointLight position={[3, -1, 2]} intensity={0.3} color='#ff4488' />
 
       {/* 环境贴图 */}
-      <Environment preset="night" />
+      <Environment preset='night' />
 
       {/* 电话模型 */}
       <group ref={groupRef} position={[0, 0, 0]} scale={0.8}>
@@ -78,11 +74,7 @@ export function ContactScene() {
       {/* 地面 */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.01, 0]} receiveShadow>
         <planeGeometry args={[30, 30]} />
-        <meshStandardMaterial
-          color="#0a0a0a"
-          roughness={0.95}
-          metalness={0.05}
-        />
+        <meshStandardMaterial color='#0a0a0a' roughness={0.95} metalness={0.05} />
       </mesh>
     </>
   )

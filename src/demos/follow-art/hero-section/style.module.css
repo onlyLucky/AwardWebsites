@@ -117,7 +117,9 @@
   font-size: 16px;
   font-weight: 600;
   text-decoration: none;
-  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+  transition:
+    transform 0.15s ease-out,
+    opacity 0.15s ease-out;
 }
 
 .heroVisitBtn:hover {

@@ -52,10 +52,7 @@ npx tailwindcss init -p
 ```js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {},
   },
@@ -77,17 +74,15 @@ module.exports = {
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tailwind CSS Example</title>
-  <link href="/src/index.css" rel="stylesheet">
-</head>
-<body>
-  <div class="bg-blue-500 text-white p-4 rounded-lg shadow-md">
-    Hello, Tailwind CSS!
-  </div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind CSS Example</title>
+    <link href="/src/index.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="rounded-lg bg-blue-500 p-4 text-white shadow-md">Hello, Tailwind CSS!</div>
+  </body>
 </html>
 ```
 
@@ -121,7 +116,7 @@ npx create-next-app@latest my-project
 **Flexbox**
 
 ```html
-<div class="flex justify-center items-center h-64 bg-gray-100">
+<div class="flex h-64 items-center justify-center bg-gray-100">
   <div class="text-center">
     <h1 class="text-2xl font-bold">Flexbox Example</h1>
     <p>Centered content</p>
@@ -132,42 +127,42 @@ npx create-next-app@latest my-project
 **Grid**
 
 ```html
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-  <div class="bg-blue-100 p-4 rounded-lg">Item 1</div>
-  <div class="bg-blue-100 p-4 rounded-lg">Item 2</div>
-  <div class="bg-blue-100 p-4 rounded-lg">Item 3</div>
+<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+  <div class="rounded-lg bg-blue-100 p-4">Item 1</div>
+  <div class="rounded-lg bg-blue-100 p-4">Item 2</div>
+  <div class="rounded-lg bg-blue-100 p-4">Item 3</div>
 </div>
 ```
 
 **Box Model**
 
 ```html
-<div class="m-4 p-6 border border-gray-200 rounded-lg shadow-sm">
+<div class="m-4 rounded-lg border border-gray-200 p-6 shadow-sm">
   <h2 class="mb-2 font-bold">Box Model Example</h2>
   <p class="mb-4">Margin, padding, border, and shadow</p>
-  <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Button</button>
+  <button class="mt-2 rounded bg-blue-500 px-4 py-2 text-white">Button</button>
 </div>
 ```
 
 ### 间距类
 
-| 类名 | 含义 | 数值 |
-|------|------|------|
-| m-1 | 外边距 | 0.25rem (4px) |
-| m-4 | 外边距 | 1rem (16px) |
-| m-8 | 外边距 | 2rem (32px) |
-| p-1 | 内边距 | 0.25rem (4px) |
-| p-4 | 内边距 | 1rem (16px) |
-| p-8 | 内边距 | 2rem (32px) |
+| 类名 | 含义   | 数值          |
+| ---- | ------ | ------------- |
+| m-1  | 外边距 | 0.25rem (4px) |
+| m-4  | 外边距 | 1rem (16px)   |
+| m-8  | 外边距 | 2rem (32px)   |
+| p-1  | 内边距 | 0.25rem (4px) |
+| p-4  | 内边距 | 1rem (16px)   |
+| p-8  | 内边距 | 2rem (32px)   |
 
 **方向间距**
 
 ```html
-<div class="mt-4 mb-6 ml-2 mr-2">
+<div class="mt-4 mr-2 mb-6 ml-2">
   <p>Top margin: 1rem, bottom margin: 1.5rem, left/right margin: 0.5rem</p>
 </div>
 
-<div class="pt-4 pb-6 pl-2 pr-2">
+<div class="pt-4 pr-2 pb-6 pl-2">
   <p>Top padding: 1rem, bottom padding: 1.5rem, left/right padding: 0.5rem</p>
 </div>
 
@@ -186,11 +181,11 @@ npx create-next-app@latest my-project
 
 ```html
 <div class="flex space-x-4">
-  <div class="w-12 h-12 bg-red-500 rounded"></div>
-  <div class="w-12 h-12 bg-blue-500 rounded"></div>
-  <div class="w-12 h-12 bg-green-500 rounded"></div>
-  <div class="w-12 h-12 bg-yellow-500 rounded"></div>
-  <div class="w-12 h-12 bg-purple-500 rounded"></div>
+  <div class="h-12 w-12 rounded bg-red-500"></div>
+  <div class="h-12 w-12 rounded bg-blue-500"></div>
+  <div class="h-12 w-12 rounded bg-green-500"></div>
+  <div class="h-12 w-12 rounded bg-yellow-500"></div>
+  <div class="h-12 w-12 rounded bg-purple-500"></div>
 </div>
 ```
 
@@ -198,15 +193,15 @@ npx create-next-app@latest my-project
 
 ```html
 <div class="flex flex-col space-y-2">
-  <div class="w-full h-8 bg-blue-100"></div>
-  <div class="w-full h-8 bg-blue-200"></div>
-  <div class="w-full h-8 bg-blue-300"></div>
-  <div class="w-full h-8 bg-blue-400"></div>
-  <div class="w-full h-8 bg-blue-500"></div>
-  <div class="w-full h-8 bg-blue-600"></div>
-  <div class="w-full h-8 bg-blue-700"></div>
-  <div class="w-full h-8 bg-blue-800"></div>
-  <div class="w-full h-8 bg-blue-900"></div>
+  <div class="h-8 w-full bg-blue-100"></div>
+  <div class="h-8 w-full bg-blue-200"></div>
+  <div class="h-8 w-full bg-blue-300"></div>
+  <div class="h-8 w-full bg-blue-400"></div>
+  <div class="h-8 w-full bg-blue-500"></div>
+  <div class="h-8 w-full bg-blue-600"></div>
+  <div class="h-8 w-full bg-blue-700"></div>
+  <div class="h-8 w-full bg-blue-800"></div>
+  <div class="h-8 w-full bg-blue-900"></div>
 </div>
 ```
 
@@ -250,7 +245,10 @@ npx create-next-app@latest my-project
   <p class="text-left">Left aligned text</p>
   <p class="text-center">Center aligned text</p>
   <p class="text-right">Right aligned text</p>
-  <p class="text-justify">Justified text. This text should be justified, meaning it will be aligned evenly along both the left and right margins.</p>
+  <p class="text-justify">
+    Justified text. This text should be justified, meaning it will be aligned evenly along both the left and right
+    margins.
+  </p>
 </div>
 ```
 
@@ -259,7 +257,7 @@ npx create-next-app@latest my-project
 **悬停状态**
 
 ```html
-<button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors duration-300">
+<button class="rounded bg-blue-500 px-4 py-2 text-white transition-colors duration-300 hover:bg-blue-600">
   Hover me
 </button>
 ```
@@ -267,23 +265,19 @@ npx create-next-app@latest my-project
 **焦点状态**
 
 ```html
-<input class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 px-4 py-2 rounded">
+<input class="rounded border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200" />
 ```
 
 **活动状态**
 
 ```html
-<button class="bg-blue-500 active:bg-blue-700 text-white px-4 py-2 rounded">
-  Click me
-</button>
+<button class="rounded bg-blue-500 px-4 py-2 text-white active:bg-blue-700">Click me</button>
 ```
 
 **禁用状态**
 
 ```html
-<button class="bg-gray-400 cursor-not-allowed disabled:opacity-50" disabled>
-  Disabled
-</button>
+<button class="cursor-not-allowed bg-gray-400 disabled:opacity-50" disabled>Disabled</button>
 ```
 
 ### 响应式设计
@@ -291,21 +285,21 @@ npx create-next-app@latest my-project
 **断点**
 
 | 断点 | 前缀 | 屏幕尺寸 |
-|------|------|----------|
-| sm | sm: | 640px+ |
-| md | md: | 768px+ |
-| lg | lg: | 1024px+ |
-| xl | xl: | 1280px+ |
-| 2xl | 2xl: | 1536px+ |
+| ---- | ---- | -------- |
+| sm   | sm:  | 640px+   |
+| md   | md:  | 768px+   |
+| lg   | lg:  | 1024px+  |
+| xl   | xl:  | 1280px+  |
+| 2xl  | 2xl: | 1536px+  |
 
 **响应式示例**
 
 ```html
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-  <div class="bg-blue-100 p-4 rounded-lg">Item 1</div>
-  <div class="bg-blue-100 p-4 rounded-lg">Item 2</div>
-  <div class="bg-blue-100 p-4 rounded-lg">Item 3</div>
-  <div class="bg-blue-100 p-4 rounded-lg">Item 4</div>
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  <div class="rounded-lg bg-blue-100 p-4">Item 1</div>
+  <div class="rounded-lg bg-blue-100 p-4">Item 2</div>
+  <div class="rounded-lg bg-blue-100 p-4">Item 3</div>
+  <div class="rounded-lg bg-blue-100 p-4">Item 4</div>
 </div>
 
 <div class="text-center sm:text-left">
@@ -330,10 +324,7 @@ npx create-next-app@latest my-project
 // tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -357,8 +348,8 @@ module.exports = {
         mono: ['Fira Code', 'monospace'],
       },
       spacing: {
-        '128': '32rem',
-        '144': '36rem',
+        128: '32rem',
+        144: '36rem',
       },
       borderRadius: {
         '4xl': '2rem',
@@ -372,13 +363,9 @@ module.exports = {
 **使用自定义颜色**
 
 ```html
-<div class="bg-primary-500 text-white p-4 rounded-lg">
-  Primary color background
-</div>
+<div class="bg-primary-500 rounded-lg p-4 text-white">Primary color background</div>
 
-<div class="bg-secondary text-white p-4 rounded-lg">
-  Secondary color background
-</div>
+<div class="bg-secondary rounded-lg p-4 text-white">Secondary color background</div>
 ```
 
 ### 组件提取
@@ -389,17 +376,17 @@ module.exports = {
 /* src/components/Button.css */
 @layer components {
   .btn {
-    @apply px-4 py-2 rounded font-medium transition-colors duration-300;
+    @apply rounded px-4 py-2 font-medium transition-colors duration-300;
   }
-  
+
   .btn-primary {
-    @apply btn bg-primary-500 text-white hover:bg-primary-600;
+    @apply btn bg-primary-500 hover:bg-primary-600 text-white;
   }
-  
+
   .btn-secondary {
     @apply btn bg-secondary text-white hover:bg-purple-700;
   }
-  
+
   .btn-outline {
     @apply btn border border-gray-300 hover:bg-gray-100;
   }
@@ -419,9 +406,11 @@ module.exports = {
 **过渡效果**
 
 ```html
-<div class="w-20 h-20 bg-blue-500 rounded-lg transition-all duration-300 hover:scale-110 hover:rotate-12"></div>
+<div class="h-20 w-20 rounded-lg bg-blue-500 transition-all duration-300 hover:scale-110 hover:rotate-12"></div>
 
-<button class="bg-blue-500 text-white px-4 py-2 rounded transition-colors duration-300 hover:bg-blue-600 active:bg-blue-700">
+<button
+  class="rounded bg-blue-500 px-4 py-2 text-white transition-colors duration-300 hover:bg-blue-600 active:bg-blue-700"
+>
   Hover and active transitions
 </button>
 ```
@@ -443,9 +432,9 @@ module.exports = {
 ```
 
 ```html
-<div class="animate-bounce-slow w-12 h-12 bg-blue-500 rounded-full"></div>
-<div class="animate-pulse-slow w-12 h-12 bg-green-500 rounded-full"></div>
-<div class="animate-spin w-12 h-12 border-4 border-t-blue-500 border-r-transparent rounded-full"></div>
+<div class="animate-bounce-slow h-12 w-12 rounded-full bg-blue-500"></div>
+<div class="animate-pulse-slow h-12 w-12 rounded-full bg-green-500"></div>
+<div class="h-12 w-12 animate-spin rounded-full border-4 border-t-blue-500 border-r-transparent"></div>
 ```
 
 ### 深色模式
@@ -463,29 +452,39 @@ module.exports = {
 **使用深色模式**
 
 ```html
-<div class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white p-4 rounded-lg">
+<div class="rounded-lg bg-white p-4 text-gray-900 dark:bg-gray-900 dark:text-white">
   <p>This text changes color based on dark mode</p>
 </div>
 
-<button class="bg-blue-500 dark:bg-blue-700 text-white p-4 rounded-lg">
-  Button that adapts to dark mode
-</button>
+<button class="rounded-lg bg-blue-500 p-4 text-white dark:bg-blue-700">Button that adapts to dark mode</button>
 ```
 
 **切换深色模式**
 
 ```html
-<button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700">
-  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path class="dark:hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-    <path class="hidden dark:block" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+<button id="theme-toggle" class="rounded-full bg-gray-200 p-2 dark:bg-gray-700">
+  <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path
+      class="dark:hidden"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+    />
+    <path
+      class="hidden dark:block"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+    />
   </svg>
 </button>
 
 <script>
-  document.getElementById('theme-toggle').addEventListener('click', function() {
-    document.documentElement.classList.toggle('dark');
-  });
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    document.documentElement.classList.toggle('dark')
+  })
 </script>
 ```
 
@@ -497,7 +496,7 @@ module.exports = {
 // tailwind.config.js
 module.exports = {
   plugins: [
-    function({ addUtilities }) {
+    function ({ addUtilities }) {
       addUtilities({
         '.content-auto': {
           'content-visibility': 'auto',
@@ -512,7 +511,7 @@ module.exports = {
           'backdrop-filter': 'blur(8px)',
         },
       })
-    }
+    },
   ],
 }
 ```
@@ -522,13 +521,9 @@ module.exports = {
 ```html
 <h1 class="text-3xl font-bold text-shadow-lg">Text with shadow</h1>
 
-<div class="bg-white/70 backdrop-blur p-4 rounded-lg">
-  Backdrop blur effect
-</div>
+<div class="rounded-lg bg-white/70 p-4 backdrop-blur">Backdrop blur effect</div>
 
-<div class="content-auto">
-  Content with auto visibility
-</div>
+<div class="content-auto">Content with auto visibility</div>
 ```
 
 ## 5. 实际应用
@@ -536,54 +531,41 @@ module.exports = {
 ### 登录页面
 
 ```html
-<div class="min-h-screen flex items-center justify-center bg-gray-50">
-  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-    <h2 class="text-2xl font-bold text-center text-gray-900 mb-6">
-      Sign in to your account
-    </h2>
+<div class="flex min-h-screen items-center justify-center bg-gray-50">
+  <div class="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+    <h2 class="mb-6 text-center text-2xl font-bold text-gray-900">Sign in to your account</h2>
     <form class="space-y-6">
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-          Email address
-        </label>
+        <label class="mb-1 block text-sm font-medium text-gray-700"> Email address </label>
         <input
           type="email"
-          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          class="w-full rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your email"
           required
         />
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-          Password
-        </label>
+        <label class="mb-1 block text-sm font-medium text-gray-700"> Password </label>
         <input
           type="password"
-          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          class="w-full rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your password"
           required
         />
       </div>
       <div class="flex items-center justify-between">
         <div class="flex items-center">
-          <input
-            type="checkbox"
-            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-          />
-          <label class="ml-2 block text-sm text-gray-700">
-            Remember me
-          </label>
+          <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+          <label class="ml-2 block text-sm text-gray-700"> Remember me </label>
         </div>
         <div class="text-sm">
-          <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
-            Forgot your password?
-          </a>
+          <a href="#" class="font-medium text-blue-600 hover:text-blue-500"> Forgot your password? </a>
         </div>
       </div>
       <div>
         <button
           type="submit"
-          class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          class="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           Sign in
         </button>
@@ -600,26 +582,41 @@ module.exports = {
   <div class="flex">
     <!-- Sidebar -->
     <div class="w-64 bg-white shadow-md">
-      <div class="p-4 border-b">
+      <div class="border-b p-4">
         <h1 class="text-xl font-bold text-gray-900">Dashboard</h1>
       </div>
       <div class="p-4">
         <nav class="space-y-2">
-          <a href="#" class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100">
-            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          <a href="#" class="flex items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
+            <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              />
             </svg>
             Dashboard
           </a>
-          <a href="#" class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100">
-            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          <a href="#" class="flex items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
+            <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
             </svg>
             Users
           </a>
-          <a href="#" class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100">
-            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          <a href="#" class="flex items-center rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
+            <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+              />
             </svg>
             Orders
           </a>
@@ -628,30 +625,35 @@ module.exports = {
     </div>
     <!-- Main content -->
     <div class="flex-1 p-6">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <div class="text-sm font-medium text-gray-500 mb-1">Total Users</div>
+      <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div class="rounded-lg bg-white p-6 shadow-md">
+          <div class="mb-1 text-sm font-medium text-gray-500">Total Users</div>
           <div class="text-2xl font-bold text-gray-900">1,234</div>
-          <div class="text-green-500 text-sm mt-1">+12% from last month</div>
+          <div class="mt-1 text-sm text-green-500">+12% from last month</div>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <div class="text-sm font-medium text-gray-500 mb-1">Revenue</div>
+        <div class="rounded-lg bg-white p-6 shadow-md">
+          <div class="mb-1 text-sm font-medium text-gray-500">Revenue</div>
           <div class="text-2xl font-bold text-gray-900">$45,678</div>
-          <div class="text-green-500 text-sm mt-1">+8% from last month</div>
+          <div class="mt-1 text-sm text-green-500">+8% from last month</div>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <div class="text-sm font-medium text-gray-500 mb-1">Active Sessions</div>
+        <div class="rounded-lg bg-white p-6 shadow-md">
+          <div class="mb-1 text-sm font-medium text-gray-500">Active Sessions</div>
           <div class="text-2xl font-bold text-gray-900">567</div>
-          <div class="text-red-500 text-sm mt-1">-3% from last month</div>
+          <div class="mt-1 text-sm text-red-500">-3% from last month</div>
         </div>
       </div>
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
+      <div class="rounded-lg bg-white p-6 shadow-md">
+        <h2 class="mb-4 text-lg font-semibold text-gray-900">Recent Activity</h2>
         <div class="space-y-4">
           <div class="flex items-center">
-            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            <div class="mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
+              <svg class="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
               </svg>
             </div>
             <div>
@@ -661,9 +663,14 @@ module.exports = {
             <div class="ml-auto text-sm text-gray-500">10 minutes ago</div>
           </div>
           <div class="flex items-center">
-            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
-              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+            <div class="mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
+              <svg class="h-5 w-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                />
               </svg>
             </div>
             <div>
@@ -682,29 +689,23 @@ module.exports = {
 ### 电商产品卡片
 
 ```html
-<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="overflow-hidden rounded-lg bg-white shadow-md">
   <div class="relative">
-    <img src="https://picsum.photos/800/600" alt="Product" class="w-full h-48 object-cover" />
-    <div class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-      Sale
-    </div>
+    <img src="https://picsum.photos/800/600" alt="Product" class="h-48 w-full object-cover" />
+    <div class="absolute top-2 right-2 rounded bg-red-500 px-2 py-1 text-xs font-bold text-white">Sale</div>
   </div>
   <div class="p-4">
-    <h3 class="text-lg font-medium text-gray-900 mb-2">Premium Headphones</h3>
-    <div class="flex items-center mb-2">
-      <div class="text-yellow-400 flex">
-        ★★★★☆
-      </div>
-      <span class="text-sm text-gray-500 ml-2">(12 reviews)</span>
+    <h3 class="mb-2 text-lg font-medium text-gray-900">Premium Headphones</h3>
+    <div class="mb-2 flex items-center">
+      <div class="flex text-yellow-400">★★★★☆</div>
+      <span class="ml-2 text-sm text-gray-500">(12 reviews)</span>
     </div>
     <div class="flex items-center justify-between">
       <div>
         <span class="text-lg font-bold text-gray-900">$299.99</span>
-        <span class="text-sm text-gray-500 line-through ml-2">$399.99</span>
+        <span class="ml-2 text-sm text-gray-500 line-through">$399.99</span>
       </div>
-      <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
-        Add to Cart
-      </button>
+      <button class="rounded bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">Add to Cart</button>
     </div>
   </div>
 </div>
@@ -714,38 +715,30 @@ module.exports = {
 
 ```html
 <nav class="bg-white shadow-md">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-16">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 justify-between">
       <div class="flex items-center">
         <div class="flex-shrink-0">
           <span class="text-xl font-bold text-gray-900">Brand</span>
         </div>
-        <div class="hidden md:block ml-10">
+        <div class="ml-10 hidden md:block">
           <div class="flex items-center space-x-4">
-            <a href="#" class="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-              Home
-            </a>
-            <a href="#" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-900 hover:text-blue-600"> Home </a>
+            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-900">
               Products
             </a>
-            <a href="#" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
-              About
-            </a>
-            <a href="#" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
-              Contact
-            </a>
+            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-900"> About </a>
+            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-900"> Contact </a>
           </div>
         </div>
       </div>
-      <div class="hidden md:flex items-center">
-        <button class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
-          Sign in
-        </button>
-        <button class="ml-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm font-medium">
+      <div class="hidden items-center md:flex">
+        <button class="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-900">Sign in</button>
+        <button class="ml-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
           Sign up
         </button>
       </div>
-      <div class="md:hidden flex items-center">
+      <div class="flex items-center md:hidden">
         <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-900">
           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -755,24 +748,33 @@ module.exports = {
     </div>
   </div>
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="md:hidden hidden">
-    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-      <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 bg-gray-100">
-        Home
-      </a>
-      <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50">
+  <div id="mobile-menu" class="hidden md:hidden">
+    <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
+      <a href="#" class="block rounded-md bg-gray-100 px-3 py-2 text-base font-medium text-gray-900"> Home </a>
+      <a
+        href="#"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+      >
         Products
       </a>
-      <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50">
+      <a
+        href="#"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+      >
         About
       </a>
-      <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50">
+      <a
+        href="#"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+      >
         Contact
       </a>
     </div>
-    <div class="pt-4 pb-3 border-t border-gray-200">
+    <div class="border-t border-gray-200 pt-4 pb-3">
       <div class="flex items-center px-5">
-        <button class="block w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-base font-medium">
+        <button
+          class="block w-full rounded-md bg-blue-600 px-4 py-2 text-base font-medium text-white hover:bg-blue-700"
+        >
           Sign up
         </button>
         <button class="mt-3 block w-full text-center text-base font-medium text-gray-500 hover:text-gray-900">
@@ -784,10 +786,10 @@ module.exports = {
 </nav>
 
 <script>
-  document.getElementById('mobile-menu-button').addEventListener('click', function() {
-    const mobileMenu = document.getElementById('mobile-menu');
-    mobileMenu.classList.toggle('hidden');
-  });
+  document.getElementById('mobile-menu-button').addEventListener('click', function () {
+    const mobileMenu = document.getElementById('mobile-menu')
+    mobileMenu.classList.toggle('hidden')
+  })
 </script>
 ```
 
@@ -795,49 +797,52 @@ module.exports = {
 
 ```html
 <div class="container mx-auto px-4 py-8">
-  <h2 class="text-2xl font-bold mb-6">Our Services</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-      <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+  <h2 class="mb-6 text-2xl font-bold">Our Services</h2>
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="rounded-lg bg-white p-6 shadow-md transition-shadow hover:shadow-lg">
+      <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
+        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
+          />
         </svg>
       </div>
-      <h3 class="text-lg font-semibold mb-2">Web Development</h3>
-      <p class="text-gray-600 mb-4">
-        We build modern, responsive websites that deliver exceptional user experiences.
-      </p>
-      <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">
-        Learn more →
-      </a>
+      <h3 class="mb-2 text-lg font-semibold">Web Development</h3>
+      <p class="mb-4 text-gray-600">We build modern, responsive websites that deliver exceptional user experiences.</p>
+      <a href="#" class="font-medium text-blue-600 hover:text-blue-800"> Learn more → </a>
     </div>
-    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-      <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
-        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+    <div class="rounded-lg bg-white p-6 shadow-md transition-shadow hover:shadow-lg">
+      <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+        <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+          />
         </svg>
       </div>
-      <h3 class="text-lg font-semibold mb-2">Mobile App Development</h3>
-      <p class="text-gray-600 mb-4">
-        Create native and cross-platform mobile apps for iOS and Android.
-      </p>
-      <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">
-        Learn more →
-      </a>
+      <h3 class="mb-2 text-lg font-semibold">Mobile App Development</h3>
+      <p class="mb-4 text-gray-600">Create native and cross-platform mobile apps for iOS and Android.</p>
+      <a href="#" class="font-medium text-blue-600 hover:text-blue-800"> Learn more → </a>
     </div>
-    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-      <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4">
-        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+    <div class="rounded-lg bg-white p-6 shadow-md transition-shadow hover:shadow-lg">
+      <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
+        <svg class="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+          />
         </svg>
       </div>
-      <h3 class="text-lg font-semibold mb-2">Digital Marketing</h3>
-      <p class="text-gray-600 mb-4">
-        Grow your business with strategic digital marketing campaigns.
-      </p>
-      <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">
-        Learn more →
-      </a>
+      <h3 class="mb-2 text-lg font-semibold">Digital Marketing</h3>
+      <p class="mb-4 text-gray-600">Grow your business with strategic digital marketing campaigns.</p>
+      <a href="#" class="font-medium text-blue-600 hover:text-blue-800"> Learn more → </a>
     </div>
   </div>
 </div>
@@ -849,6 +854,7 @@ module.exports = {
 
 **问题**：Tailwind 类不生效
 **解决方案**：
+
 - 检查 `content` 配置是否正确，确保包含了所有需要处理的文件
 - 重新构建项目
 - 检查是否正确导入了 Tailwind CSS 文件
@@ -856,12 +862,14 @@ module.exports = {
 
 **问题**：自定义颜色不显示
 **解决方案**：
+
 - 检查 `tailwind.config.js` 中的颜色配置
 - 确保颜色名称正确
 - 重新启动开发服务器
 
 **问题**：响应式类不工作
 **解决方案**：
+
 - 检查断点前缀是否正确（sm:, md:, lg:, etc.）
 - 确保屏幕尺寸超过了断点阈值
 - 检查是否有其他 CSS 规则覆盖了 Tailwind 类
@@ -870,6 +878,7 @@ module.exports = {
 
 **问题**：CSS 文件过大
 **解决方案**：
+
 - 确保使用了 JIT 模式（Tailwind v3 默认启用）
 - 检查 `content` 配置，只包含必要的文件
 - 避免使用通配符选择器
@@ -877,6 +886,7 @@ module.exports = {
 
 **问题**：开发速度慢
 **解决方案**：
+
 - 确保使用了 JIT 模式
 - 优化 IDE 配置
 - 考虑使用 Tailwind CSS IntelliSense 插件
@@ -886,6 +896,7 @@ module.exports = {
 
 **问题**：类名过长
 **解决方案**：
+
 - 提取组件类
 - 使用 `@apply` 合并常用类
 - 考虑使用 CSS 变量
@@ -893,6 +904,7 @@ module.exports = {
 
 **问题**：维护困难
 **解决方案**：
+
 - 建立一致的命名规范
 - 合理使用组件提取
 - 文档化常用样式模式
@@ -900,6 +912,7 @@ module.exports = {
 
 **问题**：与其他 CSS 冲突
 **解决方案**：
+
 - 使用 `@layer` 组织代码
 - 避免使用 `!important`
 - 检查 CSS 加载顺序
@@ -917,10 +930,7 @@ JIT (Just-In-Time) 模式是 Tailwind v3 的默认模式，它只生成你实际
 // tailwind.config.js
 module.exports = {
   // JIT 模式在 Tailwind v3 中默认启用
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   // ...
 }
 ```
@@ -931,8 +941,8 @@ module.exports = {
 // tailwind.config.js
 module.exports = {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
     // 避免使用过于宽泛的模式
     // "./**/*.{js,ts,jsx,tsx}" // 不推荐
   ],
@@ -963,9 +973,7 @@ module.exports = {
 **使用 will-change**
 
 ```html
-<div class="will-change-transform transition-transform duration-300 hover:scale-105">
-  Hover me
-</div>
+<div class="transition-transform duration-300 will-change-transform hover:scale-105">Hover me</div>
 ```
 
 ### 代码组织
@@ -984,16 +992,16 @@ module.exports = {
 
 @layer components {
   .btn {
-    @apply px-4 py-2 rounded font-medium;
+    @apply rounded px-4 py-2 font-medium;
   }
   .card {
-    @apply bg-white rounded-lg shadow-md p-6;
+    @apply rounded-lg bg-white p-6 shadow-md;
   }
 }
 
 @layer utilities {
   .text-shadow {
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 }
 ```
@@ -1002,9 +1010,7 @@ module.exports = {
 
 ```html
 <!-- 不推荐 -->
-<button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
-  Button
-</button>
+<button class="rounded bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">Button</button>
 
 <!-- 推荐 -->
 <button class="btn-primary">Button</button>

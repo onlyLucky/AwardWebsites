@@ -329,10 +329,7 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
     // ===== 全屏四边形 =====
     const buffer = gl!.createBuffer()
     gl!.bindBuffer(gl!.ARRAY_BUFFER, buffer)
-    gl!.bufferData(gl!.ARRAY_BUFFER, new Float32Array([
-      -1, -1, 1, -1, -1, 1,
-      -1, 1, 1, -1, 1, 1
-    ]), gl!.STATIC_DRAW)
+    gl!.bufferData(gl!.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl!.STATIC_DRAW)
 
     const posLoc = gl!.getAttribLocation(program, 'a_position')
     gl!.enableVertexAttribArray(posLoc)
@@ -342,16 +339,32 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
     function loadTexture(url: string, wrapRepeat: boolean = false): Promise<WebGLTexture | null> {
       return new Promise((resolve) => {
         const tex = gl!.createTexture()
-        if (!tex) { resolve(null); return }
+        if (!tex) {
+          resolve(null)
+          return
+        }
 
         // 占位黑色
         gl!.bindTexture(gl!.TEXTURE_2D, tex)
-        gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGBA, 1, 1, 0, gl!.RGBA, gl!.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 255]))
+        gl!.texImage2D(
+          gl!.TEXTURE_2D,
+          0,
+          gl!.RGBA,
+          1,
+          1,
+          0,
+          gl!.RGBA,
+          gl!.UNSIGNED_BYTE,
+          new Uint8Array([0, 0, 0, 255])
+        )
 
         const img = new Image()
         img.crossOrigin = 'anonymous'
         img.onload = () => {
-          if (!gl) { resolve(null); return }
+          if (!gl) {
+            resolve(null)
+            return
+          }
           gl.bindTexture(gl.TEXTURE_2D, tex)
           gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img)
           gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, wrapRepeat ? gl.REPEAT : gl.CLAMP_TO_EDGE)
@@ -377,7 +390,7 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
     Promise.all([
       loadTexture(bootScreenPath),
-      loadTexture(new URL('@/assets/shader-se/textures/rgba_noise.png', import.meta.url).href, true)
+      loadTexture(new URL('@/assets/shader-se/textures/rgba_noise.png', import.meta.url).href, true),
     ]).then(([bootTex, noiseTex]) => {
       if (!bootTex || !noiseTex) return
 
@@ -446,7 +459,7 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
     const minDisplayTime = 3000 // 最小展示 3 秒
 
     const interval = setInterval(() => {
-      setProgress(prev => {
+      setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval)
           const elapsed = Date.now() - startTime

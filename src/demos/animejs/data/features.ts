@@ -136,17 +136,17 @@ export interface Module {
 }
 
 export const modules: Module[] = [
-  { name: 'Timer', size: 5.60, color: 'timer' },
-  { name: 'Animation', size: 5.20, color: 'animation' },
+  { name: 'Timer', size: 5.6, color: 'timer' },
+  { name: 'Animation', size: 5.2, color: 'animation' },
   { name: 'Timeline', size: 0.55, color: 'timeline' },
-  { name: 'Animatable', size: 0.40, color: 'animatable' },
+  { name: 'Animatable', size: 0.4, color: 'animatable' },
   { name: 'Draggable', size: 6.41, color: 'draggable' },
-  { name: 'Scroll', size: 4.30, color: 'events' },
+  { name: 'Scroll', size: 4.3, color: 'events' },
   { name: 'Scope', size: 0.22, color: 'scope' },
   { name: 'SVG', size: 0.35, color: 'svg' },
   { name: 'Stagger', size: 0.48, color: 'utils' },
   { name: 'Spring', size: 0.52, color: 'easings' },
-  { name: 'WAAPI', size: 3.50, color: 'waapi' },
+  { name: 'WAAPI', size: 3.5, color: 'waapi' },
 ]
 
 // 计算总大小

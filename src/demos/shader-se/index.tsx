@@ -68,7 +68,7 @@ export default function ShaderSeDemo() {
   }, [])
 
   return (
-    <div className="shader-se-demo">
+    <div className='shader-se-demo'>
       {/* 加载画面 */}
       {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
 
@@ -76,7 +76,7 @@ export default function ShaderSeDemo() {
       <Navbar />
 
       {/* 3D Canvas 背景 */}
-      <div className="shader-se-canvas">
+      <div className='shader-se-canvas'>
         <Canvas
           camera={{
             fov: 75,
@@ -99,7 +99,7 @@ export default function ShaderSeDemo() {
       </div>
 
       {/* HTML 内容层 */}
-      <div className="shader-se-content">
+      <div className='shader-se-content'>
         <HeroSection />
         <ProjectsSection />
         <AboutSection />

@@ -19,16 +19,8 @@ export interface UseInViewOptions {
   rootMargin?: string
 }
 
-export function useInView<T extends HTMLElement>(
-  ref: RefObject<T>,
-  options: UseInViewOptions = {}
-): void {
-  const {
-    once = false,
-    threshold = 0.5,
-    root = null,
-    rootMargin = '0px',
-  } = options
+export function useInView<T extends HTMLElement>(ref: RefObject<T>, options: UseInViewOptions = {}): void {
+  const { once = false, threshold = 0.5, root = null, rootMargin = '0px' } = options
 
   useEffect(() => {
     const element = ref.current

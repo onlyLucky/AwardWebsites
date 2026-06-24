@@ -177,7 +177,11 @@ export default function SubNav() {
       >
         <div className={styles['scroll-bar']}>
           <div ref={cursorRef} className={styles['scroll-cursor']} style={{ transform: 'translateX(0%)' }}></div>
-          <div ref={ghostRef} className={`${styles['scroll-cursor-ghost']} ${styles['scroll-cursor']}`} style={{ transform: 'translateX(0%)' }}></div>
+          <div
+            ref={ghostRef}
+            className={`${styles['scroll-cursor-ghost']} ${styles['scroll-cursor']}`}
+            style={{ transform: 'translateX(0%)' }}
+          ></div>
         </div>
       </div>
 
@@ -191,9 +195,9 @@ export default function SubNav() {
       {/* 模块可视化卡片 */}
       <div
         className={`${styles['modules-sizes']} ${styles['home-section-card']} ${styles['text-layout']}`}
-        data-card="modules"
-        data-enter-offset="-=50lvh"
-        data-leave-offset="-=150lvh"
+        data-card='modules'
+        data-enter-offset='-=50lvh'
+        data-leave-offset='-=150lvh'
         style={{ opacity: activeCard === 'modules' ? 1 : 0 }}
       >
         <div className={styles['box-heading']}>
@@ -225,12 +229,12 @@ export default function SubNav() {
       {/* 赞助级别卡片 */}
       <div
         className={`${styles['funding-level-box']} ${styles['home-section-card']} ${styles['text-layout']}`}
-        data-card="sponsors"
-        data-enter-offset="-=50lvh"
-        data-leave-offset="-=50lvh"
+        data-card='sponsors'
+        data-enter-offset='-=50lvh'
+        data-leave-offset='-=50lvh'
         style={{ opacity: activeCard === 'sponsors' ? 1 : 0 }}
       >
-        <FundingLevel path="github-sponsors" />
+        <FundingLevel path='github-sponsors' />
       </div>
     </div>
   )

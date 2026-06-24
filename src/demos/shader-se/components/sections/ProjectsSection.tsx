@@ -44,37 +44,43 @@ export function ProjectsSection() {
   const currentProject = projects[currentIndex]
 
   // 拖拽处理
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    dragStartX.current = e.clientX
-    setIsDragging(true)
-  }, [setIsDragging])
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      dragStartX.current = e.clientX
+      setIsDragging(true)
+    },
+    [setIsDragging]
+  )
 
-  const handleMouseUp = useCallback((e: React.MouseEvent) => {
-    if (!isDragging) return
+  const handleMouseUp = useCallback(
+    (e: React.MouseEvent) => {
+      if (!isDragging) return
 
-    const dragDistance = e.clientX - dragStartX.current
-    const threshold = 50
+      const dragDistance = e.clientX - dragStartX.current
+      const threshold = 50
 
-    if (dragDistance > threshold) {
-      prevProject()
-    } else if (dragDistance < -threshold) {
-      nextProject()
-    }
+      if (dragDistance > threshold) {
+        prevProject()
+      } else if (dragDistance < -threshold) {
+        nextProject()
+      }
 
-    setIsDragging(false)
-  }, [isDragging, nextProject, prevProject, setIsDragging])
+      setIsDragging(false)
+    },
+    [isDragging, nextProject, prevProject, setIsDragging]
+  )
 
   const handleMouseLeave = useCallback(() => {
     setIsDragging(false)
   }, [setIsDragging])
 
   return (
-    <section className="shader-se-section shader-se-projects" id="selected-work">
+    <section className='shader-se-section shader-se-projects' id='selected-work'>
       <motion.div
-        className="shader-se-projects__content"
+        className='shader-se-projects__content'
         variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
+        initial='hidden'
+        whileInView='visible'
         viewport={{ once: true, amount: 0.3 }}
         style={{
           position: 'relative',
@@ -108,7 +114,7 @@ export function ProjectsSection() {
 
         {/* 项目轮播 */}
         <motion.div
-          className="shader-se-projects__carousel"
+          className='shader-se-projects__carousel'
           variants={itemVariants}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
@@ -117,37 +123,37 @@ export function ProjectsSection() {
         >
           {/* 导航箭头 */}
           <button
-            className="shader-se-projects__nav shader-se-projects__nav--prev"
+            className='shader-se-projects__nav shader-se-projects__nav--prev'
             onClick={(e) => {
               e.stopPropagation()
               prevProject()
             }}
-            aria-label="Previous project"
+            aria-label='Previous project'
           >
             &#8592;
           </button>
 
           <button
-            className="shader-se-projects__nav shader-se-projects__nav--next"
+            className='shader-se-projects__nav shader-se-projects__nav--next'
             onClick={(e) => {
               e.stopPropagation()
               nextProject()
             }}
-            aria-label="Next project"
+            aria-label='Next project'
           >
             &#8594;
           </button>
 
           {/* 项目卡片 */}
           <motion.div
-            className="shader-se-projects__card"
+            className='shader-se-projects__card'
             key={currentIndex}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
             <div
-              className="shader-se-projects__card-image"
+              className='shader-se-projects__card-image'
               style={{
                 width: '100%',
                 height: '100%',
@@ -170,9 +176,9 @@ export function ProjectsSection() {
               </div>
             </div>
 
-            <div className="shader-se-projects__card-overlay">
-              <h3 className="shader-se-projects__card-title">{currentProject.title}</h3>
-              <p className="shader-se-projects__card-subtitle">{currentProject.subtitle}</p>
+            <div className='shader-se-projects__card-overlay'>
+              <h3 className='shader-se-projects__card-title'>{currentProject.title}</h3>
+              <p className='shader-se-projects__card-subtitle'>{currentProject.subtitle}</p>
             </div>
           </motion.div>
 
@@ -227,8 +233,8 @@ export function ProjectsSection() {
           {currentProject.site_link && (
             <a
               href={currentProject.site_link}
-              target="_blank"
-              rel="noopener noreferrer"
+              target='_blank'
+              rel='noopener noreferrer'
               style={{
                 display: 'inline-block',
                 padding: '0.75rem 1.5rem',

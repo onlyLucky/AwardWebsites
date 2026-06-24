@@ -18,9 +18,7 @@ interface UseScrollAnimationOptions {
   onLeave?: () => void
 }
 
-export function useScrollAnimation<T extends HTMLElement>(
-  options: UseScrollAnimationOptions = {}
-) {
+export function useScrollAnimation<T extends HTMLElement>(options: UseScrollAnimationOptions = {}) {
   const elementRef = useRef<T>(null)
   const animationRef = useRef<gsap.core.Tween | null>(null)
 
@@ -28,13 +26,7 @@ export function useScrollAnimation<T extends HTMLElement>(
     const element = elementRef.current
     if (!element) return
 
-    const {
-      start = 'top 80%',
-      end = 'top 50%',
-      scrub = false,
-      onEnter,
-      onLeave,
-    } = options
+    const { start = 'top 80%', end = 'top 50%', scrub = false, onEnter, onLeave } = options
 
     // 创建 ScrollTrigger 实例
     const trigger = ScrollTrigger.create({

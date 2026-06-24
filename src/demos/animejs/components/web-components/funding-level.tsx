@@ -26,7 +26,7 @@ export default function FundingLevel({ path = 'github-sponsors', className = '' 
       <ul className={styles['funding-level-list']}>
         {PLACEHOLDER_FUNDING.map((sponsor, index) => (
           <li key={index} className={styles['funding-level-item']}>
-            <a href={sponsor.url} target="_blank" rel="noopener noreferrer" title={sponsor.name}>
+            <a href={sponsor.url} target='_blank' rel='noopener noreferrer' title={sponsor.name}>
               {sponsor.name}
             </a>
           </li>

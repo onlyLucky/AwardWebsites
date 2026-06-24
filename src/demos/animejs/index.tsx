@@ -28,7 +28,7 @@ export default function AnimejsDemo() {
   }, [])
 
   return (
-    <div className="animejsRoot">
+    <div className='animejsRoot'>
       <div ref={pageRef} className={styles.page}>
         {/* 1. 顶部导航 */}
         <Header />

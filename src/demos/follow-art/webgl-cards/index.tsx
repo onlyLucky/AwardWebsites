@@ -39,7 +39,7 @@ import card7 from './images/Card-7.png'
 import card8 from './images/Card-8.png'
 import card9 from './images/Card-9.png'
 
-const CARD_IMAGES = [card1, card2, card3, card4, card5, card6, card7, card8, card9]
+const CARD_IMAGES = [card1.src, card2.src, card3.src, card4.src, card5.src, card6.src, card7.src, card8.src, card9.src]
 
 // ============================================================
 // 源码精确参数（来自 Nuq5qwIZ.js + DJ9DjCKf.js）
@@ -83,18 +83,10 @@ function getCurvePoint(t: number) {
   const angle = t * Math.PI * 2
 
   // 圆形路径上的位置
-  const pos = new THREE.Vector3(
-    Math.cos(angle) * RADIUS,
-    0,
-    Math.sin(angle) * RADIUS
-  )
+  const pos = new THREE.Vector3(Math.cos(angle) * RADIUS, 0, Math.sin(angle) * RADIUS)
 
   // 切线方向（圆的切线，垂直于半径方向）
-  const tangent = new THREE.Vector3(
-    -Math.sin(angle),
-    0,
-    Math.cos(angle)
-  ).normalize()
+  const tangent = new THREE.Vector3(-Math.sin(angle), 0, Math.cos(angle)).normalize()
 
   // 法线方向（世界空间向上）
   const normal = new THREE.Vector3(0, 1, 0)
@@ -159,11 +151,7 @@ function createCurvedCardGeometry(
     // 构建 basis 矩阵（源码: mat3 basis = mat3(a, b, c)）
     // 列向量分别为：切线、法线、副法线
     const basis = new THREE.Matrix3()
-    basis.set(
-      tangent.x, tangent.y, tangent.z,
-      normal.x, normal.y, normal.z,
-      binormal.x, binormal.y, binormal.z
-    )
+    basis.set(tangent.x, tangent.y, tangent.z, normal.x, normal.y, normal.z, binormal.x, binormal.y, binormal.z)
 
     // 变换顶点（源码: transformed = basis * vec3(0, y, 0) + spinePos）
     // xWeight=0 意味着 x 坐标不参与变换，只有 y 坐标被弯曲
@@ -209,8 +197,8 @@ function WebGLCards() {
     // --------------------------------------------------------
     // 1. 创建两个场景（源码使用两个独立的 scene）
     // --------------------------------------------------------
-    const sceneShadow = new THREE.Scene()    // 阴影场景
-    const sceneTextured = new THREE.Scene()  // 纹理场景
+    const sceneShadow = new THREE.Scene() // 阴影场景
+    const sceneTextured = new THREE.Scene() // 纹理场景
 
     // --------------------------------------------------------
     // 2. 创建两个相机（源码使用不同的 near/far 裁剪平面）
@@ -222,16 +210,16 @@ function WebGLCards() {
      * 这样阴影卡片只在特定距离范围内可见
      */
     const cameraShadow = new THREE.PerspectiveCamera(
-      28,  // FOV（源码精确值）
+      28, // FOV（源码精确值）
       container.clientWidth / container.clientHeight,
-      69,  // near（源码精确值）
-      200  // far（源码精确值）
+      69, // near（源码精确值）
+      200 // far（源码精确值）
     )
     cameraShadow.position.set(0, -14, -70) // 源码精确位置
     cameraShadow.rotation.set(
       (Math.PI / 180) * -192, // 源码精确旋转 X（度→弧度）
       0,
-      (Math.PI / 180) * -25   // 源码精确旋转 Z（度→弧度）
+      (Math.PI / 180) * -25 // 源码精确旋转 Z（度→弧度）
     )
 
     /**
@@ -244,14 +232,10 @@ function WebGLCards() {
       28,
       container.clientWidth / container.clientHeight,
       0.1,
-      69  // 源码值，但实际渲染时需要调整
+      69 // 源码值，但实际渲染时需要调整
     )
     cameraTextured.position.set(0, -14, -70)
-    cameraTextured.rotation.set(
-      (Math.PI / 180) * -192,
-      0,
-      (Math.PI / 180) * -25
-    )
+    cameraTextured.rotation.set((Math.PI / 180) * -192, 0, (Math.PI / 180) * -25)
 
     // --------------------------------------------------------
     // 3. 创建两个渲染器（每个对应一个 canvas）
@@ -284,8 +268,8 @@ function WebGLCards() {
     // --------------------------------------------------------
     // 4. 创建卡片网格
     // --------------------------------------------------------
-    const texturedCards: THREE.Mesh[] = []  // 带贴图的卡片
-    const shadowCards: THREE.Mesh[] = []    // 橙色阴影卡片
+    const texturedCards: THREE.Mesh[] = [] // 带贴图的卡片
+    const shadowCards: THREE.Mesh[] = [] // 橙色阴影卡片
 
     /**
      * 阴影材质（源码: new THREE.MeshBasicMaterial({ color: "#B05A2E", side: DoubleSide })）
@@ -310,9 +294,11 @@ function WebGLCards() {
           // 贴图加载失败时用灰色占位
           img.onerror = () => {
             const c = document.createElement('canvas')
-            c.width = 512; c.height = 717
+            c.width = 512
+            c.height = 717
             const ctx = c.getContext('2d')!
-            ctx.fillStyle = '#333'; ctx.fillRect(0, 0, 512, 717)
+            ctx.fillStyle = '#333'
+            ctx.fillRect(0, 0, 512, 717)
             const fallbackImg = new Image()
             fallbackImg.src = c.toDataURL()
             fallbackImg.onload = () => resolve(fallbackImg)
@@ -328,18 +314,18 @@ function WebGLCards() {
 
         // 纹理卡片
         const texture = new THREE.Texture(img)
-        texture.colorSpace = THREE.SRGBColorSpace  // 正确的颜色空间
-        texture.minFilter = THREE.LinearFilter     // 线性过滤，避免锯齿
+        texture.colorSpace = THREE.SRGBColorSpace // 正确的颜色空间
+        texture.minFilter = THREE.LinearFilter // 线性过滤，避免锯齿
         texture.magFilter = THREE.LinearFilter
-        texture.flipY = false                      // 不翻转 Y 轴
+        texture.flipY = false // 不翻转 Y 轴
         texture.needsUpdate = true
 
         // 每张卡片创建独立的弯曲几何体（cardT 决定在圆形路径上的位置）
         const texturedGeometry = createCurvedCardGeometry(CARD_WIDTH, CARD_HEIGHT, CARD_SEGMENTS, cardT)
         const texturedMaterial = new THREE.MeshBasicMaterial({
           map: texture,
-          side: THREE.DoubleSide,    // 双面可见（卡片会旋转到背面）
-          transparent: true,         // 透明背景，露出下方的阴影和标题
+          side: THREE.DoubleSide, // 双面可见（卡片会旋转到背面）
+          transparent: true, // 透明背景，露出下方的阴影和标题
         })
 
         const texturedMesh = new THREE.Mesh(texturedGeometry, texturedMaterial)
@@ -372,7 +358,7 @@ function WebGLCards() {
         // 源码中卡片沿圆形路径移动，弯曲形状随位置变化
         const regenerateCards = (cards: THREE.Mesh[]) => {
           cards.forEach((mesh, idx) => {
-            const cardT = ((idx / CARD_IMAGES.length + currentOffset) % 1 + 1) % 1
+            const cardT = (((idx / CARD_IMAGES.length + currentOffset) % 1) + 1) % 1
             const newGeom = createCurvedCardGeometry(CARD_WIDTH, CARD_HEIGHT, CARD_SEGMENTS, cardT)
             mesh.geometry.dispose()
             mesh.geometry = newGeom
@@ -459,12 +445,7 @@ function WebGLCards() {
     }
   }, [isVisible])
 
-  return (
-    <div
-      className={`${styles.webglCardsContainer} ${isVisible ? styles.visible : ''}`}
-      ref={containerRef}
-    />
-  )
+  return <div className={`${styles.webglCardsContainer} ${isVisible ? styles.visible : ''}`} ref={containerRef} />
 }
 
 export default WebGLCards

@@ -55,16 +55,16 @@ function SearchInput({ value, onChange, placeholder, expandable = false }: Searc
 
   if (expandable) {
     return (
-      <div ref={containerRef} className="flex items-center gap-2">
+      <div ref={containerRef} className='flex items-center gap-2'>
         {/* Search icon button */}
         <button
           onClick={() => setExpanded(true)}
-          className={`p-2 rounded-md border border-border hover:bg-accent transition-all ${
-            expanded ? 'opacity-0 scale-90 pointer-events-none' : 'opacity-100 scale-100'
+          className={`border-border hover:bg-accent rounded-md border p-2 transition-all ${
+            expanded ? 'pointer-events-none scale-90 opacity-0' : 'scale-100 opacity-100'
           }`}
-          aria-label="Search"
+          aria-label='Search'
         >
-          <Search className="h-4 w-4" />
+          <Search className='h-4 w-4' />
         </button>
 
         {/* Expandable search input */}
@@ -73,22 +73,22 @@ function SearchInput({ value, onChange, placeholder, expandable = false }: Searc
             expanded ? 'w-64 opacity-100' : 'w-0 opacity-0'
           }`}
         >
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <div className='relative'>
+            <Search className='text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2' />
             <input
               ref={inputRef}
-              type="text"
+              type='text'
               value={value}
               onChange={(e) => onChange(e.target.value)}
               placeholder={placeholder}
-              className="w-full pl-9 pr-9 py-2 rounded-md border border-border bg-background text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              className='border-border bg-background placeholder:text-muted-foreground focus:ring-ring w-full rounded-md border py-2 pr-9 pl-9 text-sm focus:ring-2 focus:outline-none'
             />
             {value && (
               <button
                 onClick={() => onChange('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 rounded-sm hover:bg-accent transition-colors"
+                className='hover:bg-accent absolute top-1/2 right-3 -translate-y-1/2 rounded-sm p-0.5 transition-colors'
               >
-                <X className="h-3.5 w-3.5 text-muted-foreground" />
+                <X className='text-muted-foreground h-3.5 w-3.5' />
               </button>
             )}
           </div>
@@ -99,21 +99,21 @@ function SearchInput({ value, onChange, placeholder, expandable = false }: Searc
 
   // Default: always visible input
   return (
-    <div className="relative">
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+    <div className='relative'>
+      <Search className='text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2' />
       <input
-        type="text"
+        type='text'
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full pl-9 pr-9 py-2.5 rounded-lg border border-border bg-background text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
+        className='border-border bg-background placeholder:text-muted-foreground focus:ring-ring w-full rounded-lg border py-2.5 pr-9 pl-9 text-sm transition-shadow focus:ring-2 focus:outline-none'
       />
       {value && (
         <button
           onClick={() => onChange('')}
-          className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 rounded-sm hover:bg-accent transition-colors"
+          className='hover:bg-accent absolute top-1/2 right-3 -translate-y-1/2 rounded-sm p-0.5 transition-colors'
         >
-          <X className="h-3.5 w-3.5 text-muted-foreground" />
+          <X className='text-muted-foreground h-3.5 w-3.5' />
         </button>
       )}
     </div>

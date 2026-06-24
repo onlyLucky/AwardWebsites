@@ -11,19 +11,20 @@ const MAX_BAR_SIZE = 6.41
 export default function ModulesSection() {
   return (
     <section
-      id="modules"
+      id='modules'
       className={`home-section-container ${styles['home-section-light']}`}
-      data-chapter="modules"
-      data-label="MODULES"
-      data-enter-offset="+=10lvh"
-      data-leave-offset="-=75lvh"
+      data-chapter='modules'
+      data-label='MODULES'
+      data-enter-offset='+=10lvh'
+      data-leave-offset='-=75lvh'
     >
       <section className={`${styles['home-section']} ${styles['fixed-section']}`}>
         <div className={styles['home-section-content']}>
-          <div className={`${styles['home-section-text']} ${styles['text-layout']} ${styles['home-section-text-short']}`}>
+          <div
+            className={`${styles['home-section-text']} ${styles['text-layout']} ${styles['home-section-text-short']}`}
+          >
             <h2 className={`${styles['section-heading']} ${styles['text-xxl']}`}>
-              A lightweight{' '}
-              <br />
+              A lightweight <br />
               and modular API
             </h2>
             <p className={styles['section-sub-heading']}>

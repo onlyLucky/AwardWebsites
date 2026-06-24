@@ -93,15 +93,11 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="App">
+    <div className='App'>
       <h1>Hello React!</h1>
       <p>Count: {count}</p>
-      <button onClick={() => setCount(count + 1)}>
-        Increment
-      </button>
-      <button onClick={() => setCount(count - 1)}>
-        Decrement
-      </button>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => setCount(count - 1)}>Decrement</button>
     </div>
   )
 }
@@ -117,22 +113,18 @@ JSX 是一种 JavaScript 的语法扩展，看起来像模板语言，但它具�
 
 ```jsx
 // 基本 JSX
-const element = <h1>Hello, world!</h1>;
+const element = <h1>Hello, world!</h1>
 
 // 嵌入表达式
-const name = 'John';
-const element = <h1>Hello, {name}!</h1>;
+const name = 'John'
+const element = <h1>Hello, {name}!</h1>
 
 // 使用 JavaScript 表达式
-const isLoggedIn = true;
-const element = (
-  <div>
-    {isLoggedIn ? <p>Welcome back!</p> : <p>Please log in.</p>}
-  </div>
-);
+const isLoggedIn = true
+const element = <div>{isLoggedIn ? <p>Welcome back!</p> : <p>Please log in.</p>}</div>
 
 // 属性
-const element = <img src="logo.png" alt="Logo" className="logo" />;
+const element = <img src='logo.png' alt='Logo' className='logo' />
 
 // 子元素
 const element = (
@@ -140,7 +132,7 @@ const element = (
     <h1>Hello</h1>
     <p>Welcome to React</p>
   </div>
-);
+)
 ```
 
 ### 组件基础
@@ -152,16 +144,16 @@ React 组件可以是函数组件或类组件。现代 React 推荐使用函数�
 ```jsx
 // src/components/Greeting.jsx
 function Greeting({ name }) {
-  return <h1>Hello, {name}!</h1>;
+  return <h1>Hello, {name}!</h1>
 }
 
-export default Greeting;
+export default Greeting
 
 // 使用
-import Greeting from './components/Greeting';
+import Greeting from './components/Greeting'
 
 function App() {
-  return <Greeting name="John" />;
+  return <Greeting name='John' />
 }
 ```
 
@@ -169,17 +161,17 @@ function App() {
 
 ```jsx
 // src/components/ClassCounter.jsx
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class ClassCounter extends Component {
   constructor(props) {
-    super(props);
-    this.state = { count: 0 };
+    super(props)
+    this.state = { count: 0 }
   }
 
   increment = () => {
-    this.setState({ count: this.state.count + 1 });
-  };
+    this.setState({ count: this.state.count + 1 })
+  }
 
   render() {
     return (
@@ -187,11 +179,11 @@ class ClassCounter extends Component {
         <p>Count: {this.state.count}</p>
         <button onClick={this.increment}>Increment</button>
       </div>
-    );
+    )
   }
 }
 
-export default ClassCounter;
+export default ClassCounter
 ```
 
 ### Hooks 基础
@@ -204,30 +196,25 @@ Hooks 是 React 16.8 引入的新特性，让函数组件可以使用状态和�
 
 ```jsx
 // src/components/Counter.jsx
-import { useState } from 'react';
+import { useState } from 'react'
 
 function Counter() {
-  const [count, setCount] = useState(0);
-  const [name, setName] = useState('');
+  const [count, setCount] = useState(0)
+  const [name, setName] = useState('')
 
   return (
     <div>
       <p>Count: {count}</p>
       <button onClick={() => setCount(count + 1)}>Increment</button>
       <button onClick={() => setCount(count - 1)}>Decrement</button>
-      
-      <input 
-        type="text" 
-        value={name} 
-        onChange={(e) => setName(e.target.value)} 
-        placeholder="Enter your name"
-      />
+
+      <input type='text' value={name} onChange={(e) => setName(e.target.value)} placeholder='Enter your name' />
       <p>Hello, {name}!</p>
     </div>
-  );
+  )
 }
 
-export default Counter;
+export default Counter
 ```
 
 #### useEffect
@@ -236,50 +223,50 @@ export default Counter;
 
 ```jsx
 // src/components/DataFetcher.jsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 function DataFetcher() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     // 数据获取
     const fetchData = async () => {
       try {
-        const response = await fetch('https://api.example.com/data');
+        const response = await fetch('https://api.example.com/data')
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error('Network response was not ok')
         }
-        const result = await response.json();
-        setData(result);
+        const result = await response.json()
+        setData(result)
       } catch (err) {
-        setError(err.message);
+        setError(err.message)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchData();
+    fetchData()
 
     // 清理函数
     return () => {
       // 清理资源，如取消订阅
-    };
-  }, []); // 空依赖数组 = 只执行一次
+    }
+  }, []) // 空依赖数组 = 只执行一次
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error}</p>
+
   return (
     <div>
       <h2>Data</h2>
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
-  );
+  )
 }
 
-export default DataFetcher;
+export default DataFetcher
 ```
 
 #### useContext
@@ -288,71 +275,67 @@ export default DataFetcher;
 
 ```jsx
 // src/context/ThemeContext.jsx
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react'
 
 // 创建 Context
-const ThemeContext = createContext();
+const ThemeContext = createContext()
 
 // 自定义 Hook 方便使用
 export function useTheme() {
-  return useContext(ThemeContext);
+  return useContext(ThemeContext)
 }
 
 // Provider 组件
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('light')
 
   const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
+    setTheme(theme === 'light' ? 'dark' : 'light')
+  }
 
   const value = {
     theme,
-    toggleTheme
-  };
+    toggleTheme,
+  }
 
-  return (
-    <ThemeContext.Provider value={value}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }
 
 // src/components/ThemedButton.jsx
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../context/ThemeContext'
 
 function ThemedButton() {
-  const { theme, toggleTheme } = useTheme();
-  
+  const { theme, toggleTheme } = useTheme()
+
   return (
-    <button 
+    <button
       onClick={toggleTheme}
-      style={{ 
+      style={{
         background: theme === 'light' ? '#fff' : '#333',
         color: theme === 'light' ? '#333' : '#fff',
-        border: `1px solid ${theme === 'light' ? '#ccc' : '#666'}`
+        border: `1px solid ${theme === 'light' ? '#ccc' : '#666'}`,
       }}
     >
       Toggle Theme ({theme})
     </button>
-  );
+  )
 }
 
-export default ThemedButton;
+export default ThemedButton
 
 // src/App.jsx
-import { ThemeProvider } from './context/ThemeContext';
-import ThemedButton from './components/ThemedButton';
+import { ThemeProvider } from './context/ThemeContext'
+import ThemedButton from './components/ThemedButton'
 
 function App() {
   return (
     <ThemeProvider>
-      <div className="App">
+      <div className='App'>
         <h1>Theme Example</h1>
         <ThemedButton />
       </div>
     </ThemeProvider>
-  );
+  )
 }
 ```
 
@@ -363,14 +346,14 @@ function App() {
 ```jsx
 // Parent.jsx
 function Parent() {
-  const [message, setMessage] = useState('Hello from parent');
-  
+  const [message, setMessage] = useState('Hello from parent')
+
   return (
     <div>
       <Child message={message} onUpdate={setMessage} />
       <p>Parent message: {message}</p>
     </div>
-  );
+  )
 }
 
 // Child.jsx
@@ -378,11 +361,9 @@ function Child({ message, onUpdate }) {
   return (
     <div>
       <p>Child received: {message}</p>
-      <button onClick={() => onUpdate('Updated by child')}>
-        Update Message
-      </button>
+      <button onClick={() => onUpdate('Updated by child')}>Update Message</button>
     </div>
-  );
+  )
 }
 ```
 
@@ -391,34 +372,27 @@ function Child({ message, onUpdate }) {
 ```jsx
 // src/components/Child.jsx
 function Child({ onDataChange }) {
-  const [value, setValue] = useState('');
-  
+  const [value, setValue] = useState('')
+
   const handleChange = (e) => {
-    const newValue = e.target.value;
-    setValue(newValue);
-    onDataChange(newValue);
-  };
-  
-  return (
-    <input 
-      type="text" 
-      value={value} 
-      onChange={handleChange} 
-      placeholder="Enter something"
-    />
-  );
+    const newValue = e.target.value
+    setValue(newValue)
+    onDataChange(newValue)
+  }
+
+  return <input type='text' value={value} onChange={handleChange} placeholder='Enter something' />
 }
 
 // src/components/Parent.jsx
 function Parent() {
-  const [data, setData] = useState('');
-  
+  const [data, setData] = useState('')
+
   return (
     <div>
       <Child onDataChange={setData} />
       <p>Parent received: {data}</p>
     </div>
-  );
+  )
 }
 ```
 
@@ -428,69 +402,66 @@ function Parent() {
 
 ```jsx
 // src/components/LoginForm.jsx
-import { useState } from 'react';
+import { useState } from 'react'
 
 function LoginForm() {
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
-  });
+    password: '',
+  })
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
+    const { name, value } = e.target
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
-    }));
-  };
+      [name]: value,
+    }))
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
+    e.preventDefault()
+    console.log('Form submitted:', formData)
     // 这里可以进行登录逻辑
-  };
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className='space-y-4'>
       <div>
-        <label htmlFor="email" className="block text-sm font-medium">
+        <label htmlFor='email' className='block text-sm font-medium'>
           Email address
         </label>
         <input
-          type="email"
-          id="email"
-          name="email"
+          type='email'
+          id='email'
+          name='email'
           value={formData.email}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          className='w-full rounded-md border border-gray-300 px-3 py-2'
           required
         />
       </div>
       <div>
-        <label htmlFor="password" className="block text-sm font-medium">
+        <label htmlFor='password' className='block text-sm font-medium'>
           Password
         </label>
         <input
-          type="password"
-          id="password"
-          name="password"
+          type='password'
+          id='password'
+          name='password'
           value={formData.password}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          className='w-full rounded-md border border-gray-300 px-3 py-2'
           required
         />
       </div>
-      <button
-        type="submit"
-        className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-      >
+      <button type='submit' className='w-full rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600'>
         Sign in
       </button>
     </form>
-  );
+  )
 }
 
-export default LoginForm;
+export default LoginForm
 ```
 
 ## 4. 进阶使用
@@ -501,36 +472,36 @@ export default LoginForm;
 
 ```jsx
 // src/hooks/useCounter.js
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react'
 
 export function useCounter(initialValue = 0, step = 1) {
-  const [count, setCount] = useState(initialValue);
+  const [count, setCount] = useState(initialValue)
 
   const increment = useCallback(() => {
-    setCount(prev => prev + step);
-  }, [step]);
+    setCount((prev) => prev + step)
+  }, [step])
 
   const decrement = useCallback(() => {
-    setCount(prev => prev - step);
-  }, [step]);
+    setCount((prev) => prev - step)
+  }, [step])
 
   const reset = useCallback(() => {
-    setCount(initialValue);
-  }, [initialValue]);
+    setCount(initialValue)
+  }, [initialValue])
 
   return {
     count,
     increment,
     decrement,
-    reset
-  };
+    reset,
+  }
 }
 
 // 使用
-import { useCounter } from './hooks/useCounter';
+import { useCounter } from './hooks/useCounter'
 
 function CounterComponent() {
-  const { count, increment, decrement, reset } = useCounter(0, 2);
+  const { count, increment, decrement, reset } = useCounter(0, 2)
 
   return (
     <div>
@@ -539,7 +510,7 @@ function CounterComponent() {
       <button onClick={decrement}>Decrement</button>
       <button onClick={reset}>Reset</button>
     </div>
-  );
+  )
 }
 ```
 
@@ -549,13 +520,13 @@ function CounterComponent() {
 
 ```jsx
 // src/components/TodoList.jsx
-import { useReducer } from 'react';
+import { useReducer } from 'react'
 
 // 初始状态
 const initialState = {
   todos: [],
-  inputValue: ''
-};
+  inputValue: '',
+}
 
 // Reducer 函数
 function todoReducer(state, action) {
@@ -563,69 +534,68 @@ function todoReducer(state, action) {
     case 'SET_INPUT':
       return {
         ...state,
-        inputValue: action.payload
-      };
+        inputValue: action.payload,
+      }
     case 'ADD_TODO':
       return {
         ...state,
-        todos: [...state.todos, {
-          id: Date.now(),
-          text: state.inputValue,
-          completed: false
-        }],
-        inputValue: ''
-      };
+        todos: [
+          ...state.todos,
+          {
+            id: Date.now(),
+            text: state.inputValue,
+            completed: false,
+          },
+        ],
+        inputValue: '',
+      }
     case 'TOGGLE_TODO':
       return {
         ...state,
-        todos: state.todos.map(todo => 
-          todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo
-        )
-      };
+        todos: state.todos.map((todo) => (todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo)),
+      }
     case 'DELETE_TODO':
       return {
         ...state,
-        todos: state.todos.filter(todo => todo.id !== action.payload)
-      };
+        todos: state.todos.filter((todo) => todo.id !== action.payload),
+      }
     default:
-      return state;
+      return state
   }
 }
 
 function TodoList() {
-  const [state, dispatch] = useReducer(todoReducer, initialState);
+  const [state, dispatch] = useReducer(todoReducer, initialState)
 
   return (
-    <div className="space-y-4">
+    <div className='space-y-4'>
       <div>
         <input
-          type="text"
+          type='text'
           value={state.inputValue}
           onChange={(e) => dispatch({ type: 'SET_INPUT', payload: e.target.value })}
-          placeholder="Add a todo"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          placeholder='Add a todo'
+          className='w-full rounded-md border border-gray-300 px-3 py-2'
         />
         <button
           onClick={() => dispatch({ type: 'ADD_TODO' })}
-          className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          className='mt-2 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600'
         >
           Add Todo
         </button>
       </div>
-      <ul className="space-y-2">
-        {state.todos.map(todo => (
-          <li key={todo.id} className="flex items-center space-x-2">
+      <ul className='space-y-2'>
+        {state.todos.map((todo) => (
+          <li key={todo.id} className='flex items-center space-x-2'>
             <input
-              type="checkbox"
+              type='checkbox'
               checked={todo.completed}
               onChange={() => dispatch({ type: 'TOGGLE_TODO', payload: todo.id })}
             />
-            <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
-              {todo.text}
-            </span>
+            <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>{todo.text}</span>
             <button
               onClick={() => dispatch({ type: 'DELETE_TODO', payload: todo.id })}
-              className="ml-auto bg-red-500 text-white px-2 py-1 rounded text-sm"
+              className='ml-auto rounded bg-red-500 px-2 py-1 text-sm text-white'
             >
               Delete
             </button>
@@ -633,10 +603,10 @@ function TodoList() {
         ))}
       </ul>
     </div>
-  );
+  )
 }
 
-export default TodoList;
+export default TodoList
 ```
 
 ### useCallback 和 useMemo
@@ -646,47 +616,54 @@ export default TodoList;
 #### useCallback
 
 **作用**：
+
 - 缓存函数实例，避免每次渲染都创建新的函数引用
 - 当函数作为 props 传递给子组件时，可以避免子组件的不必要重新渲染
 - 当函数作为 `useEffect` 的依赖时，可以避免 effect 的频繁执行
 
 **用法**：
+
 ```jsx
 const memoizedCallback = useCallback(
   () => {
     // 函数逻辑
   },
   [dependencies] // 依赖数组
-);
+)
 ```
 
 **使用场景**：
+
 1. **传递给子组件的回调函数** - 特别是当子组件使用 `React.memo` 优化时
 2. **作为 `useEffect` 的依赖** - 避免 effect 因函数引用变化而频繁执行
 3. **事件处理函数** - 避免每次渲染都创建新的事件处理函数
 4. **自定义 Hook 中的返回函数** - 确保返回的函数引用稳定
 
 **示例**：
+
 ```jsx
 // src/components/Parent.jsx
-import { useState, useCallback } from 'react';
-import Child from './Child';
+import { useState, useCallback } from 'react'
+import Child from './Child'
 
 function Parent() {
-  const [count, setCount] = useState(0);
-  const [message, setMessage] = useState('Hello');
+  const [count, setCount] = useState(0)
+  const [message, setMessage] = useState('Hello')
 
   // 缓存回调函数，只有当 message 变化时才重新创建
-  const handleClick = useCallback((item) => {
-    console.log('Item clicked:', item);
-    setMessage(`Clicked: ${item.name}`);
-  }, [message]);
+  const handleClick = useCallback(
+    (item) => {
+      console.log('Item clicked:', item)
+      setMessage(`Clicked: ${item.name}`)
+    },
+    [message]
+  )
 
   // 缓存事件处理函数，无依赖
   const handleReset = useCallback(() => {
-    setCount(0);
-    setMessage('Hello');
-  }, []);
+    setCount(0)
+    setMessage('Hello')
+  }, [])
 
   return (
     <div>
@@ -696,100 +673,104 @@ function Parent() {
       <button onClick={handleReset}>Reset</button>
       <Child onItemClick={handleClick} />
     </div>
-  );
+  )
 }
 
 // src/components/Child.jsx
-import { memo } from 'react';
+import { memo } from 'react'
 
 // 使用 memo 避免不必要的渲染
 const Child = memo(({ onItemClick }) => {
-  console.log('Child component rendered');
-  
+  console.log('Child component rendered')
+
   const items = [
     { id: 1, name: 'Item 1' },
     { id: 2, name: 'Item 2' },
-    { id: 3, name: 'Item 3' }
-  ];
+    { id: 3, name: 'Item 3' },
+  ]
 
   return (
     <ul>
-      {items.map(item => (
+      {items.map((item) => (
         <li key={item.id} onClick={() => onItemClick(item)}>
           {item.name}
         </li>
       ))}
     </ul>
-  );
-});
+  )
+})
 
-export default Child;
+export default Child
 ```
 
 #### useMemo
 
 **作用**：
+
 - 缓存计算结果，避免每次渲染都重新计算
 - 当计算结果作为 props 传递给子组件时，可以避免子组件的不必要重新渲染
 - 优化昂贵的计算，提高组件性能
 
 **用法**：
+
 ```jsx
 const memoizedValue = useMemo(
   () => {
     // 计算逻辑
-    return expensiveCalculation(dependencies);
+    return expensiveCalculation(dependencies)
   },
   [dependencies] // 依赖数组
-);
+)
 ```
 
 **使用场景**：
+
 1. **昂贵的计算** - 如复杂的数学计算、数据转换、排序等
 2. **派生状态** - 从现有状态或 props 派生的值
 3. **复杂对象的创建** - 避免每次渲染都创建新的对象
 4. **作为子组件的 props** - 确保传递给子组件的值引用稳定
 
 **示例**：
+
 ```jsx
 // src/components/DataProcessor.jsx
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
 function DataProcessor({ data, filter, sortBy }) {
   // 缓存过滤和排序结果
   const processedData = useMemo(() => {
-    console.log('Processing data...');
-    
+    console.log('Processing data...')
+
     // 过滤数据
-    const filtered = data.filter(item => {
-      if (!filter) return true;
-      return item.name.toLowerCase().includes(filter.toLowerCase());
-    });
-    
+    const filtered = data.filter((item) => {
+      if (!filter) return true
+      return item.name.toLowerCase().includes(filter.toLowerCase())
+    })
+
     // 排序数据
     const sorted = [...filtered].sort((a, b) => {
       if (sortBy === 'name') {
-        return a.name.localeCompare(b.name);
+        return a.name.localeCompare(b.name)
       } else if (sortBy === 'value') {
-        return a.value - b.value;
+        return a.value - b.value
       }
-      return 0;
-    });
-    
-    return sorted;
-  }, [data, filter, sortBy]); // 只有当依赖变化时才重新计算
+      return 0
+    })
+
+    return sorted
+  }, [data, filter, sortBy]) // 只有当依赖变化时才重新计算
 
   // 缓存计算结果
   const statistics = useMemo(() => {
     if (processedData.length === 0) {
-      return { total: 0, average: 0 };
+      return { total: 0, average: 0 }
     }
-    
-    const total = processedData.reduce((sum, item) => sum + item.value, 0);
-    const average = total / processedData.length;
-    
-    return { total, average };
-  }, [processedData]);
+
+    const total = processedData.reduce((sum, item) => sum + item.value, 0)
+    const average = total / processedData.length
+
+    return { total, average }
+  }, [processedData])
 
   return (
     <div>
@@ -797,46 +778,48 @@ function DataProcessor({ data, filter, sortBy }) {
       <p>Total items: {processedData.length}</p>
       <p>Total value: {statistics.total}</p>
       <p>Average value: {statistics.average.toFixed(2)}</p>
-      
+
       <ul>
-        {processedData.map(item => (
+        {processedData.map((item) => (
           <li key={item.id}>
             {item.name}: {item.value}
           </li>
         ))}
       </ul>
     </div>
-  );
+  )
 }
 
-export default DataProcessor;
+export default DataProcessor
 ```
 
 #### 内部函数的使用
 
 **在组件内部定义函数时**：
+
 - 每次组件渲染都会创建新的函数实例
 - 这会导致传递给子组件的函数引用每次都不同
 - 可能会触发子组件的不必要重新渲染
 
 **使用 useCallback 优化内部函数**：
+
 ```jsx
 function MyComponent() {
   // 不推荐：每次渲染都创建新函数
   const handleClick = () => {
-    console.log('Clicked');
-  };
+    console.log('Clicked')
+  }
 
   // 推荐：缓存函数实例
   const handleClickMemoized = useCallback(() => {
-    console.log('Clicked');
-  }, []);
+    console.log('Clicked')
+  }, [])
 
   return (
     <div>
       <button onClick={handleClickMemoized}>Click me</button>
     </div>
-  );
+  )
 }
 ```
 
@@ -852,94 +835,93 @@ function MyComponent() {
 
 ```jsx
 // 综合示例：结合 useCallback 和 useMemo
-import { useState, useCallback, useMemo } from 'react';
-import { memo } from 'react';
+import { useState, useCallback, useMemo } from 'react'
+import { memo } from 'react'
 
 // 子组件：使用 memo 优化
 const ListItem = memo(({ item, onItemClick }) => {
-  console.log('ListItem rendered:', item.id);
+  console.log('ListItem rendered:', item.id)
   return (
     <li onClick={() => onItemClick(item)}>
       {item.name} - ${item.price}
     </li>
-  );
-});
+  )
+})
 
 function ShoppingList() {
   const [items, setItems] = useState([
     { id: 1, name: 'Apples', price: 1.99, category: 'Fruits' },
     { id: 2, name: 'Bananas', price: 0.99, category: 'Fruits' },
     { id: 3, name: 'Carrots', price: 0.49, category: 'Vegetables' },
-    { id: 4, name: 'Potatoes', price: 0.79, category: 'Vegetables' }
-  ]);
-  
-  const [category, setCategory] = useState('All');
-  const [search, setSearch] = useState('');
+    { id: 4, name: 'Potatoes', price: 0.79, category: 'Vegetables' },
+  ])
+
+  const [category, setCategory] = useState('All')
+  const [search, setSearch] = useState('')
 
   // 缓存过滤和排序逻辑
   const filteredItems = useMemo(() => {
-    console.log('Filtering items...');
-    return items.filter(item => {
-      const matchesCategory = category === 'All' || item.category === category;
-      const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase());
-      return matchesCategory && matchesSearch;
-    });
-  }, [items, category, search]);
+    console.log('Filtering items...')
+    return items.filter((item) => {
+      const matchesCategory = category === 'All' || item.category === category
+      const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase())
+      return matchesCategory && matchesSearch
+    })
+  }, [items, category, search])
 
   // 缓存总计计算
   const total = useMemo(() => {
-    return filteredItems.reduce((sum, item) => sum + item.price, 0);
-  }, [filteredItems]);
+    return filteredItems.reduce((sum, item) => sum + item.price, 0)
+  }, [filteredItems])
 
   // 缓存回调函数
   const handleItemClick = useCallback((item) => {
-    console.log('Item clicked:', item.name);
+    console.log('Item clicked:', item.name)
     // 可以添加到购物车等逻辑
-  }, []);
+  }, [])
 
   const handleAddItem = useCallback((newItem) => {
-    setItems(prev => [...prev, newItem]);
-  }, []);
+    setItems((prev) => [...prev, newItem])
+  }, [])
 
   return (
     <div>
       <h1>Shopping List</h1>
-      
-      <div className="filters">
-        <input
-          type="text"
-          placeholder="Search items..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+
+      <div className='filters'>
+        <input type='text' placeholder='Search items...' value={search} onChange={(e) => setSearch(e.target.value)} />
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option value="All">All Categories</option>
-          <option value="Fruits">Fruits</option>
-          <option value="Vegetables">Vegetables</option>
+          <option value='All'>All Categories</option>
+          <option value='Fruits'>Fruits</option>
+          <option value='Vegetables'>Vegetables</option>
         </select>
       </div>
-      
+
       <ul>
-        {filteredItems.map(item => (
+        {filteredItems.map((item) => (
           <ListItem key={item.id} item={item} onItemClick={handleItemClick} />
         ))}
       </ul>
-      
+
       <p>Total: ${total.toFixed(2)}</p>
-      
-      <button onClick={() => handleAddItem({ 
-        id: Date.now(), 
-        name: 'New Item', 
-        price: 1.00, 
-        category: 'Other' 
-      })}>
+
+      <button
+        onClick={() =>
+          handleAddItem({
+            id: Date.now(),
+            name: 'New Item',
+            price: 1.0,
+            category: 'Other',
+          })
+        }
+      >
         Add Item
       </button>
     </div>
-  );
+  )
 }
 
-export default ShoppingList;
+export default ShoppingList
 ```
 
 ### React 18 新特性
@@ -953,13 +935,13 @@ React 18 引入了许多新特性，提升了性能和开发体验。
 ```jsx
 // React 18 之前
 function App() {
-  const [count, setCount] = useState(0);
-  const [message, setMessage] = useState('Hello');
+  const [count, setCount] = useState(0)
+  const [message, setMessage] = useState('Hello')
 
   function handleClick() {
     // 会触发两次渲染
-    setCount(c => c + 1);
-    setMessage('Updated');
+    setCount((c) => c + 1)
+    setMessage('Updated')
   }
 
   return (
@@ -968,18 +950,18 @@ function App() {
       <p>Message: {message}</p>
       <button onClick={handleClick}>Click</button>
     </div>
-  );
+  )
 }
 
 // React 18 中
 function App() {
-  const [count, setCount] = useState(0);
-  const [message, setMessage] = useState('Hello');
+  const [count, setCount] = useState(0)
+  const [message, setMessage] = useState('Hello')
 
   function handleClick() {
     // 只会触发一次渲染
-    setCount(c => c + 1);
-    setMessage('Updated');
+    setCount((c) => c + 1)
+    setMessage('Updated')
   }
 
   return (
@@ -988,7 +970,7 @@ function App() {
       <p>Message: {message}</p>
       <button onClick={handleClick}>Click</button>
     </div>
-  );
+  )
 }
 ```
 
@@ -997,44 +979,40 @@ function App() {
 **作用**：标记非紧急更新为过渡更新，优先处理紧急更新（如用户输入），提高用户体验。
 
 **使用场景**：
+
 - 大型列表过滤或排序
 - 复杂表单验证
 - 页面切换动画
 
 ```jsx
-import { useState, startTransition } from 'react';
+import { useState, startTransition } from 'react'
 
 function SearchComponent() {
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState([]);
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState([])
 
   function handleSearch(e) {
-    const newQuery = e.target.value;
-    setQuery(newQuery);
+    const newQuery = e.target.value
+    setQuery(newQuery)
 
     // 标记为过渡更新
     startTransition(() => {
       // 模拟搜索
-      const filteredResults = searchItems(newQuery);
-      setResults(filteredResults);
-    });
+      const filteredResults = searchItems(newQuery)
+      setResults(filteredResults)
+    })
   }
 
   return (
     <div>
-      <input
-        type="text"
-        value={query}
-        onChange={handleSearch}
-        placeholder="Search..."
-      />
+      <input type='text' value={query} onChange={handleSearch} placeholder='Search...' />
       <ul>
-        {results.map(item => (
+        {results.map((item) => (
           <li key={item.id}>{item.name}</li>
         ))}
       </ul>
     </div>
-  );
+  )
 }
 ```
 
@@ -1043,25 +1021,26 @@ function SearchComponent() {
 **作用**：生成唯一的 ID，避免服务器端渲染和客户端渲染之间的不匹配。
 
 **使用场景**：
+
 - 表单输入字段
 - 可访问性标签
 - 唯一标识符
 
 ```jsx
-import { useId } from 'react';
+import { useId } from 'react'
 
 function FormComponent() {
-  const id = useId();
+  const id = useId()
 
   return (
     <div>
       <label htmlFor={`${id}-name`}>Name:</label>
-      <input id={`${id}-name`} type="text" />
-      
+      <input id={`${id}-name`} type='text' />
+
       <label htmlFor={`${id}-email`}>Email:</label>
-      <input id={`${id}-email`} type="email" />
+      <input id={`${id}-email`} type='email' />
     </div>
-  );
+  )
 }
 ```
 
@@ -1070,30 +1049,31 @@ function FormComponent() {
 **作用**：订阅外部存储，确保在并发渲染中保持状态同步。
 
 **使用场景**：
+
 - 状态管理库
 - 外部数据源
 - 第三方状态
 
 ```jsx
-import { useSyncExternalStore } from 'react';
+import { useSyncExternalStore } from 'react'
 
 function useCounterStore() {
   return useSyncExternalStore(
     // 订阅函数
     (callback) => {
-      window.addEventListener('counterChange', callback);
-      return () => window.removeEventListener('counterChange', callback);
+      window.addEventListener('counterChange', callback)
+      return () => window.removeEventListener('counterChange', callback)
     },
     // 获取快照
     () => window.counter,
     // 获取服务器快照（可选）
     () => initialCounter
-  );
+  )
 }
 
 function Counter() {
-  const count = useCounterStore();
-  return <p>Count: {count}</p>;
+  const count = useCounterStore()
+  return <p>Count: {count}</p>
 }
 ```
 
@@ -1102,39 +1082,35 @@ function Counter() {
 **作用**：延迟处理非紧急值，优先更新紧急内容。
 
 **使用场景**：
+
 - 搜索结果
 - 大型列表
 - 复杂计算
 
 ```jsx
-import { useState, useDeferredValue } from 'react';
+import { useState, useDeferredValue } from 'react'
 
 function SearchComponent() {
-  const [query, setQuery] = useState('');
-  const deferredQuery = useDeferredValue(query);
-  const [results, setResults] = useState([]);
+  const [query, setQuery] = useState('')
+  const deferredQuery = useDeferredValue(query)
+  const [results, setResults] = useState([])
 
   // 当 deferredQuery 变化时更新结果
   useEffect(() => {
-    const filteredResults = searchItems(deferredQuery);
-    setResults(filteredResults);
-  }, [deferredQuery]);
+    const filteredResults = searchItems(deferredQuery)
+    setResults(filteredResults)
+  }, [deferredQuery])
 
   return (
     <div>
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search..."
-      />
+      <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} placeholder='Search...' />
       <ul>
-        {results.map(item => (
+        {results.map((item) => (
           <li key={item.id}>{item.name}</li>
         ))}
       </ul>
     </div>
-  );
+  )
 }
 ```
 
@@ -1143,6 +1119,7 @@ function SearchComponent() {
 #### 内部函数的创建和优化
 
 **问题**：在组件内部定义的函数会在每次渲染时重新创建，这可能导致：
+
 - 子组件的不必要重新渲染
 - `useEffect` 等 Hooks 的频繁执行
 - 性能下降
@@ -1152,6 +1129,7 @@ function SearchComponent() {
 #### 内部函数的依赖管理
 
 **正确设置依赖数组**：
+
 - 包含函数中使用的所有外部变量
 - 避免循环依赖
 - 对于复杂依赖，考虑使用 `useReducer` 或状态提升
@@ -1159,24 +1137,26 @@ function SearchComponent() {
 ```jsx
 // 错误：缺少依赖
 const handleClick = useCallback(() => {
-  console.log(message); // message 是外部变量
-}, []); // 空依赖数组
+  console.log(message) // message 是外部变量
+}, []) // 空依赖数组
 
 // 正确：包含所有依赖
 const handleClick = useCallback(() => {
-  console.log(message);
-}, [message]);
+  console.log(message)
+}, [message])
 ```
 
 #### 内部函数的性能影响
 
 **何时优化**：
+
 1. 函数作为 props 传递给子组件
 2. 函数作为 `useEffect` 的依赖
 3. 函数在大型列表中使用
 4. 函数执行昂贵操作
 
 **何时不优化**：
+
 1. 函数只在组件内部使用
 2. 函数执行简单操作
 3. 组件很少重新渲染
@@ -1195,50 +1175,48 @@ const handleClick = useCallback(() => {
 
 ```jsx
 // src/components/ErrorBoundary.jsx
-import React from 'react';
+import React from 'react'
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = { hasError: false, error: null };
+    super(props)
+    this.state = { hasError: false, error: null }
   }
 
   static getDerivedStateFromError(error) {
-    return { hasError: true, error };
+    return { hasError: true, error }
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo);
+    console.error('Error caught by boundary:', error, errorInfo)
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div className="error-boundary">
+        <div className='error-boundary'>
           <h2>Something went wrong</h2>
           <p>{this.state.error?.toString()}</p>
-          <button onClick={() => this.setState({ hasError: false, error: null })}>
-            Try again
-          </button>
+          <button onClick={() => this.setState({ hasError: false, error: null })}>Try again</button>
         </div>
-      );
+      )
     }
 
-    return this.props.children;
+    return this.props.children
   }
 }
 
-export default ErrorBoundary;
+export default ErrorBoundary
 
 // 使用
-import ErrorBoundary from './components/ErrorBoundary';
+import ErrorBoundary from './components/ErrorBoundary'
 
 function App() {
   return (
     <ErrorBoundary>
       <ComponentThatMightError />
     </ErrorBoundary>
-  );
+  )
 }
 ```
 
@@ -1248,20 +1226,20 @@ function App() {
 
 ```jsx
 // src/components/LazyComponent.jsx
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react'
 
 // 延迟加载 HeavyComponent
-const HeavyComponent = lazy(() => import('./HeavyComponent'));
+const HeavyComponent = lazy(() => import('./HeavyComponent'))
 
 function LazyComponent() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <HeavyComponent />
     </Suspense>
-  );
+  )
 }
 
-export default LazyComponent;
+export default LazyComponent
 ```
 
 ## 5. 实际应用
@@ -1290,82 +1268,72 @@ src/
 
 ```jsx
 // src/components/ProductCard.jsx
-import { useContext } from 'react';
-import { CartContext } from '../context/CartContext';
+import { useContext } from 'react'
+import { CartContext } from '../context/CartContext'
 
 function ProductCard({ product }) {
-  const { addToCart } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext)
 
   return (
-    <div className="product-card border rounded-lg p-4 hover:shadow-md transition-shadow">
-      <img 
-        src={product.image} 
-        alt={product.name} 
-        className="w-full h-48 object-cover mb-4 rounded"
-      />
-      <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-      <p className="text-gray-600 mb-2">{product.description}</p>
-      <div className="flex justify-between items-center">
-        <span className="text-xl font-bold">${product.price.toFixed(2)}</span>
-        <button 
+    <div className='product-card rounded-lg border p-4 transition-shadow hover:shadow-md'>
+      <img src={product.image} alt={product.name} className='mb-4 h-48 w-full rounded object-cover' />
+      <h3 className='mb-2 text-lg font-semibold'>{product.name}</h3>
+      <p className='mb-2 text-gray-600'>{product.description}</p>
+      <div className='flex items-center justify-between'>
+        <span className='text-xl font-bold'>${product.price.toFixed(2)}</span>
+        <button
           onClick={() => addToCart(product)}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className='rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600'
         >
           Add to Cart
         </button>
       </div>
     </div>
-  );
+  )
 }
 
-export default ProductCard;
+export default ProductCard
 ```
 
 **CartContext**：
 
 ```jsx
 // src/context/CartContext.jsx
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext } from 'react'
 
-const CartContext = createContext();
+const CartContext = createContext()
 
 export function useCart() {
-  return useContext(CartContext);
+  return useContext(CartContext)
 }
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([])
 
   const addToCart = (product) => {
-    setCart(prev => {
-      const existingItem = prev.find(item => item.id === product.id);
+    setCart((prev) => {
+      const existingItem = prev.find((item) => item.id === product.id)
       if (existingItem) {
-        return prev.map(item => 
-          item.id === product.id 
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
+        return prev.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item))
       } else {
-        return [...prev, { ...product, quantity: 1 }];
+        return [...prev, { ...product, quantity: 1 }]
       }
-    });
-  };
+    })
+  }
 
   const removeFromCart = (productId) => {
-    setCart(prev => prev.filter(item => item.id !== productId));
-  };
+    setCart((prev) => prev.filter((item) => item.id !== productId))
+  }
 
   const updateQuantity = (productId, quantity) => {
-    setCart(prev => prev.map(item => 
-      item.id === productId ? { ...item, quantity } : item
-    ));
-  };
+    setCart((prev) => prev.map((item) => (item.id === productId ? { ...item, quantity } : item)))
+  }
 
   const clearCart = () => {
-    setCart([]);
-  };
+    setCart([])
+  }
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
   const value = {
     cart,
@@ -1374,14 +1342,10 @@ export function CartProvider({ children }) {
     updateQuantity,
     clearCart,
     total,
-    itemCount: cart.reduce((count, item) => count + item.quantity, 0)
-  };
+    itemCount: cart.reduce((count, item) => count + item.quantity, 0),
+  }
 
-  return (
-    <CartContext.Provider value={value}>
-      {children}
-    </CartContext.Provider>
-  );
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }
 ```
 
@@ -1409,96 +1373,89 @@ src/
 
 ```jsx
 // src/components/Post.jsx
-import { useState } from 'react';
+import { useState } from 'react'
 
 function Post({ post, onLike, onComment }) {
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState('')
 
   const handleCommentSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (comment.trim()) {
-      onComment(post.id, comment);
-      setComment('');
+      onComment(post.id, comment)
+      setComment('')
     }
-  };
+  }
 
   return (
-    <div className="post border rounded-lg p-4 mb-4">
-      <div className="flex items-center mb-4">
-        <img 
-          src={post.author.avatar} 
-          alt={post.author.name} 
-          className="w-10 h-10 rounded-full mr-3"
-        />
+    <div className='post mb-4 rounded-lg border p-4'>
+      <div className='mb-4 flex items-center'>
+        <img src={post.author.avatar} alt={post.author.name} className='mr-3 h-10 w-10 rounded-full' />
         <div>
-          <h4 className="font-semibold">{post.author.name}</h4>
-          <p className="text-sm text-gray-500">{post.date}</p>
+          <h4 className='font-semibold'>{post.author.name}</h4>
+          <p className='text-sm text-gray-500'>{post.date}</p>
         </div>
       </div>
-      <div className="mb-4">
+      <div className='mb-4'>
         <p>{post.content}</p>
-        {post.image && (
-          <img 
-            src={post.image} 
-            alt="Post image" 
-            className="w-full mt-2 rounded"
-          />
-        )}
+        {post.image && <img src={post.image} alt='Post image' className='mt-2 w-full rounded' />}
       </div>
-      <div className="flex items-center space-x-4 mb-4">
-        <button 
+      <div className='mb-4 flex items-center space-x-4'>
+        <button
           onClick={() => onLike(post.id)}
-          className="flex items-center space-x-1 text-gray-600 hover:text-blue-500"
+          className='flex items-center space-x-1 text-gray-600 hover:text-blue-500'
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          <svg className='h-5 w-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2}
+              d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
+            />
           </svg>
           <span>{post.likes}</span>
         </button>
-        <button className="flex items-center space-x-1 text-gray-600 hover:text-blue-500">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        <button className='flex items-center space-x-1 text-gray-600 hover:text-blue-500'>
+          <svg className='h-5 w-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2}
+              d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'
+            />
           </svg>
           <span>{post.comments.length}</span>
         </button>
       </div>
-      <form onSubmit={handleCommentSubmit} className="mt-4">
+      <form onSubmit={handleCommentSubmit} className='mt-4'>
         <input
-          type="text"
+          type='text'
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          placeholder="Write a comment..."
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          placeholder='Write a comment...'
+          className='w-full rounded-md border border-gray-300 px-3 py-2'
         />
-        <button 
-          type="submit" 
-          className="mt-2 bg-blue-500 text-white px-4 py-1 rounded text-sm hover:bg-blue-600"
-        >
+        <button type='submit' className='mt-2 rounded bg-blue-500 px-4 py-1 text-sm text-white hover:bg-blue-600'>
           Post Comment
         </button>
       </form>
       {post.comments.length > 0 && (
-        <div className="mt-4 space-y-2">
-          {post.comments.map(comment => (
-            <div key={comment.id} className="flex">
-              <img 
-                src={comment.author.avatar} 
-                alt={comment.author.name} 
-                className="w-6 h-6 rounded-full mr-2"
-              />
-              <div className="bg-gray-100 p-2 rounded">
-                <p className="text-sm font-semibold">{comment.author.name}</p>
-                <p className="text-sm">{comment.content}</p>
+        <div className='mt-4 space-y-2'>
+          {post.comments.map((comment) => (
+            <div key={comment.id} className='flex'>
+              <img src={comment.author.avatar} alt={comment.author.name} className='mr-2 h-6 w-6 rounded-full' />
+              <div className='rounded bg-gray-100 p-2'>
+                <p className='text-sm font-semibold'>{comment.author.name}</p>
+                <p className='text-sm'>{comment.content}</p>
               </div>
             </div>
           ))}
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default Post;
+export default Post
 ```
 
 ### 仪表板应用
@@ -1525,60 +1482,40 @@ src/
 
 ```jsx
 // src/pages/DashboardPage.jsx
-import { useEffect, useState } from 'react';
-import MetricCard from '../components/MetricCard';
-import Chart from '../components/Chart';
+import { useEffect, useState } from 'react'
+import MetricCard from '../components/MetricCard'
+import Chart from '../components/Chart'
 
 function DashboardPage() {
   const [metrics, setMetrics] = useState({
     users: 1234,
     revenue: 45678,
     conversions: 24,
-    sessions: 567
-  });
+    sessions: 567,
+  })
 
-  const [chartData, setChartData] = useState([10, 20, 15, 25, 30, 20, 35]);
+  const [chartData, setChartData] = useState([10, 20, 15, 25, 30, 20, 35])
 
   return (
-    <div className="dashboard">
-      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <MetricCard 
-          title="Total Users" 
-          value={metrics.users} 
-          change={12} 
-          changeType="positive"
-        />
-        <MetricCard 
-          title="Revenue" 
-          value={`$${metrics.revenue.toLocaleString()}`} 
-          change={8} 
-          changeType="positive"
-        />
-        <MetricCard 
-          title="Conversions" 
-          value={`${metrics.conversions}%`} 
-          change={-3} 
-          changeType="negative"
-        />
-        <MetricCard 
-          title="Active Sessions" 
-          value={metrics.sessions} 
-          change={5} 
-          changeType="positive"
-        />
+    <div className='dashboard'>
+      <h1 className='mb-6 text-2xl font-bold'>Dashboard</h1>
+
+      <div className='mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
+        <MetricCard title='Total Users' value={metrics.users} change={12} changeType='positive' />
+        <MetricCard title='Revenue' value={`$${metrics.revenue.toLocaleString()}`} change={8} changeType='positive' />
+        <MetricCard title='Conversions' value={`${metrics.conversions}%`} change={-3} changeType='negative' />
+        <MetricCard title='Active Sessions' value={metrics.sessions} change={5} changeType='positive' />
       </div>
 
-      <div className="bg-white p-4 rounded-lg shadow">
-        <h2 className="text-lg font-semibold mb-4">Traffic Overview</h2>
+      <div className='rounded-lg bg-white p-4 shadow'>
+        <h2 className='mb-4 text-lg font-semibold'>Traffic Overview</h2>
         <Chart data={chartData} />
       </div>
     </div>
-  );
+  )
 }
 
-export default DashboardPage;
+export default DashboardPage
 ```
 
 ### 内容管理系统
@@ -1605,75 +1542,72 @@ src/
 
 ```jsx
 // src/components/ContentEditor.jsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 function ContentEditor({ content, onSave, onCancel }) {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  const [title, setTitle] = useState('')
+  const [body, setBody] = useState('')
 
   useEffect(() => {
     if (content) {
-      setTitle(content.title);
-      setBody(content.body);
+      setTitle(content.title)
+      setBody(content.body)
     } else {
-      setTitle('');
-      setBody('');
+      setTitle('')
+      setBody('')
     }
-  }, [content]);
+  }, [content])
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave({ title, body });
-  };
+    e.preventDefault()
+    onSave({ title, body })
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className='space-y-4'>
       <div>
-        <label htmlFor="title" className="block text-sm font-medium mb-1">
+        <label htmlFor='title' className='mb-1 block text-sm font-medium'>
           Title
         </label>
         <input
-          type="text"
-          id="title"
+          type='text'
+          id='title'
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          className='w-full rounded-md border border-gray-300 px-3 py-2'
           required
         />
       </div>
       <div>
-        <label htmlFor="body" className="block text-sm font-medium mb-1">
+        <label htmlFor='body' className='mb-1 block text-sm font-medium'>
           Content
         </label>
         <textarea
-          id="body"
+          id='body'
           value={body}
           onChange={(e) => setBody(e.target.value)}
           rows={10}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          className='w-full rounded-md border border-gray-300 px-3 py-2'
           required
         />
       </div>
-      <div className="flex space-x-2">
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
+      <div className='flex space-x-2'>
+        <button type='submit' className='rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600'>
           Save
         </button>
         <button
-          type="button"
+          type='button'
           onClick={onCancel}
-          className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300"
+          className='rounded bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300'
         >
           Cancel
         </button>
       </div>
     </form>
-  );
+  )
 }
 
-export default ContentEditor;
+export default ContentEditor
 ```
 
 ## 6. 常见问题
@@ -1682,51 +1616,57 @@ export default ContentEditor;
 
 **问题**：组件状态更新不生效
 **解决方案**：
+
 - 使用函数式更新，确保状态更新基于最新值
 - 检查是否在异步操作中正确更新状态
 - 确保状态更新逻辑没有错误
 
 ```jsx
 // 错误
-setCount(count + 1);
+setCount(count + 1)
 
 // 正确
-setCount(prevCount => prevCount + 1);
+setCount((prevCount) => prevCount + 1)
 ```
 
 **问题**：深层状态更新
 **解决方案**：
+
 - 使用展开运算符或 Immer 库
 - 确保正确处理嵌套对象的更新
 
 ```jsx
 // 展开运算符
-setUser(prev => ({
+setUser((prev) => ({
   ...prev,
   address: {
     ...prev.address,
-    city: 'New York'
-  }
-}));
+    city: 'New York',
+  },
+}))
 
 // Immer
-import produce from 'immer';
+import produce from 'immer'
 
-setUser(produce(draft => {
-  draft.address.city = 'New York';
-}));
+setUser(
+  produce((draft) => {
+    draft.address.city = 'New York'
+  })
+)
 ```
 
 ### 渲染问题
 
 **问题**：组件重复渲染
 **解决方案**：
+
 - 使用 `React.memo` 包装组件
 - 使用 `useCallback` 和 `useMemo` 优化
 - 检查依赖数组是否正确
 
 **问题**：无限渲染循环
 **解决方案**：
+
 - 检查 `useEffect` 依赖数组
 - 避免在 effect 中修改依赖项
 - 确保没有在渲染过程中修改状态
@@ -1735,50 +1675,53 @@ setUser(produce(draft => {
 
 **问题**：组件卸载后状态更新
 **解决方案**：
+
 - 使用 cleanup 函数
 - 使用 `AbortController` 取消异步操作
 - 检查组件是否已卸载
 
 ```jsx
 useEffect(() => {
-  const controller = new AbortController();
-  let mounted = true;
-  
+  const controller = new AbortController()
+  let mounted = true
+
   const fetchData = async () => {
     try {
       const response = await fetch('https://api.example.com/data', {
-        signal: controller.signal
-      });
-      const data = await response.json();
+        signal: controller.signal,
+      })
+      const data = await response.json()
       if (mounted) {
-        setData(data);
+        setData(data)
       }
     } catch (error) {
       if (error.name !== 'AbortError' && mounted) {
-        setError(error);
+        setError(error)
       }
     }
-  };
-  
-  fetchData();
-  
+  }
+
+  fetchData()
+
   return () => {
-    mounted = false;
-    controller.abort();
-  };
-}, []);
+    mounted = false
+    controller.abort()
+  }
+}, [])
 ```
 
 ### 性能问题
 
 **问题**：大型列表渲染慢
 **解决方案**：
+
 - 使用虚拟滚动（如 react-window）
 - 实现分页
 - 使用 `React.memo` 和 `useCallback`
 
 **问题**：内存泄漏
 **解决方案**：
+
 - 清理 event listeners
 - 取消 subscriptions
 - 终止 async operations
@@ -1791,60 +1734,60 @@ useEffect(() => {
 
 ```jsx
 // src/components/ExpensiveComponent.jsx
-import { memo } from 'react';
+import { memo } from 'react'
 
 const ExpensiveComponent = memo(({ data }) => {
   // 昂贵的计算
-  console.log('ExpensiveComponent rendered');
-  return <div>{data}</div>;
-});
+  console.log('ExpensiveComponent rendered')
+  return <div>{data}</div>
+})
 
-export default ExpensiveComponent;
+export default ExpensiveComponent
 ```
 
 #### useMemo
 
 ```jsx
 // src/components/Calculation.jsx
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
 function Calculation({ numbers }) {
   const total = useMemo(() => {
-    console.log('Calculating total...');
-    return numbers.reduce((sum, num) => sum + num, 0);
-  }, [numbers]);
-  
-  return <p>Total: {total}</p>;
+    console.log('Calculating total...')
+    return numbers.reduce((sum, num) => sum + num, 0)
+  }, [numbers])
+
+  return <p>Total: {total}</p>
 }
 
-export default Calculation;
+export default Calculation
 ```
 
 #### useCallback
 
 ```jsx
 // src/components/Button.jsx
-import { useCallback } from 'react';
+import { useCallback } from 'react'
 
 function Button({ onClick, children }) {
-  return <button onClick={onClick}>{children}</button>;
+  return <button onClick={onClick}>{children}</button>
 }
 
 // src/components/Parent.jsx
 function Parent() {
-  const [count, setCount] = useState(0);
-  
+  const [count, setCount] = useState(0)
+
   const handleClick = useCallback(() => {
-    console.log('Button clicked');
-  }, []);
-  
+    console.log('Button clicked')
+  }, [])
+
   return (
     <div>
       <Button onClick={handleClick}>Click me</Button>
       <p>Count: {count}</p>
       <button onClick={() => setCount(count + 1)}>Increment</button>
     </div>
-  );
+  )
 }
 ```
 
@@ -1855,25 +1798,14 @@ function Parent() {
 ```jsx
 // 子组件不需要直接管理状态
 function Child({ value, onChange }) {
-  return (
-    <input 
-      type="text" 
-      value={value} 
-      onChange={onChange} 
-    />
-  );
+  return <input type='text' value={value} onChange={onChange} />
 }
 
 // 父组件管理状态
 function Parent() {
-  const [value, setValue] = useState('');
-  
-  return (
-    <Child 
-      value={value} 
-      onChange={(e) => setValue(e.target.value)} 
-    />
-  );
+  const [value, setValue] = useState('')
+
+  return <Child value={value} onChange={(e) => setValue(e.target.value)} />
 }
 ```
 
@@ -1882,14 +1814,14 @@ function Parent() {
 ```jsx
 // 只有组件内部需要的状态
 function Counter() {
-  const [count, setCount] = useState(0);
-  
+  const [count, setCount] = useState(0)
+
   return (
     <div>
       <p>Count: {count}</p>
       <button onClick={() => setCount(count + 1)}>Increment</button>
     </div>
-  );
+  )
 }
 ```
 
@@ -1899,47 +1831,47 @@ function Counter() {
 
 ```jsx
 // src/components/LazyComponent.jsx
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react'
 
-const HeavyComponent = lazy(() => import('./HeavyComponent'));
+const HeavyComponent = lazy(() => import('./HeavyComponent'))
 
 function LazyComponent() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <HeavyComponent />
     </Suspense>
-  );
+  )
 }
 
-export default LazyComponent;
+export default LazyComponent
 ```
 
 #### 路由级代码分割
 
 ```jsx
 // src/App.jsx
-import { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-const Home = lazy(() => import('./pages/Home'));
-const About = lazy(() => import('./pages/About'));
-const Contact = lazy(() => import('./pages/Contact'));
+const Home = lazy(() => import('./pages/Home'))
+const About = lazy(() => import('./pages/About'))
+const Contact = lazy(() => import('./pages/Contact'))
 
 function App() {
   return (
     <Router>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/contact' element={<Contact />} />
         </Routes>
       </Suspense>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
 ```
 
 ### 网络优化
@@ -1948,29 +1880,29 @@ export default App;
 
 ```jsx
 // 使用 SWR
-import useSWR from 'swr';
+import useSWR from 'swr'
 
 function DataComponent() {
-  const { data, error } = useSWR('https://api.example.com/data');
-  
-  if (error) return <div>Error</div>;
-  if (!data) return <div>Loading...</div>;
-  
-  return <div>{data}</div>;
+  const { data, error } = useSWR('https://api.example.com/data')
+
+  if (error) return <div>Error</div>
+  if (!data) return <div>Loading...</div>
+
+  return <div>{data}</div>
 }
 
 // 使用 React Query
-import { useQuery } from 'react-query';
+import { useQuery } from 'react-query'
 
 function DataComponent() {
-  const { data, error, isLoading } = useQuery('data', () => 
-    fetch('https://api.example.com/data').then(res => res.json())
-  );
-  
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
-  
-  return <div>{data}</div>;
+  const { data, error, isLoading } = useQuery('data', () =>
+    fetch('https://api.example.com/data').then((res) => res.json())
+  )
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error</div>
+
+  return <div>{data}</div>
 }
 ```
 
@@ -1978,29 +1910,29 @@ function DataComponent() {
 
 ```jsx
 function PaginatedList() {
-  const [page, setPage] = useState(1);
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1)
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const loadMore = async () => {
-    setLoading(true);
-    const response = await fetch(`https://api.example.com/data?page=${page}`);
-    const newData = await response.json();
-    setData(prev => [...prev, ...newData]);
-    setPage(prev => prev + 1);
-    setLoading(false);
-  };
+    setLoading(true)
+    const response = await fetch(`https://api.example.com/data?page=${page}`)
+    const newData = await response.json()
+    setData((prev) => [...prev, ...newData])
+    setPage((prev) => prev + 1)
+    setLoading(false)
+  }
 
   return (
     <div>
-      {data.map(item => (
+      {data.map((item) => (
         <div key={item.id}>{item.name}</div>
       ))}
       <button onClick={loadMore} disabled={loading}>
         {loading ? 'Loading...' : 'Load More'}
       </button>
     </div>
-  );
+  )
 }
 ```
 

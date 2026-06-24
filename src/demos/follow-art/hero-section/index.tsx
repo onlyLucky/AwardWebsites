@@ -24,7 +24,8 @@ const letters: Letter[] = [
     char: 'F',
     baseScaleY: 0.719856,
     pathDesktop: 'M1420 6V63.1629H1388.18V500H1333.45V63.1629H1301V6H1420Z',
-    pathMobile: 'M253.237 132 246 2h23.32l2.412 96.937.536 20.329h3.753l.804-20.329L281.649 2h32.702l5.092 96.937.536 20.329h3.753l.536-20.329L326.68 2H350l-6.969 130h-38.33l-4.021-93.212-.536-24.054h-4.02l-.536 24.054L291.567 132z',
+    pathMobile:
+      'M253.237 132 246 2h23.32l2.412 96.937.536 20.329h3.753l.804-20.329L281.649 2h32.702l5.092 96.937.536 20.329h3.753l.536-20.329L326.68 2H350l-6.969 130h-38.33l-4.021-93.212-.536-24.054h-4.02l-.536 24.054L291.567 132z',
   },
   {
     char: 'O',
@@ -60,8 +61,7 @@ const letters: Letter[] = [
     baseScaleY: 0.870604,
     pathDesktop:
       'M578 500C534.61 500 511 474.306 511 427.083V73.6111C511 25.6944 534.61 0 578 0C621.391 0 645 25.6944 645 73.6111V427.083C645 474.306 621.391 500 578 500ZM578 443.75C586.295 443.75 590.124 436.111 590.124 422.917V77.0833C590.124 63.8889 586.295 56.25 578 56.25C569.705 56.25 565.238 63.8889 565.238 77.0833V422.917C565.238 436.111 569.705 443.75 578 443.75Z',
-    pathMobile:
-      'M41 15.215H20.38v36.054h18.222v13.214H20.38V132H0V2h41z',
+    pathMobile: 'M41 15.215H20.38v36.054h18.222v13.214H20.38V132H0V2h41z',
   },
   {
     char: '.',
@@ -81,14 +81,12 @@ const letters: Letter[] = [
     baseScaleY: 0.989695,
     pathDesktop:
       'M191.5 500C148.433 500 125 474.306 125 427.083V73.6111C125 25.6944 148.433 0 191.5 0C234.567 0 258 25.6944 258 73.6111V427.083C258 474.306 234.567 500 191.5 500ZM191.5 443.75C199.733 443.75 203.533 436.111 203.533 422.917V77.0833C203.533 63.8889 199.733 56.25 191.5 56.25C183.267 56.25 178.833 63.8889 178.833 77.0833V422.917C178.833 436.111 183.267 443.75 191.5 443.75Z',
-    pathMobile:
-      'M160 170v-18h20v18z',
+    pathMobile: 'M160 170v-18h20v18z',
   },
   {
     char: 'T',
     baseScaleY: 0.800845,
-    pathDesktop:
-      'M109 63.1629H54.1813V219.126H102.626V276.289H54.1813V500H0V6H109V63.1629Z',
+    pathDesktop: 'M109 63.1629H54.1813V219.126H102.626V276.289H54.1813V500H0V6H109V63.1629Z',
     pathMobile:
       'M253 312V152h23.853c15.596 0 24.082 7.162 24.082 20.13v23.614c0 12.775-6.422 19.743-18.348 19.743h-1.377v2.323h13.533L303 312h-19.496l-6.422-84.706h-4.358V312zm19.724-99.223h4.129c2.981 0 4.587-2.129 4.587-5.613v-33.873c0-3.677-1.606-5.613-4.587-5.613h-4.129z',
   },
@@ -130,9 +128,7 @@ function HeroSection() {
         const baseScaleY = Number(path.dataset.scaleY) || 1
         const totalLetters = pathRefs.current.length
         // 字母位置 (-1 到 1)
-        const letterPosition = totalLetters > 1
-          ? (index + 0.5) / totalLetters * 2 - 1 + 1 / totalLetters
-          : 0
+        const letterPosition = totalLetters > 1 ? ((index + 0.5) / totalLetters) * 2 - 1 + 1 / totalLetters : 0
 
         let finalScaleY = baseScaleY
 
@@ -169,19 +165,19 @@ function HeroSection() {
   }, [])
 
   // 注册 path ref
-  const setPathRef = useCallback((index: number) => (el: SVGPathElement | null) => {
-    if (el) {
-      pathRefs.current[index] = el
-      // 初始化时设置基础 scaleY
-      el.style.transform = `scaleY(${letters[index].baseScaleY})`
-    }
-  }, [])
+  const setPathRef = useCallback(
+    (index: number) => (el: SVGPathElement | null) => {
+      if (el) {
+        pathRefs.current[index] = el
+        // 初始化时设置基础 scaleY
+        el.style.transform = `scaleY(${letters[index].baseScaleY})`
+      }
+    },
+    []
+  )
 
   return (
-    <section
-      className={`${styles.heroSection} ${isVisible ? styles.introShow : ''}`}
-      ref={containerRef}
-    >
+    <section className={`${styles.heroSection} ${isVisible ? styles.introShow : ''}`} ref={containerRef}>
       {/* 标题区域 */}
       <div className={styles.introTitle}>
         <div className={styles.titleChildrenWrapper}>
@@ -189,41 +185,41 @@ function HeroSection() {
           <svg
             ref={svgRef}
             className={`${styles.introTitle} is-hidden:sm-down ${styles.svgFix}`}
-            width="1420"
-            height="500"
-            viewBox="0 0 1420 500"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+            width='1420'
+            height='500'
+            viewBox='0 0 1420 500'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
           >
             {letters.map((letter, index) => (
               <path
                 key={`desktop-${index}`}
                 ref={setPathRef(index)}
-                data-char=""
+                data-char=''
                 data-scale-y={letter.baseScaleY}
                 d={letter.pathDesktop}
-                fill="white"
+                fill='white'
               />
             ))}
           </svg>
 
           {/* 移动端 SVG */}
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="351"
-            height="402"
-            fill="none"
-            viewBox="0 0 351 312"
+            xmlns='http://www.w3.org/2000/svg'
+            width='351'
+            height='402'
+            fill='none'
+            viewBox='0 0 351 312'
             className={`${styles.introTitle} is-hidden:md-up ${styles.svgFix}`}
-            preserveAspectRatio="none"
+            preserveAspectRatio='none'
           >
             {letters.map((letter, index) => (
               <path
                 key={`mobile-${index}`}
-                data-char=""
+                data-char=''
                 data-scale-y={letter.baseScaleY}
                 d={letter.pathMobile}
-                fill="white"
+                fill='white'
               />
             ))}
           </svg>
@@ -232,19 +228,8 @@ function HeroSection() {
 
       {/* 标题装饰线 */}
       <div className={styles.introTitleDecoration}>
-        <svg
-          className={styles.imgFull}
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <line
-            x1="0"
-            y1="50"
-            x2="100"
-            y2="50"
-            stroke="white"
-            strokeWidth="2"
-          />
+        <svg className={styles.imgFull} viewBox='0 0 100 100' preserveAspectRatio='none'>
+          <line x1='0' y1='50' x2='100' y2='50' stroke='white' strokeWidth='2' />
         </svg>
       </div>
 
@@ -257,12 +242,7 @@ function HeroSection() {
           <p>One Card.</p>
           <p>Share it. Be noticed. Be supported</p>
         </div>
-        <a
-          href="https://follow.art"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.heroVisitBtn}
-        >
+        <a href='https://follow.art' target='_blank' rel='noopener noreferrer' className={styles.heroVisitBtn}>
           Visit follow.art
         </a>
       </div>

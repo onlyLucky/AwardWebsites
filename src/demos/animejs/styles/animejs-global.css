@@ -165,8 +165,8 @@
   --text-xxxs: 0.6875rem;
 
   /* 字体变量（与源码一致） */
-  --font-body: "DIN", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-code: "Mono", monospace;
+  --font-body: 'DIN', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-code: 'Mono', monospace;
 
   /* 主题色（每章节动态切换，由 JS 设置 inline style 覆盖） */
   --hex-current-1: var(--hex-fg-1);

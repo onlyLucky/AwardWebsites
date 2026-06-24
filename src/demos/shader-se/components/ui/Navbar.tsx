@@ -32,10 +32,10 @@ export function Navbar() {
 
   return (
     <nav className={`shader-se-navbar ${isScrolled ? 'shader-se-navbar--scrolled' : ''}`}>
-      <a href="/" className="shader-se-navbar__logo">
+      <a href='/' className='shader-se-navbar__logo'>
         SHADER
       </a>
-      <ul className="shader-se-navbar__links">
+      <ul className='shader-se-navbar__links'>
         {SECTIONS.map((section) => (
           <li key={section.id}>
             <a

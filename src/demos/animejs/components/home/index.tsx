@@ -35,7 +35,7 @@ export default function Home() {
   }, [])
 
   return (
-    <main id="home" className={`${styles['animejs-home']} ${styles['layout-container']}`}>
+    <main id='home' className={`${styles['animejs-home']} ${styles['layout-container']}`}>
       <IntroSection />
       <ToolboxSection />
       <FeaturesGallerySection />
