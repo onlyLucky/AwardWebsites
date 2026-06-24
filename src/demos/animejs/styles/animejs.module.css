@@ -30,7 +30,7 @@
 }
 
 /* ===== Header ===== */
-#site-header {
+.site-header {
   position: sticky;
   z-index: 2;
   top: 0;
@@ -39,7 +39,7 @@
   background-color: var(--hex-bg-1);
 }
 
-#site-header-content {
+.site-header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -50,7 +50,7 @@
 
 /* 桌面端 header padding */
 @media (min-width: 900px) {
-  #site-header {
+  .site-header {
     padding-left: var(--margin-m);
     padding-right: var(--margin-m);
   }
@@ -65,7 +65,7 @@
   display: none;
 }
 
-#site-menu ul {
+.site-menu ul {
   display: flex;
   gap: 1.5rem;
   list-style: none;
@@ -74,7 +74,7 @@
 }
 
 /* 默认（< 1200px）：隐藏导航菜单 */
-#site-menu {
+.site-menu {
   display: none;
   position: absolute;
   top: 100%;
@@ -90,11 +90,11 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
-#site-menu.is-open {
+.site-menu.is-open {
   display: block;
 }
 
-#site-menu ul {
+.site-menu ul {
   flex-direction: column;
   gap: 0.5rem;
 }
@@ -115,7 +115,7 @@
 }
 
 /* 移动端 toggle 按钮始终可见 */
-#toggle-site-menu {
+.toggle-site-menu {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -123,14 +123,14 @@
   cursor: pointer;
 }
 
-#toggle-site-menu .icon {
+.toggle-site-menu .icon {
   width: 24px;
   height: 24px;
 }
 
 /* 大屏：显示导航菜单，隐藏 toggle 按钮 */
 @media (min-width: 1200px) {
-  #site-menu {
+  .site-menu {
     display: flex;
     position: static;
     width: auto;
@@ -142,18 +142,18 @@
     box-shadow: none;
   }
 
-  #site-menu ul {
+  .site-menu ul {
     flex-direction: row;
     gap: 1.5rem;
   }
 
-  #toggle-site-menu {
+  .toggle-site-menu {
     display: none;
   }
 }
 
 /* ===== Home Section ===== */
-#home {
+.animejs-home {
   width: 100%;
   --max-box-width: 21rem;
   flex-direction: column;
@@ -195,16 +195,16 @@
 }
 
 /* ===== Intro Section 特殊布局 ===== */
-#intro {
+.animejs-intro {
   position: relative;
 }
 
-#intro .home-section {
+.animejs-intro .home-section {
   position: relative;
   height: calc(100lvh - var(--site-header-height));
 }
 
-#intro .home-section-content {
+.animejs-intro .home-section-content {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -212,14 +212,14 @@
   height: 100%;
 }
 
-#intro .home-section-text h2 {
+.animejs-intro .home-section-text h2 {
   color: var(--hex-fg-1);
   font-size: var(--text-xxxxl);
   line-height: 0.865em;
   letter-spacing: -0.025em;
 }
 
-#intro .home-section-text p {
+.animejs-intro .home-section-text p {
   width: 100%;
   color: var(--hex-fg-2);
   font-size: var(--text-l);
@@ -920,7 +920,7 @@ ul.modules-list {
 }
 
 /* ===== Footer ===== */
-#site-footer {
+.site-footer {
   container-type: inline-size;
   z-index: 2;
   padding-left: var(--margin-s);
@@ -931,14 +931,14 @@ ul.modules-list {
 
 /* 桌面端 footer padding */
 @media (min-width: 900px) {
-  #site-footer {
+  .site-footer {
     padding-left: var(--margin-m);
     padding-right: var(--margin-m);
     padding-bottom: var(--margin-m);
   }
 }
 
-#site-footer-content {
+.site-footer-content {
   position: relative;
   z-index: 2;
   display: flex;
@@ -1176,7 +1176,7 @@ ul.links-list li a[target*=_blank] .icon {
 }
 
 /* ===== Engine ===== */
-#engine {
+.animejs-engine {
   position: fixed;
   width: 100%;
   height: 100lvh;
@@ -1321,7 +1321,7 @@ ul.links-list li a[target*=_blank] .icon {
 }
 
 /* Get Started 章节标题 */
-#get-started h2 {
+.get-started h2 {
   color: var(--hex-fg-1);
   font-size: var(--text-xxxl);
   font-weight: 700;
@@ -1330,7 +1330,7 @@ ul.links-list li a[target*=_blank] .icon {
   margin-bottom: 0.5em;
 }
 
-#get-started p {
+.get-started p {
   color: var(--hex-fg-3);
   font-size: var(--text-m);
 }
@@ -1380,7 +1380,7 @@ ul.links-list li a[target*=_blank] .icon {
     padding: 0 1rem;
   }
 
-  #site-header-content {
+  .site-header-content {
     padding: 0.75rem 1rem;
   }
 
@@ -1411,11 +1411,11 @@ ul.links-list li a[target*=_blank] .icon {
 
 /* 大屏幕导航展开 */
 @media (min-width: 1200px) {
-  #site-menu .main-nav-link {
+  .site-menu .main-nav-link {
     height: 100%;
   }
 
-  #site-menu .main-nav-link:hover {
+  .site-menu .main-nav-link:hover {
     color: var(--hex-fg-1);
   }
 }

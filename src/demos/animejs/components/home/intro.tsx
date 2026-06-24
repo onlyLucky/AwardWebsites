@@ -7,7 +7,7 @@ import SponsorsList from '../web-components/sponsors-list'
 
 export default function IntroSection() {
   return (
-    <section id="intro" data-chapter="intro" data-label="HEADING">
+    <section id="intro" className={styles['animejs-intro']} data-chapter="intro" data-label="HEADING">
       <div className={`${styles['home-section']} ${styles['text-layout']}`}>
         <div className={styles['home-section-content']}>
           {/* 左侧文字内容 */}

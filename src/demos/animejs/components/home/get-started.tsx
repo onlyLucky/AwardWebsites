@@ -17,7 +17,7 @@ function ArrowIcon() {
 
 export default function GetStartedSection() {
   return (
-    <section id="get-started" data-chapter="get-started" data-label="GET_STARTED">
+    <section id="get-started" className={styles['get-started']} data-chapter="get-started" data-label="GET_STARTED">
       {/* 章节间距 */}
       <div className={styles['section-spacer']}></div>
 

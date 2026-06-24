@@ -14,8 +14,8 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header id="site-header" className={`${styles['layout-container']} text-ui ui-overlay${menuOpen ? ' is-menu-open' : ''}`}>
-      <div id="site-header-content">
+    <header id="site-header" className={`${styles['site-header']} ${styles['layout-container']} text-ui ui-overlay${menuOpen ? ' is-menu-open' : ''}`}>
+      <div id="site-header-content" className={styles['site-header-content']}>
         {/* Logo */}
         <h1 className={`heading-logo ${styles['header-logo']}`}>
           <a href="/">
@@ -38,7 +38,7 @@ export default function Header() {
         </h1>
 
         {/* 导航菜单 */}
-        <nav id="site-menu" className={menuOpen ? styles['is-open'] : ''}>
+        <nav id="site-menu" className={`${styles['site-menu']}${menuOpen ? ` ${styles['is-open']}` : ''}`}>
           <ul>
             <li>
               <a className={`${styles['main-nav-link']} docs-link`} data-id="docs" href="documentation.html" title="Documentation">
@@ -123,7 +123,7 @@ export default function Header() {
         {/* 移动端菜单按钮 */}
         <button
           id="toggle-site-menu"
-          className="ui-input trigger-pane"
+          className={`${styles['toggle-site-menu']} ui-input trigger-pane`}
           title="Toggle site menu"
           onClick={() => setMenuOpen((v) => !v)}
           aria-expanded={menuOpen}

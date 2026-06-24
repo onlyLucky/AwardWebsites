@@ -23,8 +23,8 @@ function ArrowIcon() {
 
 export default function Footer() {
   return (
-    <footer id="site-footer" className={styles['layout-container']} data-color="fg">
-      <div id="site-footer-content">
+    <footer id="site-footer" className={`${styles['site-footer']} ${styles['layout-container']}`} data-color="fg">
+      <div id="site-footer-content" className={styles['site-footer-content']}>
         <div className={styles['footer-row']}>
           {/* 赞助商区块 */}
           <div className={`${styles['footer-block']} ${styles['footer-block-sponsors']}`}>
