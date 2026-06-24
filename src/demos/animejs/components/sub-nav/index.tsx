@@ -1,58 +1,45 @@
 // ===== Sub Nav 组件 =====
 // 对应源码 sub-nav
 // 包含滚动进度条和代码片段展示
+// 通过 IntersectionObserver 检测各 section 进入视口
+// 通过 useScrollProgress Hook 同步滚动游标位置
 
-export default function SubNav() {
-  return (
-    <div className="sub-nav">
-      {/* 滚动进度条 */}
-      <div className="home-progress-card">
-        <div className="scroll-bar">
-          <div className="scroll-cursor"></div>
-          <div className="scroll-cursor-ghost scroll-cursor"></div>
-        </div>
-      </div>
+import { useEffect, useRef, useState } from 'react'
+import { useScrollProgress } from '@/demos/animejs/hooks/useScrollProgress'
+import { getModuleTotalSize, getModulesList } from '@/demos/animejs/components/home/modules'
+import FundingLevel from '../web-components/funding-level'
 
-      {/* 代码片段: Intuitive API */}
-      <pre data-card="intuitive">
-        <code>
-{`animate('.square', {
+const FEATURE_IDS = [
+  'intuitive',
+  'composition',
+  'scroll',
+  'staggering',
+  'svgUtils',
+  'draggable',
+  'clockwork',
+  'responsive',
+] as const
+
+const CODE_SNIPPETS: Record<string, string> = {
+  intuitive: `animate('.square', {
   rotate: 90,
   loop: true,
   ease: 'inOutExpo',
-});`}
-        </code>
-      </pre>
-
-      {/* 代码片段: Composition */}
-      <pre data-card="composition">
-        <code>
-{`animate('.shape', {
+});`,
+  composition: `animate('.shape', {
   x: random(-100, 100),
   y: random(-100, 100),
   rotate: random(-180, 180),
   duration: random(500, 1000),
   composition: 'blend',
-});`}
-        </code>
-      </pre>
-
-      {/* 代码片段: Scroll */}
-      <pre data-card="scroll">
-        <code>
-{`animate(createDrawable('path'), {
+});`,
+  scroll: `animate(createDrawable('path'), {
   draw: ['0 0', '0 1', '1 1'],
   delay: stagger(40),
   ease: 'inOut(3)',
   autoplay: onScroll({ sync: true }),
-});`}
-        </code>
-      </pre>
-
-      {/* 代码片段: Staggering */}
-      <pre data-card="staggering">
-        <code>
-{`const options = {
+});`,
+  staggering: `const options = {
   grid: [13, 13],
   from: 'center',
 };
@@ -61,14 +48,8 @@ createTimeline()
   .add('.dot', {
     scale: stagger([1.1, .75], options),
     ease: 'inOutQuad',
-  }, stagger(200, options));`}
-        </code>
-      </pre>
-
-      {/* 代码片段: SVG Utils */}
-      <pre data-card="svgUtils">
-        <code>
-{`animate('.car', {
+  }, stagger(200, options));`,
+  svgUtils: `animate('.car', {
   ...createMotionPath('.circuit'),
 });
 
@@ -78,26 +59,14 @@ animate(createDrawable('.circuit'), {
 
 animate('.circuit-a', {
   d: morphTo('.circuit-b'),
-});`}
-        </code>
-      </pre>
-
-      {/* 代码片段: Draggable */}
-      <pre data-card="draggable">
-        <code>
-{`createDraggable('.circle', {
+});`,
+  draggable: `createDraggable('.circle', {
   releaseEase: createSpring({
     stiffness: 120,
     damping: 6,
   })
-});`}
-        </code>
-      </pre>
-
-      {/* 代码片段: Clockwork */}
-      <pre data-card="clockwork">
-        <code>
-{`createTimeline()
+});`,
+  clockwork: `createTimeline()
   .add('.tick', {
     y: '-=6',
     duration: 50,
@@ -105,14 +74,8 @@ animate('.circuit-a', {
   .add('.ticker', {
     rotate: 360,
     duration: 1920,
-  }, '<');`}
-        </code>
-      </pre>
-
-      {/* 代码片段: Responsive */}
-      <pre data-card="responsive">
-        <code>
-{`createScope({
+  }, '<');`,
+  responsive: `createScope({
   mediaQueries: {
     portrait: '(orientation: portrait)',
   }
@@ -123,9 +86,106 @@ animate('.circuit-a', {
     y: isPortrait ? 0 : [-50, 50, -50],
     x: isPortrait ? [-50, 50, -50] : 0,
   }, stagger(100));
-});`}
-        </code>
-      </pre>
+});`,
+}
+
+const MAX_BAR_SIZE = 6.41
+
+export default function SubNav() {
+  const scrollProgressRef = useScrollProgress()
+  const cursorRef = useRef<HTMLDivElement>(null)
+  const progressCardRef = useRef<HTMLDivElement>(null)
+  const ghostRef = useRef<HTMLDivElement>(null)
+  const [activeCard, setActiveCard] = useState<string | null>(null)
+  const [showProgress, setShowProgress] = useState(false)
+
+  // 使用 IntersectionObserver 检测哪个 section 在视口中央
+  useEffect(() => {
+    const targets: Element[] = []
+    FEATURE_IDS.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) targets.push(el)
+    })
+    const modulesEl = document.getElementById('modules')
+    if (modulesEl) targets.push(modulesEl)
+    const sponsorsEl = document.getElementById('sponsors')
+    if (sponsorsEl) targets.push(sponsorsEl)
+
+    if (typeof IntersectionObserver === 'undefined') return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = (entry.target as HTMLElement).id
+            setActiveCard(id)
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
+    targets.forEach((t) => observer.observe(t))
+    return () => observer.disconnect()
+  }, [])
+
+  // 同步滚动游标位置
+  useEffect(() => {
+    let rafId: number | null = null
+    const updateCursor = () => {
+      rafId = null
+      const progress = scrollProgressRef.current
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translateX(${progress * 100}%)`
+      }
+      // ghost 跟随
+      if (ghostRef.current) {
+        ghostRef.current.style.transform = `translateX(${progress * 100}%)`
+      }
+      // 进度卡片显示
+      setShowProgress(progress > 0.02)
+    }
+
+    const onScroll = () => {
+      if (rafId !== null) return
+      rafId = requestAnimationFrame(updateCursor)
+    }
+
+    // 立即更新一次
+    updateCursor()
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (rafId !== null) cancelAnimationFrame(rafId)
+    }
+  }, [scrollProgressRef])
+
+  const modules = getModulesList()
+  const totalSize = getModuleTotalSize()
+
+  return (
+    <div className="sub-nav">
+      {/* 滚动进度条 */}
+      <div
+        ref={progressCardRef}
+        className="home-progress-card"
+        style={{ opacity: showProgress ? 1 : 0, pointerEvents: showProgress ? 'auto' : 'none' }}
+      >
+        <div className="scroll-bar">
+          <div ref={cursorRef} className="scroll-cursor" style={{ transform: 'translateX(0%)' }}></div>
+          <div ref={ghostRef} className="scroll-cursor-ghost scroll-cursor" style={{ transform: 'translateX(0%)' }}></div>
+        </div>
+      </div>
+
+      {/* 代码片段: 8 个特性 */}
+      {FEATURE_IDS.map((id) => (
+        <pre key={id} data-card={id} style={{ opacity: activeCard === id ? 1 : 0 }}>
+          <code>{CODE_SNIPPETS[id]}</code>
+        </pre>
+      ))}
 
       {/* 模块可视化卡片 */}
       <div
@@ -133,70 +193,31 @@ animate('.circuit-a', {
         data-card="modules"
         data-enter-offset="-=50lvh"
         data-leave-offset="-=150lvh"
+        style={{ opacity: activeCard === 'modules' ? 1 : 0 }}
       >
         <div className="box-heading">
           <h3>Bundle size</h3>
           <div className="modules-bundle-size">
-            <span className="size">24.50</span> KB
+            <span className="size">{totalSize}</span> KB
           </div>
         </div>
         <div className="modules-sizes-chart chart">
-          <div data-size="3.50" className="chart-bar module-waapi color-waapi"></div>
-          <div data-size="0.55" className="chart-bar module-timeline color-timeline"></div>
-          <div data-size="0.48" className="chart-bar module-stagger color-utils"></div>
-          <div data-size="0.35" className="chart-bar module-svg color-svg"></div>
-          <div data-size="0.52" className="chart-bar module-spring color-easings"></div>
-          <div data-size="5.60" className="chart-bar module-timer color-timer"></div>
-          <div data-size="4.30" className="chart-bar module-scroll color-events"></div>
-          <div data-size="5.20" className="chart-bar module-animation color-animation"></div>
-          <div data-size="6.41" className="chart-bar module-draggable color-draggable"></div>
-          <div data-size="0.22" className="chart-bar module-scope color-scope"></div>
+          {modules.map((m) => (
+            <div
+              key={m.name}
+              data-size={m.size}
+              className={`chart-bar module-${m.color} color-${m.color}`}
+              style={{ ['--data-size' as any]: (m.size / MAX_BAR_SIZE) * 100 }}
+            ></div>
+          ))}
         </div>
         <ul className="modules-list">
-          <li>
-            <span className="label-dot color-timer"></span>
-            Timer <span className="size">5.60 KB</span>
-          </li>
-          <li>
-            <span className="label-dot color-animation"></span>
-            Animation <span className="size">+5.20 KB</span>
-          </li>
-          <li>
-            <span className="label-dot color-timeline"></span>
-            Timeline <span className="size">+0.55 KB</span>
-          </li>
-          <li>
-            <span className="label-dot color-animatable"></span>
-            Animatable <span className="size">+0.40 KB</span>
-          </li>
-          <li>
-            <span className="label-dot color-draggable"></span>
-            Draggable <span className="size">+6.41 KB</span>
-          </li>
-          <li>
-            <span className="label-dot color-events"></span>
-            Scroll <span className="size">+4.30 KB</span>
-          </li>
-          <li>
-            <span className="label-dot color-scope"></span>
-            Scope <span className="size">+0.22 KB</span>
-          </li>
-          <li>
-            <span className="label-dot color-svg"></span>
-            SVG <span className="size">0.35 KB</span>
-          </li>
-          <li>
-            <span className="label-dot color-utils"></span>
-            Stagger <span className="size">+0.48 KB</span>
-          </li>
-          <li>
-            <span className="label-dot color-easings"></span>
-            Spring <span className="size">0.52 KB</span>
-          </li>
-          <li>
-            <span className="label-dot color-waapi"></span>
-            WAAPI <span className="size">3.50 KB</span>
-          </li>
+          {modules.map((m) => (
+            <li key={m.name}>
+              <span className={`label-dot color-${m.color}`}></span>
+              {m.name} <span className="size">{m.size} KB</span>
+            </li>
+          ))}
         </ul>
       </div>
 
@@ -206,8 +227,9 @@ animate('.circuit-a', {
         data-card="sponsors"
         data-enter-offset="-=50lvh"
         data-leave-offset="-=50lvh"
+        style={{ opacity: activeCard === 'sponsors' ? 1 : 0 }}
       >
-        <funding-level path="github-sponsors"></funding-level>
+        <FundingLevel path="github-sponsors" />
       </div>
     </div>
   )

@@ -2,6 +2,8 @@
 // 对应源码 #intro (Hero 区域)
 // 包含标题、副标题、npm 命令、Learn more 按钮
 
+import SponsorsList from '../web-components/sponsors-list'
+
 export default function IntroSection() {
   return (
     <section id="intro" data-chapter="intro" data-label="HEADING">
@@ -40,19 +42,19 @@ export default function IntroSection() {
                   Learn more
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
                     <g fill="none" fillRule="evenodd">
-                      <polygon fill="currentColor" fillRule="nonzero" points="12 18 17.237 12.763 16 11.525 12.875 14.651 12.875 6.763 11.125 6.763 11.125 14.651 8 11.525 6.763 12.763"/>
+                      <polygon fill="currentColor" fillRule="nonzero" points="12 18 17.237 12.763 16 11.525 12.875 14.651 12.875 6.763 11.125 6.763 11.125 14.651 8 11.525 6.763 12.763" />
                     </g>
                   </svg>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
                     <g fill="none" fillRule="evenodd">
-                      <polygon fill="currentColor" fillRule="nonzero" points="12 18 17.237 12.763 16 11.525 12.875 14.651 12.875 6.763 11.125 6.763 11.125 14.651 8 11.525 6.763 12.763"/>
+                      <polygon fill="currentColor" fillRule="nonzero" points="12 18 17.237 12.763 16 11.525 12.875 14.651 12.875 6.763 11.125 6.763 11.125 14.651 8 11.525 6.763 12.763" />
                     </g>
                   </svg>
                 </button>
               </div>
               <div className="heading-sponsors text-layout">
                 <span className="text-xxs">Sponsored by</span>
-                <sponsors-list path="platinum-sponsors"></sponsors-list>
+                <SponsorsList path="platinum-sponsors" size="small" />
               </div>
             </div>
           </div>

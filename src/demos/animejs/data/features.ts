@@ -91,6 +91,39 @@ animate('.circuit-a', {
 });`,
     color: 'draggable',
   },
+  {
+    id: 'clockwork',
+    title: 'Runs like clockwork',
+    description: 'Orchestrate animation sequences and keep callbacks in sync with the powerful Timeline API.',
+    code: `createTimeline()
+  .add('.tick', {
+    y: '-=6',
+    duration: 50,
+  }, stagger(10))
+  .add('.ticker', {
+    rotate: 360,
+    duration: 1920,
+  }, '<');`,
+    color: 'timeline',
+  },
+  {
+    id: 'responsive',
+    title: 'Responsive animations',
+    description: 'Make animations respond to media queries easily with the Scope API.',
+    code: `createScope({
+  mediaQueries: {
+    portrait: '(orientation: portrait)',
+  }
+})
+.add(({ matches }) => {
+  const isPortrait = matches.portrait;
+  createTimeline().add('.circle', {
+    y: isPortrait ? 0 : [-50, 50, -50],
+    x: isPortrait ? [-50, 50, -50] : 0,
+  }, stagger(100));
+});`,
+    color: 'green',
+  },
 ]
 
 // ===== 模块数据定义 =====
@@ -118,3 +151,43 @@ export const modules: Module[] = [
 
 // 计算总大小
 export const totalSize = modules.reduce((acc, mod) => acc + mod.size, 0)
+
+// ===== 工具箱标签数据 =====
+// 复刻源码左侧/右侧工具箱标签切换效果
+export const toolboxLabelsLeft: string[] = [
+  'Timer',
+  'Animation',
+  'Timeline',
+  'Animatable',
+  'Draggable',
+  'Scope',
+  'Scroll',
+  'SVG',
+  'Utils',
+  'Easings',
+  'WAAPI',
+  'Spring',
+  'Stagger',
+  'Motion path',
+  'Morph',
+  'Draw',
+]
+
+export const toolboxLabelsRight: string[] = [
+  'CSS transforms',
+  'Individual transforms',
+  'Function based values',
+  'SVG attributes',
+  'CSS variables',
+  'Color animations',
+  'Layout animations',
+  'Path animations',
+  'Keyframes',
+  'Composition',
+  'Blend modes',
+  'Callbacks',
+  'Promises',
+  'Await',
+  'Sync',
+  'Async',
+]

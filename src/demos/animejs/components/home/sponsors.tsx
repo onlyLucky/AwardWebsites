@@ -2,12 +2,14 @@
 // 对应源码 #sponsors (赞助商)
 // 包含标题、描述、赞助商列表
 
+import SponsorsList from '../web-components/sponsors-list'
+
 // SVG 箭头图标组件
 function ArrowIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
       <g fill="none" fillRule="evenodd">
-        <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
+        <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75" />
       </g>
     </svg>
   )
@@ -30,12 +32,11 @@ export default function SponsorsSection() {
           </p>
           {/* Platinum 赞助商列表 */}
           <div className="company-sponsors-list">
-            {/* 源码使用 <sponsors-list> 自定义组件，此处使用占位 div */}
-            <sponsors-list size="large" boxed path="platinum-sponsors"></sponsors-list>
+            <SponsorsList size="large" boxed path="platinum-sponsors" />
           </div>
           {/* Silver 赞助商列表 */}
           <div className="company-sponsors-list">
-            <sponsors-list size="small" boxed path="silver-sponsors"></sponsors-list>
+            <SponsorsList size="small" boxed path="silver-sponsors" />
           </div>
           <ul className="feature-links">
             <li>

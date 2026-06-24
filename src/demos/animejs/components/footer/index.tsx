@@ -2,10 +2,23 @@
 // 对应源码 #site-footer
 // 包含赞助商、站点链接、社交链接、版权信息、邮件订阅
 
+import SponsorButton from '../web-components/sponsor-button'
+
 // Logo 图片路径
 const LOGO_URL = new URL('@/assets/animejs/images/anime-js-logo-v4.svg', import.meta.url).href
 // 赞助商占位图路径
 const SPONSOR_PLACEHOLDER_URL = new URL('@/assets/animejs/media/pages/sponsors/platinum-sponsors/973aa34310-1769187540/sponsor-placeholder.svg', import.meta.url).href
+
+// 通用箭头图标
+function ArrowIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
+      <g fill="none" fillRule="evenodd">
+        <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75" />
+      </g>
+    </svg>
+  )
+}
 
 export default function Footer() {
   return (
@@ -33,25 +46,16 @@ export default function Footer() {
                     loading="lazy"
                   />
                   <span>Become a sponsor</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
-                    <g fill="none" fillRule="evenodd">
-                      <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                    </g>
-                  </svg>
+                  <ArrowIcon />
                 </a>
               </li>
               <li>
-                {/* 源码使用 <sponsor-button> 自定义组件包裹 */}
-                <sponsor-button>
+                <SponsorButton>
                   <a href="https://github.com/sponsors/juliangarnier" target="_blank">
                     Become a sponsor
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
-                      <g fill="none" fillRule="evenodd">
-                        <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                      </g>
-                    </svg>
+                    <ArrowIcon />
                   </a>
-                </sponsor-button>
+                </SponsorButton>
               </li>
             </ul>
           </div>
@@ -64,41 +68,25 @@ export default function Footer() {
                 <li>
                   <a href="index.html" title="Documentation">
                     Home
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
-                      <g fill="none" fillRule="evenodd">
-                        <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                      </g>
-                    </svg>
+                    <ArrowIcon />
                   </a>
                 </li>
                 <li>
                   <a href="documentation.html" title="Documentation">
                     Documentation
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
-                      <g fill="none" fillRule="evenodd">
-                        <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                      </g>
-                    </svg>
+                    <ArrowIcon />
                   </a>
                 </li>
                 <li>
                   <a href="easing-editor.html" title="Easing functions editor">
                     Easings editor
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
-                      <g fill="none" fillRule="evenodd">
-                        <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                      </g>
-                    </svg>
+                    <ArrowIcon />
                   </a>
                 </li>
                 <li>
                   <a href="learn.html" title="Learn">
                     Learn
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
-                      <g fill="none" fillRule="evenodd">
-                        <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                      </g>
-                    </svg>
+                    <ArrowIcon />
                   </a>
                 </li>
               </ul>
@@ -109,41 +97,25 @@ export default function Footer() {
                 <li>
                   <a target="_blank" href="https://x.com/juliangarnier">
                     X / Twitter
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
-                      <g fill="none" fillRule="evenodd">
-                        <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                      </g>
-                    </svg>
+                    <ArrowIcon />
                   </a>
                 </li>
                 <li>
                   <a target="_blank" href="https://bsky.app/profile/animejs.com">
                     Bluesky
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
-                      <g fill="none" fillRule="evenodd">
-                        <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                      </g>
-                    </svg>
+                    <ArrowIcon />
                   </a>
                 </li>
                 <li>
                   <a target="_blank" href="https://github.com/juliangarnier/anime">
                     GitHub
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
-                      <g fill="none" fillRule="evenodd">
-                        <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                      </g>
-                    </svg>
+                    <ArrowIcon />
                   </a>
                 </li>
                 <li>
                   <a target="_blank" href="https://codepen.io/collection/Poerqa">
                     CodePen
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
-                      <g fill="none" fillRule="evenodd">
-                        <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
-                      </g>
-                    </svg>
+                    <ArrowIcon />
                   </a>
                 </li>
               </ul>
