@@ -3,11 +3,18 @@ import { ArrowLeft } from 'lucide-react'
 import { useI18n } from '@/i18n'
 import Toolbar from '@/components/toolbar'
 
+// 隐藏系统顶栏的 demo 路径列表
+const HIDE_HEADER_ROUTES = ['/demo/animejs']
+
 function Header() {
   const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
   const isHome = location.pathname === '/'
+  const isHidden = HIDE_HEADER_ROUTES.includes(location.pathname)
   const { t } = useI18n()
+
+  // 部分 demo 有自己的导航，隐藏系统顶栏
+  if (isHidden) return null
 
   const searchQuery = searchParams.get('q') || ''
 

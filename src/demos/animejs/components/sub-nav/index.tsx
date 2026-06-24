@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useScrollProgress } from '@/demos/animejs/hooks/useScrollProgress'
 import { getModuleTotalSize, getModulesList } from '@/demos/animejs/components/home/modules'
 import FundingLevel from '../web-components/funding-level'
+import styles from '@/demos/animejs/styles/animejs.module.css'
 
 const FEATURE_IDS = [
   'intuitive',
@@ -122,7 +123,7 @@ export default function SubNav() {
           }
         })
       },
-      { threshold: 0.3 }
+      { threshold: 0, rootMargin: '-50% 0px -50% 0px' }
     )
 
     targets.forEach((t) => observer.observe(t))
@@ -167,16 +168,16 @@ export default function SubNav() {
   const totalSize = getModuleTotalSize()
 
   return (
-    <div className="sub-nav">
+    <div className={styles['sub-nav']}>
       {/* 滚动进度条 */}
       <div
         ref={progressCardRef}
-        className="home-progress-card"
+        className={styles['home-progress-card']}
         style={{ opacity: showProgress ? 1 : 0, pointerEvents: showProgress ? 'auto' : 'none' }}
       >
-        <div className="scroll-bar">
-          <div ref={cursorRef} className="scroll-cursor" style={{ transform: 'translateX(0%)' }}></div>
-          <div ref={ghostRef} className="scroll-cursor-ghost scroll-cursor" style={{ transform: 'translateX(0%)' }}></div>
+        <div className={styles['scroll-bar']}>
+          <div ref={cursorRef} className={styles['scroll-cursor']} style={{ transform: 'translateX(0%)' }}></div>
+          <div ref={ghostRef} className={`${styles['scroll-cursor-ghost']} ${styles['scroll-cursor']}`} style={{ transform: 'translateX(0%)' }}></div>
         </div>
       </div>
 
@@ -189,33 +190,33 @@ export default function SubNav() {
 
       {/* 模块可视化卡片 */}
       <div
-        className="modules-sizes home-section-card text-layout"
+        className={`${styles['modules-sizes']} ${styles['home-section-card']} ${styles['text-layout']}`}
         data-card="modules"
         data-enter-offset="-=50lvh"
         data-leave-offset="-=150lvh"
         style={{ opacity: activeCard === 'modules' ? 1 : 0 }}
       >
-        <div className="box-heading">
+        <div className={styles['box-heading']}>
           <h3>Bundle size</h3>
-          <div className="modules-bundle-size">
-            <span className="size">{totalSize}</span> KB
+          <div className={styles['modules-bundle-size']}>
+            <span className={styles['size']}>{totalSize}</span> KB
           </div>
         </div>
-        <div className="modules-sizes-chart chart">
+        <div className={`${styles['modules-sizes-chart']} ${styles['chart']}`}>
           {modules.map((m) => (
             <div
               key={m.name}
               data-size={m.size}
-              className={`chart-bar module-${m.color} color-${m.color}`}
+              className={`${styles['chart-bar']} module-${m.color} ${styles[`color-${m.color}`]}`}
               style={{ ['--data-size' as any]: (m.size / MAX_BAR_SIZE) * 100 }}
             ></div>
           ))}
         </div>
-        <ul className="modules-list">
+        <ul className={styles['modules-list']}>
           {modules.map((m) => (
             <li key={m.name}>
-              <span className={`label-dot color-${m.color}`}></span>
-              {m.name} <span className="size">{m.size} KB</span>
+              <span className={`${styles['label-dot']} ${styles[`color-${m.color}`]}`}></span>
+              {m.name} <span className={styles['size']}>{m.size} KB</span>
             </li>
           ))}
         </ul>
@@ -223,7 +224,7 @@ export default function SubNav() {
 
       {/* 赞助级别卡片 */}
       <div
-        className="funding-level-box home-section-card text-layout"
+        className={`${styles['funding-level-box']} ${styles['home-section-card']} ${styles['text-layout']}`}
         data-card="sponsors"
         data-enter-offset="-=50lvh"
         data-leave-offset="-=50lvh"

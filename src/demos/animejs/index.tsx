@@ -8,7 +8,8 @@ import Home from './components/home'
 import SubNav from './components/sub-nav'
 import Footer from './components/footer'
 import Engine from './components/engine'
-import './styles/animejs.css'
+import './styles/animejs-global.css'
+import styles from './styles/animejs.module.css'
 
 export default function AnimejsDemo() {
   const pageRef = useRef<HTMLDivElement>(null)
@@ -20,28 +21,30 @@ export default function AnimejsDemo() {
 
     // 使用 requestAnimationFrame 确保在下一帧添加类
     const raf = requestAnimationFrame(() => {
-      page.classList.add('is-ready')
+      page.classList.add(styles['is-ready'])
     })
 
     return () => cancelAnimationFrame(raf)
   }, [])
 
   return (
-    <div ref={pageRef} className="page">
-      {/* 1. 顶部导航 */}
-      <Header />
+    <div className="animejsRoot">
+      <div ref={pageRef} className={styles.page}>
+        {/* 1. 顶部导航 */}
+        <Header />
 
-      {/* 2. 主内容区域 */}
-      <Home />
+        {/* 2. 主内容区域 */}
+        <Home />
 
-      {/* 3. 滚动进度和代码片段 */}
-      <SubNav />
+        {/* 3. 滚动进度和代码片段 */}
+        <SubNav />
 
-      {/* 4. 页脚 */}
-      <Footer />
+        {/* 4. 页脚 */}
+        <Footer />
 
-      {/* 5. 3D 引擎 */}
-      <Engine />
+        {/* 5. 3D 引擎 */}
+        <Engine />
+      </div>
     </div>
   )
 }

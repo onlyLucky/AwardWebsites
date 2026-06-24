@@ -3,6 +3,7 @@
 // 渲染 Platinum / Silver 等赞助商列表
 
 import type { ReactNode } from 'react'
+import styles from '@/demos/animejs/styles/animejs.module.css'
 
 export interface SponsorsListProps {
   /** 路径标识：platinum-sponsors / silver-sponsors / gold-sponsors */
@@ -43,7 +44,7 @@ export default function SponsorsList({
   const renderSponsor = (sponsor: { name: string; url: string }, index: number): ReactNode => {
     if (isSmall) {
       return (
-        <li key={index} className="sponsor-item sponsor-item-small">
+        <li key={index} className={`sponsor-item ${styles['sponsor-item-small']}`}>
           <a href={sponsor.url} target="_blank" rel="noopener noreferrer" title={sponsor.name}>
             {sponsor.name}
           </a>
@@ -51,7 +52,7 @@ export default function SponsorsList({
       )
     }
     return (
-      <li key={index} className="sponsor-item sponsor-item-large">
+      <li key={index} className={`sponsor-item ${styles['sponsor-item-large']}`}>
         <a href={sponsor.url} target="_blank" rel="noopener noreferrer" title={sponsor.name}>
           {sponsor.name}
         </a>
@@ -66,7 +67,7 @@ export default function SponsorsList({
       boxed={boxed ? '' : undefined}
       class={className}
     >
-      <ul className={`sponsors-list sponsors-list-${size}${boxed ? ' sponsors-list-boxed' : ''}`}>
+      <ul className={`${styles['sponsors-list']} ${styles[`sponsors-list-${size}`]}${boxed ? ` ${styles['sponsors-list-boxed']}` : ''}`}>
         {sponsors.map(renderSponsor)}
       </ul>
     </sponsors-list>

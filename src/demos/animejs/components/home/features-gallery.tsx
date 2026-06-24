@@ -2,10 +2,12 @@
 // 对应源码 #features-gallery (特性展示区域)
 // 包含 8 个子特性
 
+import styles from '@/demos/animejs/styles/animejs.module.css'
+
 // SVG 箭头图标组件
 function ArrowIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={styles.icon}>
       <g fill="none" fillRule="evenodd">
         <polygon fill="currentColor" fillRule="nonzero" points="17.737 11.987 12.5 17.225 11.263 15.987 14.388 12.862 6.5 12.862 6.5 11.112 14.388 11.112 11.263 7.987 12.5 6.75"/>
       </g>
@@ -19,19 +21,19 @@ export default function FeaturesGallerySection() {
       {/* 特性 1: Intuitive API */}
       <section
         id="intuitive"
-        className="home-section feature-section text-layout color-getting-started"
+        className={`${styles['home-section']} ${styles['feature-section']} ${styles['text-layout']} ${styles['color-getting-started']}`}
         data-chapter="intuitive"
         data-demo="intuitive"
       >
-        <div className="home-section-content">
-          <div className="home-section-text">
-            <div className="home-section-text-heading">
+        <div className={styles['home-section-content']}>
+          <div className={styles['home-section-text']}>
+            <div className={styles['home-section-text-heading']}>
               <h2>Intuitive API</h2>
               <p>
                 Animate faster with an easy-to-use, yet powerful animation API.
               </p>
             </div>
-            <ul className="feature-links">
+            <ul className={styles['feature-links']}>
               <li>
                 <a className="text-ui" href="documentation/animation/tween-parameters/composition.html">
                   <ArrowIcon />
@@ -52,8 +54,8 @@ export default function FeaturesGallerySection() {
               </li>
             </ul>
           </div>
-          <div className="feature-section-demo-wrapper">
-            <div className="feature-section-demo fixed-section"></div>
+          <div className={styles['feature-section-demo-wrapper']}>
+            <div className={`${styles['feature-section-demo']} ${styles['fixed-section']}`}></div>
           </div>
         </div>
       </section>
@@ -61,20 +63,20 @@ export default function FeaturesGallerySection() {
       {/* 特性 2: Enhanced transforms */}
       <section
         id="composition"
-        className="home-section feature-section text-layout color-animation"
+        className={`${styles['home-section']} ${styles['feature-section']} ${styles['text-layout']} ${styles['color-animation']}`}
         data-chapter="composition"
         data-demo="composition"
       >
-        <div className="home-section-content">
-          <div className="home-section-text">
-            <div className="home-section-text-heading">
+        <div className={styles['home-section-content']}>
+          <div className={styles['home-section-text']}>
+            <div className={styles['home-section-text-heading']}>
               <h2>Enhanced transforms</h2>
               <p>
                 Smoothly blend individual CSS transform properties with a
                 versatile composition API.
               </p>
             </div>
-            <ul className="feature-links">
+            <ul className={styles['feature-links']}>
               <li>
                 <a className="text-ui" href="documentation/animation/animatable-properties/css-transforms.html">
                   <ArrowIcon />
@@ -95,8 +97,8 @@ export default function FeaturesGallerySection() {
               </li>
             </ul>
           </div>
-          <div className="feature-section-demo-wrapper">
-            <div className="feature-section-demo fixed-section"></div>
+          <div className={styles['feature-section-demo-wrapper']}>
+            <div className={`${styles['feature-section-demo']} ${styles['fixed-section']}`}></div>
           </div>
         </div>
       </section>
@@ -104,20 +106,20 @@ export default function FeaturesGallerySection() {
       {/* 特性 3: Scroll Observer */}
       <section
         id="scroll"
-        className="home-section feature-section text-layout color-turquoise"
+        className={`${styles['home-section']} ${styles['feature-section']} ${styles['text-layout']} ${styles['color-turquoise']}`}
         data-chapter="scroll"
         data-demo="scroll"
       >
-        <div className="home-section-content">
-          <div className="home-section-text">
-            <div className="home-section-text-heading">
+        <div className={styles['home-section-content']}>
+          <div className={styles['home-section-text']}>
+            <div className={styles['home-section-text-heading']}>
               <h2>Scroll Observer</h2>
               <p>
                 Synchronise and trigger animations on scroll with the Scroll
                 Observer API.
               </p>
             </div>
-            <ul className="feature-links">
+            <ul className={styles['feature-links']}>
               <li>
                 <a className="text-ui" href="documentation/events/onscroll/scrollobserver-synchronisation-modes.html">
                   <ArrowIcon />
@@ -138,8 +140,8 @@ export default function FeaturesGallerySection() {
               </li>
             </ul>
           </div>
-          <div className="feature-section-demo-wrapper">
-            <div className="feature-section-demo fixed-section"></div>
+          <div className={styles['feature-section-demo-wrapper']}>
+            <div className={`${styles['feature-section-demo']} ${styles['fixed-section']}`}></div>
           </div>
         </div>
       </section>
@@ -147,20 +149,20 @@ export default function FeaturesGallerySection() {
       {/* 特性 4: Advanced staggering */}
       <section
         id="staggering"
-        className="home-section feature-section text-layout color-utils"
+        className={`${styles['home-section']} ${styles['feature-section']} ${styles['text-layout']} ${styles['color-utils']}`}
         data-chapter="staggering"
         data-demo="staggering"
       >
-        <div className="home-section-content">
-          <div className="home-section-text">
-            <div className="home-section-text-heading">
+        <div className={styles['home-section-content']}>
+          <div className={styles['home-section-text']}>
+            <div className={styles['home-section-text-heading']}>
               <h2>Advanced staggering</h2>
               <p>
                 Create stunning effects in seconds with the built-in Stagger
                 utility function.
               </p>
             </div>
-            <ul className="feature-links">
+            <ul className={styles['feature-links']}>
               <li>
                 <a className="text-ui" href="https://animejs.com/documentation/stagger/time-staggering">
                   <ArrowIcon />
@@ -181,8 +183,8 @@ export default function FeaturesGallerySection() {
               </li>
             </ul>
           </div>
-          <div className="feature-section-demo-wrapper">
-            <div className="feature-section-demo fixed-section"></div>
+          <div className={styles['feature-section-demo-wrapper']}>
+            <div className={`${styles['feature-section-demo']} ${styles['fixed-section']}`}></div>
           </div>
         </div>
       </section>
@@ -190,20 +192,20 @@ export default function FeaturesGallerySection() {
       {/* 特性 5: SVG toolset */}
       <section
         id="svgUtils"
-        className="home-section feature-section text-layout color-svg"
+        className={`${styles['home-section']} ${styles['feature-section']} ${styles['text-layout']} ${styles['color-svg']}`}
         data-chapter="svgUtils"
         data-demo="svgUtils"
       >
-        <div className="home-section-content">
-          <div className="home-section-text">
-            <div className="home-section-text-heading">
+        <div className={styles['home-section-content']}>
+          <div className={styles['home-section-text']}>
+            <div className={styles['home-section-text-heading']}>
               <h2>SVG toolset</h2>
               <p>
                 Morph shapes, follow motion paths, and draw lines easily with
                 the built-in SVG utilities.
               </p>
             </div>
-            <ul className="feature-links">
+            <ul className={styles['feature-links']}>
               <li>
                 <a className="text-ui" href="documentation/svg/morphto.html">
                   <ArrowIcon />
@@ -224,8 +226,8 @@ export default function FeaturesGallerySection() {
               </li>
             </ul>
           </div>
-          <div className="feature-section-demo-wrapper">
-            <div className="feature-section-demo fixed-section"></div>
+          <div className={styles['feature-section-demo-wrapper']}>
+            <div className={`${styles['feature-section-demo']} ${styles['fixed-section']}`}></div>
           </div>
         </div>
       </section>
@@ -233,20 +235,20 @@ export default function FeaturesGallerySection() {
       {/* 特性 6: Springs and draggable */}
       <section
         id="draggable"
-        className="home-section feature-section text-layout color-draggable"
+        className={`${styles['home-section']} ${styles['feature-section']} ${styles['text-layout']} ${styles['color-draggable']}`}
         data-chapter="draggable"
         data-demo="draggable"
       >
-        <div className="home-section-content">
-          <div className="home-section-text">
-            <div className="home-section-text-heading">
+        <div className={styles['home-section-content']}>
+          <div className={styles['home-section-text']}>
+            <div className={styles['home-section-text-heading']}>
               <h2>Springs and draggable</h2>
               <p>
                 Drag, snap, flick and throw HTML elements with the
                 fully-featured Draggable API.
               </p>
             </div>
-            <ul className="feature-links">
+            <ul className={styles['feature-links']}>
               <li>
                 <a className="text-ui" href="documentation/draggable/draggable-settings.html">
                   <ArrowIcon />
@@ -267,8 +269,8 @@ export default function FeaturesGallerySection() {
               </li>
             </ul>
           </div>
-          <div className="feature-section-demo-wrapper">
-            <div className="feature-section-demo fixed-section">
+          <div className={styles['feature-section-demo-wrapper']}>
+            <div className={`${styles['feature-section-demo']} ${styles['fixed-section']}`}>
               <div className="draggable-container">
                 <div className="draggable"></div>
               </div>
@@ -280,13 +282,13 @@ export default function FeaturesGallerySection() {
       {/* 特性 7: Runs like clockwork */}
       <section
         id="clockwork"
-        className="home-section feature-section text-layout color-timeline"
+        className={`${styles['home-section']} ${styles['feature-section']} ${styles['text-layout']} ${styles['color-timeline']}`}
         data-chapter="clockwork"
         data-demo="clockwork"
       >
-        <div className="home-section-content">
-          <div className="home-section-text">
-            <div className="home-section-text-heading">
+        <div className={styles['home-section-content']}>
+          <div className={styles['home-section-text']}>
+            <div className={styles['home-section-text-heading']}>
               <h2>
                 Runs like{' '}
                 <br />
@@ -297,7 +299,7 @@ export default function FeaturesGallerySection() {
                 the powerful Timeline API.
               </p>
             </div>
-            <ul className="feature-links">
+            <ul className={styles['feature-links']}>
               <li>
                 <a className="text-ui" href="documentation/timeline/add-animations.html">
                   <ArrowIcon />
@@ -318,8 +320,8 @@ export default function FeaturesGallerySection() {
               </li>
             </ul>
           </div>
-          <div className="feature-section-demo-wrapper">
-            <div className="feature-section-demo fixed-section"></div>
+          <div className={styles['feature-section-demo-wrapper']}>
+            <div className={`${styles['feature-section-demo']} ${styles['fixed-section']}`}></div>
           </div>
         </div>
       </section>
@@ -327,20 +329,20 @@ export default function FeaturesGallerySection() {
       {/* 特性 8: Responsive animations */}
       <section
         id="responsive"
-        className="home-section feature-section text-layout color-green"
+        className={`${styles['home-section']} ${styles['feature-section']} ${styles['text-layout']} ${styles['color-green']}`}
         data-chapter="responsive"
         data-demo="responsive"
       >
-        <div className="home-section-content">
-          <div className="home-section-text">
-            <div className="home-section-text-heading">
+        <div className={styles['home-section-content']}>
+          <div className={styles['home-section-text']}>
+            <div className={styles['home-section-text-heading']}>
               <h2>Responsive animations</h2>
               <p>
                 Make animations respond to media queries easily with the Scope
                 API.
               </p>
             </div>
-            <ul className="feature-links">
+            <ul className={styles['feature-links']}>
               <li>
                 <a className="text-ui" href="documentation/scope/scope-parameters/mediaqueries.html">
                   <ArrowIcon />
@@ -361,8 +363,8 @@ export default function FeaturesGallerySection() {
               </li>
             </ul>
           </div>
-          <div className="feature-section-demo-wrapper">
-            <div className="feature-section-demo fixed-section"></div>
+          <div className={styles['feature-section-demo-wrapper']}>
+            <div className={`${styles['feature-section-demo']} ${styles['fixed-section']}`}></div>
           </div>
         </div>
       </section>

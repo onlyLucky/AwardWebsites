@@ -4,6 +4,9 @@
 
 import { useEffect } from 'react'
 import type { RefObject } from 'react'
+import styles from '@/demos/animejs/styles/animejs.module.css'
+
+const IS_IN_VIEW_CLASS = styles['is-in-view'] || 'is-in-view'
 
 export interface UseInViewOptions {
   /** 是否只触发一次，默认 false */
@@ -33,7 +36,7 @@ export function useInView<T extends HTMLElement>(
 
     if (typeof IntersectionObserver === 'undefined') {
       // 降级：直接视为可见
-      element.classList.add('is-in-view')
+      element.classList.add(IS_IN_VIEW_CLASS)
       return
     }
 
@@ -41,10 +44,10 @@ export function useInView<T extends HTMLElement>(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            element.classList.add('is-in-view')
+            element.classList.add(IS_IN_VIEW_CLASS)
             if (once) observer.unobserve(element)
           } else if (!once) {
-            element.classList.remove('is-in-view')
+            element.classList.remove(IS_IN_VIEW_CLASS)
           }
         })
       },

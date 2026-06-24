@@ -4,6 +4,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { toolboxLabelsLeft, toolboxLabelsRight } from '@/demos/animejs/data/features'
+import styles from '@/demos/animejs/styles/animejs.module.css'
 
 export default function ToolboxSection() {
   const [activeLeft, setActiveLeft] = useState(0)
@@ -42,42 +43,42 @@ export default function ToolboxSection() {
     <section
       ref={sectionRef}
       id="toolbox"
-      className="home-section-container home-section-light"
+      className={`home-section-container ${styles['home-section-light']}`}
       data-chapter="toolbox"
       data-label="TOOLBOX"
       data-enter-offset="-=100lvh"
       data-leave-offset="-=10lvh"
     >
-      <div className="home-section fixed-section">
-        <div className="home-section-content">
-          <div className="home-section-text text-layout home-section-text-short">
-            <h2 className="section-heading text-xxl">
+      <div className={`${styles['home-section']} ${styles['fixed-section']}`}>
+        <div className={styles['home-section-content']}>
+          <div className={`${styles['home-section-text']} ${styles['text-layout']} ${styles['home-section-text-short']}`}>
+            <h2 className={`${styles['section-heading']} ${styles['text-xxl']}`}>
               The complete{' '}
               <br />
               animator's toolbox
             </h2>
-            <p className="section-sub-heading">
+            <p className={styles['section-sub-heading']}>
               Break free from browser limitations and animate anything on the
               web with a single API.
             </p>
           </div>
-          <div className="toolbox-labels-container layout-container">
-            <div className="toolbox-labels">
-              <ul className="toolbox-labels-left">
+          <div className={`${styles['toolbox-labels-container']} ${styles['layout-container']}`}>
+            <div className={styles['toolbox-labels']}>
+              <ul className={styles['toolbox-labels-left']}>
                 {toolboxLabelsLeft.map((label, i) => (
                   <li
                     key={i}
-                    className={`toolbox-label${i === activeLeft ? ' is-active' : ''}`}
+                    className={`${styles['toolbox-label']}${i === activeLeft ? ` ${styles['is-active']}` : ''}`}
                   >
                     {label}
                   </li>
                 ))}
               </ul>
-              <ul className="toolbox-labels-right">
+              <ul className={styles['toolbox-labels-right']}>
                 {toolboxLabelsRight.map((label, i) => (
                   <li
                     key={i}
-                    className={`toolbox-label${i === activeRight ? ' is-active' : ''}`}
+                    className={`${styles['toolbox-label']}${i === activeRight ? ` ${styles['is-active']}` : ''}`}
                   >
                     {label}
                   </li>
@@ -89,10 +90,10 @@ export default function ToolboxSection() {
       </div>
 
       {/* 章节间距 */}
-      <div className="section-spacer"></div>
-      <div className="section-spacer"></div>
-      <div className="section-spacer"></div>
-      <div className="section-spacer"></div>
+      <div className={styles['section-spacer']}></div>
+      <div className={styles['section-spacer']}></div>
+      <div className={styles['section-spacer']}></div>
+      <div className={styles['section-spacer']}></div>
     </section>
   )
 }
