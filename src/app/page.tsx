@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl'
 import SearchInput from '@/components/search-input'
 import Pagination from '@/components/pagination'
 import { useInfiniteScroll } from '@/hooks/use-infinite-scroll'
+import PageTransition from '@/components/page-transition'
 
 interface DemoItem {
   titleKey: string
@@ -274,6 +275,20 @@ function HomeContent() {
           </div>
         )}
       </div>
+
+      {/* ICP 备案号 */}
+      <footer className='fixed bottom-0 left-0 right-0 z-40 border-t border-gray-200 bg-white/80 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/80'>
+        <div className='flex items-center justify-center py-3'>
+          <a
+            href='https://beian.miit.gov.cn/'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-xs text-blue-600 underline underline-offset-2 transition-colors hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300'
+          >
+            {t('footer.icp')}
+          </a>
+        </div>
+      </footer>
     </div>
   )
 }
@@ -281,7 +296,9 @@ function HomeContent() {
 export default function Home() {
   return (
     <Suspense fallback={<div className='min-h-screen flex items-center justify-center'>Loading...</div>}>
-      <HomeContent />
+      <PageTransition>
+        <HomeContent />
+      </PageTransition>
     </Suspense>
   )
 }

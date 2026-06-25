@@ -30,6 +30,7 @@ const FALLBACK_MESSAGES = {
     animejs: { title: 'Anime.js', description: '' },
   },
   header: { back: 'Back' },
+  footer: { icp: '浙ICP备2026046736号-1' },
 }
 
 export function IntlProvider({ children }: { children: React.ReactNode }) {
@@ -48,7 +49,7 @@ export function IntlProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages} timeZone='Asia/Shanghai'>
       {children}
     </NextIntlClientProvider>
   )

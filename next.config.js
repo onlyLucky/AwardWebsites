@@ -1,7 +1,17 @@
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // 启用 React Strict Mode
   reactStrictMode: true,
+
+  // Turbopack 根目录配置
+  turbopack: {
+    root: __dirname,
+  },
 
   // 转译 Three.js 相关包
   transpilePackages: ['three', '@react-three/fiber', '@react-three/drei', '@react-three/postprocessing'],

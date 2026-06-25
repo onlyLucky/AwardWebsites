@@ -36,5 +36,8 @@
   },
   "header": {
     "back": "Back"
+  },
+  "footer": {
+    "icp": "浙ICP备2026046736号-1"
   }
 }

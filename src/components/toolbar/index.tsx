@@ -1,8 +1,8 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
 import { useTheme } from 'next-themes'
 import { Sun, Moon, Languages } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import SearchInput from '@/components/search-input'
 
 interface ToolbarProps {
@@ -15,10 +15,16 @@ interface ToolbarProps {
 
 function Toolbar({ showSearch = false, searchValue = '', onSearchChange, searchPlaceholder }: ToolbarProps) {
   const { theme, setTheme } = useTheme()
-  const t = useTranslations()
+  const [mounted, setMounted] = useState(false)
+  const [currentLocale, setCurrentLocale] = useState('en')
+
+  // 确保组件只在客户端渲染后才显示主题和语言相关的 UI
+  useEffect(() => {
+    setMounted(true)
+    setCurrentLocale(localStorage.getItem('locale') || 'en')
+  }, [])
 
   const toggleLocale = () => {
-    const currentLocale = localStorage.getItem('locale') || 'en'
     const newLocale = currentLocale === 'en' ? 'zh' : 'en'
     localStorage.setItem('locale', newLocale)
     // 刷新页面以应用新语言
@@ -28,9 +34,6 @@ function Toolbar({ showSearch = false, searchValue = '', onSearchChange, searchP
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light')
   }
-
-  // 获取当前语言
-  const currentLocale = typeof window !== 'undefined' ? localStorage.getItem('locale') || 'en' : 'en'
 
   return (
     <div className='flex h-9 items-center gap-2'>
@@ -48,7 +51,7 @@ function Toolbar({ showSearch = false, searchValue = '', onSearchChange, searchP
         aria-label='Toggle language'
       >
         <Languages className='h-3.5 w-3.5' />
-        {currentLocale === 'en' ? '中' : 'EN'}
+        {mounted ? (currentLocale === 'en' ? '中' : 'EN') : '中'}
       </button>
 
       {/* Theme toggle */}
@@ -57,7 +60,7 @@ function Toolbar({ showSearch = false, searchValue = '', onSearchChange, searchP
         className='border-border bg-background/80 hover:bg-accent flex h-9 w-9 items-center justify-center rounded-md border backdrop-blur-sm transition-colors'
         aria-label='Toggle theme'
       >
-        {theme === 'light' ? <Moon className='h-3.5 w-3.5' /> : <Sun className='h-3.5 w-3.5' />}
+        {mounted && theme === 'dark' ? <Sun className='h-3.5 w-3.5' /> : <Moon className='h-3.5 w-3.5' />}
       </button>
     </div>
   )
