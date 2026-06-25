@@ -4,21 +4,36 @@ import Link from 'next/link'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { Suspense } from 'react'
 import Toolbar from '@/components/toolbar'
+import { getDemoConfig } from '@/config/demos'
 
-// 隐藏系统顶栏的 demo 路径列表
-const HIDE_HEADER_ROUTES = ['/demo/animejs']
+// 隐藏系统顶栏的 demo 路径列表（从配置读取）
+function shouldShowToolbar(pathname: string): boolean {
+  // 首页始终显示
+  if (pathname === '/') return true
 
-function Header() {
+  // Demo 页面从配置读取
+  const slug = pathname.replace('/demo/', '')
+  if (slug && slug !== pathname) {
+    return getDemoConfig(slug).showToolbar
+  }
+
+  return true
+}
+
+function HeaderContent() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const router = useRouter()
   const isHome = pathname === '/'
-  const isHidden = HIDE_HEADER_ROUTES.includes(pathname)
   const t = useTranslations()
 
-  // 部分 demo 有自己的导航，隐藏系统顶栏
-  if (isHidden) return null
+  // 根据配置决定是否显示工具栏
+  const showToolbar = shouldShowToolbar(pathname)
+
+  // 如果不显示工具栏且是首页，返回 null
+  if (!showToolbar && isHome) return null
 
   const searchQuery = searchParams.get('q') || ''
 
@@ -34,18 +49,20 @@ function Header() {
 
   return (
     <>
-      {/* Toolbar - always visible, fixed top-right */}
-      <div className='fixed top-4 right-4 z-50'>
-        <Toolbar
-          showSearch={isHome}
-          searchValue={searchQuery}
-          onSearchChange={handleSearchChange}
-          searchPlaceholder={t('home.search')}
-        />
-      </div>
+      {/* Toolbar - 根据配置决定是否显示 */}
+      {showToolbar && (
+        <div className='fixed top-4 right-4 z-50'>
+          <Toolbar
+            showSearch={isHome}
+            searchValue={searchQuery}
+            onSearchChange={handleSearchChange}
+            searchPlaceholder={t('home.search')}
+          />
+        </div>
+      )}
 
-      {/* Back button - only on demo pages */}
-      {!isHome && (
+      {/* Back button - only on demo pages with toolbar */}
+      {!isHome && showToolbar && (
         <Link
           href='/'
           className='border-border bg-background/80 hover:bg-background/90 fixed top-4 left-4 z-50 flex h-9 items-center gap-1.5 rounded-lg border px-3 text-sm font-semibold tracking-tight backdrop-blur-sm transition-all hover:opacity-80'
@@ -58,4 +75,10 @@ function Header() {
   )
 }
 
-export default Header
+export default function Header() {
+  return (
+    <Suspense fallback={null}>
+      <HeaderContent />
+    </Suspense>
+  )
+}

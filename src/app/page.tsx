@@ -11,6 +11,7 @@ import SearchInput from '@/components/search-input'
 import Pagination from '@/components/pagination'
 import { useInfiniteScroll } from '@/hooks/use-infinite-scroll'
 import PageTransition from '@/components/page-transition'
+import { demoConfig } from '@/config/demos'
 
 interface DemoItem {
   titleKey: string
@@ -20,6 +21,7 @@ interface DemoItem {
   url: string
   preview: string
   icon: React.ReactNode
+  slug: string
 }
 
 const demos: DemoItem[] = [
@@ -31,6 +33,7 @@ const demos: DemoItem[] = [
     url: 'https://follow.art',
     preview: '/previews/follow-art.svg',
     icon: <MousePointerClick className='h-5 w-5' />,
+    slug: 'follow-art',
   },
   {
     titleKey: 'demos.shaderSe.title',
@@ -40,6 +43,7 @@ const demos: DemoItem[] = [
     url: 'https://shader.se',
     preview: '/previews/shader-se.svg',
     icon: <MousePointerClick className='h-5 w-5' />,
+    slug: 'shader-se',
   },
   {
     titleKey: 'demos.animejs.title',
@@ -49,6 +53,7 @@ const demos: DemoItem[] = [
     url: 'https://animejs.com',
     preview: '/previews/animejs.svg',
     icon: <MousePointerClick className='h-5 w-5' />,
+    slug: 'animejs',
   },
 ]
 
@@ -79,11 +84,12 @@ function HomeContent() {
     setVisibleCount(PAGE_SIZE)
   }, [searchQuery])
 
-  // Filter demos
+  // Filter demos - only show visible ones from config
   const filteredDemos = useMemo(() => {
-    if (!searchQuery.trim()) return demos
+    const visibleDemos = demos.filter((demo) => demoConfig[demo.slug]?.visible !== false)
+    if (!searchQuery.trim()) return visibleDemos
     const q = searchQuery.toLowerCase()
-    return demos.filter((demo) => {
+    return visibleDemos.filter((demo) => {
       const title = t(demo.titleKey).toLowerCase()
       const desc = t(demo.descKey).toLowerCase()
       const tags = demo.tagKeys.map((k) => t(k).toLowerCase())

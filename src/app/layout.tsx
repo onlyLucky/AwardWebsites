@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Suspense } from 'react'
 import './globals.css'
 import { ThemeProvider } from '@/providers/theme-provider'
 import { IntlProvider } from '@/providers/intl-provider'
@@ -33,9 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
           <IntlProvider>
-            <Suspense fallback={null}>
-              <Header />
-            </Suspense>
+            <Header />
             {children}
           </IntlProvider>
         </ThemeProvider>
