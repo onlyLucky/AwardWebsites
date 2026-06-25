@@ -22,14 +22,13 @@ const nextConfig = {
     optimizePackageImports: ['three', '@react-three/fiber', 'lucide-react'],
   },
 
-  // 图片配置
+  // 图片配置（静态导出需禁用图片优化）
   images: {
-    domains: [],
-    formats: ['image/avif', 'image/webp'],
+    unoptimized: true,
   },
 
-  // 输出配置
-  output: 'standalone',
+  // 输出配置（静态导出）
+  output: 'export',
 
   // 压缩配置
   compress: true,
