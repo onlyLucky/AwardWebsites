@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import WebGLCards from '../webgl-cards'
+import lineSvg from '../webgl-cards/images/line.svg'
 import styles from './style.module.css'
 
 /**
@@ -228,9 +229,7 @@ function HeroSection() {
 
       {/* 标题装饰线 */}
       <div className={styles.introTitleDecoration}>
-        <svg className={styles.imgFull} viewBox='0 0 100 100' preserveAspectRatio='none'>
-          <line x1='0' y1='50' x2='100' y2='50' stroke='white' strokeWidth='2' />
-        </svg>
+        <img src={lineSvg.src} alt=' ' className={styles.imgFull} />
       </div>
 
       {/* WebGL 3D 卡片 */}

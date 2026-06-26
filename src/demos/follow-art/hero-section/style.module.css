@@ -45,7 +45,7 @@
 .introTitleDecoration {
   left: 54.5%;
   position: absolute;
-  top: 54%;
+  top: 50%;
   transform: translateY(300%) rotate(35deg);
   transition: transform 1.5s cubic-bezier(0.55, 0, 0.1, 1);
   transition-delay: 1s;
@@ -92,19 +92,23 @@
 /* 页脚 */
 .introFooter {
   display: flex;
-  height: 72px;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   margin-bottom: var(--cookie-message-mobile-height, 0);
+  padding: 20px;
   position: relative;
   transform: translateY(120%);
   transition: transform 1.5s cubic-bezier(0.55, 0, 0.1, 1);
   z-index: 3;
 }
 
+.heroTagline {
+  flex: 1;
+}
+
 .heroTagline p {
   color: white;
-  font-size: 24px;
+  font-size: 20px;
   margin: 0;
   line-height: 1.4;
 }
@@ -112,11 +116,11 @@
 .heroVisitBtn {
   background-color: #2d2d2d;
   color: white;
-  padding: 16px 40px;
-  border-radius: 4px;
-  font-size: 16px;
+  padding: 12px 32px;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
+  white-space: nowrap;
   transition:
     transform 0.15s ease-out,
     opacity 0.15s ease-out;
@@ -125,6 +129,32 @@
 .heroVisitBtn:hover {
   opacity: 0.9;
   transform: translateY(-2px);
+}
+
+/* 桌面端 tagline 和按钮样式 */
+@media (min-width: 668px) {
+  .heroTagline p {
+    font-size: 24px;
+    text-align: left;
+  }
+
+  .heroVisitBtn {
+    align-self: flex-end;
+  }
+}
+
+/* 移动端样式 */
+@media (max-width: 667px) {
+  .heroTagline p {
+    font-size: 18px;
+    text-align: right;
+  }
+
+  .heroVisitBtn {
+    width: 100%;
+    text-align: center;
+    margin-top: 16px;
+  }
 }
 
 /* 隐藏类 - 使用 :global 因为这些是工具类 */
@@ -150,8 +180,8 @@
     width: 64.1025641026vw;
   }
 
-  .introFooter {
-    flex-direction: column;
+  .introTitleDecoration img {
+    transform: rotateY(-251deg);
   }
 
   :global(.webgl-cards-container) canvas {
@@ -184,5 +214,10 @@
   .introTitle {
     position: relative;
     top: -4px;
+  }
+
+  .introFooter {
+    flex-direction: row;
+    padding: 40px;
   }
 }

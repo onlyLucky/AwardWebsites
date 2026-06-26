@@ -221,27 +221,27 @@ function getResponsiveCameraParams(width: number, height: number) {
   // 根据宽高比调整 FOV
   // 窄屏幕（手机竖屏）需要更大的 FOV 来显示更多内容
   if (aspect < 0.6) {
-    fov = 38 // 非常窄的屏幕
+    fov = 22 // 非常窄的屏幕，增大 FOV 让卡片更大
   } else if (aspect < 0.8) {
-    fov = 34 // 手机竖屏
+    fov = 24 // 手机竖屏，增大 FOV 让卡片更大
   } else if (aspect < 1) {
-    fov = 30 // 接近正方形
+    fov = 28 // 接近正方形
   } else if (aspect > 2) {
-    fov = 24 // 超宽屏幕，减小 FOV 避免卡片太小
+    fov = 32 // 超宽屏幕，减小 FOV 避免卡片太小
   } else if (aspect > 1.6) {
-    fov = 26 // 宽屏
+    fov = 30 // 宽屏
   }
 
   // 相机位置（z 轴距离根据屏幕尺寸调整）
   const camZ = mobile ? -74 : -77
 
   // 相机位置
-  const camX = mobile ? 4 : 0
-  const camY = mobile ? -17 : -14
+  const camX = mobile ? 2 : 0
+  const camY = mobile ? -24 : -14
 
   // 相机旋转（度）
   const rotX = mobile ? -200 : -192
-  const rotZ = mobile ? -38 : -25
+  const rotZ = mobile ? -40 : -25
 
   return { fov, camX, camY, camZ, rotX, rotZ }
 }

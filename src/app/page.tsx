@@ -177,7 +177,7 @@ function HomeContent() {
                           href={demo.url}
                           target='_blank'
                           rel='noopener noreferrer'
-                          className='text-primary decoration-primary/40 hover:decoration-primary mb-1 inline-flex items-center gap-1 text-sm leading-tight font-semibold underline underline-offset-2'
+                          className='text-primary decoration-primary/40 hover:decoration-primary mb-1 inline-flex items-center gap-1 text-sm leading-tight font-semibold '
                         >
                           {t(demo.titleKey)}
                           <ExternalLink className='h-3 w-3 shrink-0' />
@@ -282,16 +282,26 @@ function HomeContent() {
         )}
       </div>
 
-      {/* ICP 备案号 */}
+      {/* ICP 备案号 & 公安备案号 */}
       <footer className='mt-8 border-t border-gray-200 bg-white/80 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/80 sm:mt-12'>
-        <div className='flex items-center justify-center py-3'>
+        <div className='flex items-center justify-center gap-2 py-3'>
           <a
             href='https://beian.miit.gov.cn/'
             target='_blank'
             rel='noopener noreferrer'
-            className='text-xs text-blue-600 underline underline-offset-2 transition-colors hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300'
+            className='text-xs text-blue-600 transition-colors hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300'
           >
             {t('footer.icp')}
+          </a>
+          <span className='text-gray-200 dark:text-gray-700 text-xs'>|</span>
+          <a
+            href='https://beian.mps.gov.cn/#/query/webSearch?code=33011302001231'
+            target='_blank'
+            rel='noreferrer'
+            className='flex items-center gap-1 text-xs text-blue-600 transition-colors hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300'
+          >
+            <img src='/ipc.png' alt='公安备案' className='h-3.5 w-3.5' />
+            浙公网安备33011302001231号
           </a>
         </div>
       </footer>
