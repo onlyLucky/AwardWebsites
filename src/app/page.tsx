@@ -125,8 +125,8 @@ function HomeContent() {
   }
 
   return (
-    <div className='min-h-screen px-4 py-8 sm:px-6 sm:py-16 lg:px-8'>
-      <div className='mx-auto max-w-7xl'>
+    <div className='flex min-h-screen flex-col px-4 pt-8 pb-0 sm:px-6 sm:pt-16 lg:px-8'>
+      <div className='mx-auto w-full max-w-7xl flex-1'>
         {/* Header */}
         <div className='mb-8 sm:mb-12'>
           <div className='mb-2 flex items-center gap-2 sm:mb-3'>
@@ -283,7 +283,7 @@ function HomeContent() {
       </div>
 
       {/* ICP 备案号 */}
-      <footer className='fixed bottom-0 left-0 right-0 z-40 border-t border-gray-200 bg-white/80 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/80'>
+      <footer className='mt-8 border-t border-gray-200 bg-white/80 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/80 sm:mt-12'>
         <div className='flex items-center justify-center py-3'>
           <a
             href='https://beian.miit.gov.cn/'
