@@ -300,7 +300,7 @@ function HomeContent() {
             rel='noreferrer'
             className='flex items-center gap-1 text-xs text-blue-600 transition-colors hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300'
           >
-            <img src='/ipc.png' alt='公安备案' className='h-3.5 w-3.5' />
+            <img src='/static/ipc.png' alt='公安备案' className='h-3.5 w-3.5' />
             浙公网安备33011302001231号
           </a>
         </div>

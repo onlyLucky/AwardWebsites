@@ -7,6 +7,9 @@ import Header from '@/components/header'
 export const metadata: Metadata = {
   title: 'Award Websites - Interactive Demos Collection',
   description: 'Collection of interesting website interactions and animations',
+  icons: {
+    icon: '/static/favicon-96x96.png',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
