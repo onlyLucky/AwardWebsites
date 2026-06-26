@@ -22,6 +22,11 @@
  * - 动画速度: deltaTime * -5e-5
  * - 鼠标跟随: rotation.z += (mouseX - 0.5) * 0.2
  * - 阴影颜色: #B05A2E
+ *
+ * === 响应式适配 ===
+ * - 根据容器宽高比动态调整相机 FOV
+ * - 根据屏幕尺寸调整相机位置（z 轴距离）
+ * - 小屏幕时增大 FOV 以显示更多内容
  */
 
 import { useEffect, useRef, useState } from 'react'
@@ -45,20 +50,44 @@ const CARD_IMAGES = [card1.src, card2.src, card3.src, card4.src, card5.src, card
 // 源码精确参数（来自 Nuq5qwIZ.js + DJ9DjCKf.js）
 // ============================================================
 
-/** 卡片宽度（源码 PlaneGeometry 第一个参数） */
-const CARD_WIDTH = 9
+/** 基础卡片宽度（源码 PlaneGeometry 第一个参数） */
+const BASE_CARD_WIDTH = 9
 
-/** 卡片高度（源码 PlaneGeometry 第二个参数） */
-const CARD_HEIGHT = 12.6
+/** 基础卡片高度（源码 PlaneGeometry 第二个参数） */
+const BASE_CARD_HEIGHT = 12.6
 
 /** 卡片弯曲分段数（源码 PlaneGeometry 第三个参数，用于 shader 弯曲） */
 const CARD_SEGMENTS = 10
 
 /**
- * 圆形路径半径（源码 CircleCurve options.scale = 15）
+ * 基础圆形路径半径（源码 CircleCurve options.scale = 15）
  * 卡片沿此半径的圆形路径排列和弯曲
  */
-const RADIUS = 15
+const BASE_RADIUS = 15
+
+/**
+ * 调试模式：显示相机位置标记
+ * 调试完成后设置为 false
+ */
+const DEBUG_CAMERA = false
+
+/**
+ * 获取响应式卡片尺寸
+ * 根据容器宽度调整卡片大小，确保在不同屏幕下都能正确显示
+ */
+function getResponsiveCardSize(containerWidth: number) {
+  // 基准宽度（桌面端）
+  const baseWidth = 1200
+
+  // 计算缩放比例，限制在 0.5 到 1.2 之间
+  const scale = Math.max(0.5, Math.min(1.2, containerWidth / baseWidth))
+
+  return {
+    cardWidth: BASE_CARD_WIDTH * scale,
+    cardHeight: BASE_CARD_HEIGHT * scale,
+    radius: BASE_RADIUS * scale,
+  }
+}
 
 /**
  * 动画速度（源码: deltaTime * -5e-5）
@@ -74,16 +103,17 @@ const ANIMATION_SPEED = -5e-5
  * 获取圆形路径上指定位置的几何信息
  *
  * 源码使用 THREE.CircularCurve（继承自 Curve），这里手动计算。
- * 圆形路径：x = cos(t * 2PI) * RADIUS, z = sin(t * 2PI) * RADIUS
+ * 圆形路径：x = cos(t * 2PI) * radius, z = sin(t * 2PI) * radius
  *
  * @param t - 路径上的归一化位置（0-1，0 和 1 是同一点）
+ * @param radius - 圆形路径半径
  * @returns 位置、切线、法线、副法线（Frenet 框架）
  */
-function getCurvePoint(t: number) {
+function getCurvePoint(t: number, radius: number = BASE_RADIUS) {
   const angle = t * Math.PI * 2
 
   // 圆形路径上的位置
-  const pos = new THREE.Vector3(Math.cos(angle) * RADIUS, 0, Math.sin(angle) * RADIUS)
+  const pos = new THREE.Vector3(Math.cos(angle) * radius, 0, Math.sin(angle) * radius)
 
   // 切线方向（圆的切线，垂直于半径方向）
   const tangent = new THREE.Vector3(-Math.sin(angle), 0, Math.cos(angle)).normalize()
@@ -115,20 +145,22 @@ function getCurvePoint(t: number) {
  * @param height - 卡片高度
  * @param segments - 宽度方向的分段数（越多弯曲越平滑）
  * @param cardT - 卡片在圆形路径上的起始位置（0-1）
+ * @param radius - 圆形路径半径
  * @returns 弯曲后的 BufferGeometry
  */
 function createCurvedCardGeometry(
   width: number,
   height: number,
   segments: number,
-  cardT: number
+  cardT: number,
+  radius: number = BASE_RADIUS
 ): THREE.BufferGeometry {
   // 创建基础平面几何体
   const geometry = new THREE.PlaneGeometry(width, height, segments, 1)
   const pos = geometry.attributes.position
 
   // 圆周长（用于计算 spinePortion）
-  const curveLen = Math.PI * 2 * RADIUS
+  const curveLen = Math.PI * 2 * radius
   // 源码 spineOffset = 161，这里用 width/2 近似（卡片中心对齐）
   const spineOffset = width / 2
   // 源码 spineLength = 400，这里用圆周长
@@ -146,7 +178,7 @@ function createCurvedCardGeometry(
     const curveT = (spinePortion + cardT) % 1
 
     // 获取该位置的 Frenet 框架
-    const { pos: curvePos, tangent, normal, binormal } = getCurvePoint(curveT)
+    const { pos: curvePos, tangent, normal, binormal } = getCurvePoint(curveT, radius)
 
     // 构建 basis 矩阵（源码: mat3 basis = mat3(a, b, c)）
     // 列向量分别为：切线、法线、副法线
@@ -171,6 +203,47 @@ function createCurvedCardGeometry(
 /** 判断是否为移动设备 */
 function isMobile(): boolean {
   return window.innerWidth <= 667
+}
+
+/**
+ * 根据容器尺寸计算响应式相机参数
+ * @param width - 容器宽度
+ * @param height - 容器高度
+ * @returns 相机参数：FOV、位置、旋转
+ */
+function getResponsiveCameraParams(width: number, height: number) {
+  const aspect = width / height
+  const mobile = width <= 667
+
+  // 基础 FOV
+  let fov = 28
+
+  // 根据宽高比调整 FOV
+  // 窄屏幕（手机竖屏）需要更大的 FOV 来显示更多内容
+  if (aspect < 0.6) {
+    fov = 38 // 非常窄的屏幕
+  } else if (aspect < 0.8) {
+    fov = 34 // 手机竖屏
+  } else if (aspect < 1) {
+    fov = 30 // 接近正方形
+  } else if (aspect > 2) {
+    fov = 24 // 超宽屏幕，减小 FOV 避免卡片太小
+  } else if (aspect > 1.6) {
+    fov = 26 // 宽屏
+  }
+
+  // 相机位置（z 轴距离根据屏幕尺寸调整）
+  const camZ = mobile ? -74 : -77
+
+  // 相机位置
+  const camX = mobile ? 4 : 0
+  const camY = mobile ? -17 : -14
+
+  // 相机旋转（度）
+  const rotX = mobile ? -200 : -192
+  const rotZ = mobile ? -38 : -25
+
+  return { fov, camX, camY, camZ, rotX, rotZ }
 }
 
 // ============================================================
@@ -204,38 +277,44 @@ function WebGLCards() {
     // 2. 创建两个相机（源码使用不同的 near/far 裁剪平面）
     // --------------------------------------------------------
 
+    // 获取响应式相机参数
+    const initialParams = getResponsiveCameraParams(container.clientWidth, container.clientHeight)
+
     /**
      * 阴影相机：near=69, far=200
      * 源码中阴影卡片距离相机约 70 单位，刚好在 near=69 的裁剪边缘
      * 这样阴影卡片只在特定距离范围内可见
      */
     const cameraShadow = new THREE.PerspectiveCamera(
-      28, // FOV（源码精确值）
+      initialParams.fov,
       container.clientWidth / container.clientHeight,
       69, // near（源码精确值）
       200 // far（源码精确值）
     )
-    cameraShadow.position.set(0, -14, -70) // 源码精确位置
+    cameraShadow.position.set(initialParams.camX, initialParams.camY, initialParams.camZ)
     cameraShadow.rotation.set(
-      (Math.PI / 180) * -192, // 源码精确旋转 X（度→弧度）
+      (Math.PI / 180) * initialParams.rotX,
       0,
-      (Math.PI / 180) * -25 // 源码精确旋转 Z（度→弧度）
+      (Math.PI / 180) * initialParams.rotZ
     )
 
     /**
-     * 纹理相机：near=0.1, far=69
-     * 纹理卡片距离相机约 70 单位，超出 far=69 的裁剪范围
-     * 这意味着纹理相机实际上看不到卡片（源码通过 shader 处理）
-     * 这里我们放宽 far 值以确保可见
+     * 纹理相机：near=0.1, far=75
+     * 纹理卡片距离相机约 70 单位，在 far=75 的裁剪范围内
+     * 这样纹理卡片可见，同时保持与阴影相机的分离
      */
     const cameraTextured = new THREE.PerspectiveCamera(
-      28,
+      initialParams.fov,
       container.clientWidth / container.clientHeight,
       0.1,
-      69 // 源码值，但实际渲染时需要调整
+      75 // 略大于卡片距离，确保纹理卡片可见
     )
-    cameraTextured.position.set(0, -14, -70)
-    cameraTextured.rotation.set((Math.PI / 180) * -192, 0, (Math.PI / 180) * -25)
+    cameraTextured.position.set(initialParams.camX, initialParams.camY, initialParams.camZ)
+    cameraTextured.rotation.set(
+      (Math.PI / 180) * initialParams.rotX,
+      0,
+      (Math.PI / 180) * initialParams.rotZ
+    )
 
     // --------------------------------------------------------
     // 3. 创建两个渲染器（每个对应一个 canvas）
@@ -264,6 +343,67 @@ function WebGLCards() {
     rendererTextured.domElement.style.position = 'absolute'
     rendererTextured.domElement.style.inset = '0'
     container.appendChild(rendererTextured.domElement)
+
+    // --------------------------------------------------------
+    // 3.5 调试：相机位置标记
+    // --------------------------------------------------------
+    let cameraHelpers: THREE.Object3D[] = []
+    if (DEBUG_CAMERA) {
+      // 相机位置标记（小球体）
+      const markerGeometry = new THREE.SphereGeometry(0.5, 16, 16)
+
+      // 阴影相机标记（红色）
+      const shadowMarkerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+      const shadowMarker = new THREE.Mesh(markerGeometry, shadowMarkerMaterial)
+      shadowMarker.position.copy(cameraShadow.position)
+      sceneShadow.add(shadowMarker)
+      cameraHelpers.push(shadowMarker)
+
+      // 纹理相机标记（蓝色）
+      const texturedMarkerMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff })
+      const texturedMarker = new THREE.Mesh(markerGeometry, texturedMarkerMaterial)
+      texturedMarker.position.copy(cameraTextured.position)
+      sceneTextured.add(texturedMarker)
+      cameraHelpers.push(texturedMarker)
+
+      // 相机方向线（从相机位置沿视线方向）
+      const lineGeometry = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(0, 0, 0),
+        new THREE.Vector3(0, 0, -10),
+      ])
+
+      // 阴影相机方向线（红色虚线）
+      const shadowLineMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 })
+      const shadowLine = new THREE.Line(lineGeometry.clone(), shadowLineMaterial)
+      shadowLine.position.copy(cameraShadow.position)
+      shadowLine.rotation.copy(cameraShadow.rotation)
+      sceneShadow.add(shadowLine)
+      cameraHelpers.push(shadowLine)
+
+      // 纹理相机方向线（蓝色虚线）
+      const texturedLineMaterial = new THREE.LineBasicMaterial({ color: 0x0000ff })
+      const texturedLine = new THREE.Line(lineGeometry.clone(), texturedLineMaterial)
+      texturedLine.position.copy(cameraTextured.position)
+      texturedLine.rotation.copy(cameraTextured.rotation)
+      sceneTextured.add(texturedLine)
+      cameraHelpers.push(texturedLine)
+
+      // 添加坐标轴辅助
+      const axesShadow = new THREE.AxesHelper(3)
+      axesShadow.position.copy(cameraShadow.position)
+      sceneShadow.add(axesShadow)
+      cameraHelpers.push(axesShadow)
+
+      const axesTextured = new THREE.AxesHelper(3)
+      axesTextured.position.copy(cameraTextured.position)
+      sceneTextured.add(axesTextured)
+      cameraHelpers.push(axesTextured)
+
+      console.log('Camera Debug:', {
+        shadow: { pos: cameraShadow.position, rot: cameraShadow.rotation },
+        textured: { pos: cameraTextured.position, rot: cameraTextured.rotation },
+      })
+    }
 
     // --------------------------------------------------------
     // 4. 创建卡片网格
@@ -308,6 +448,9 @@ function WebGLCards() {
     )
 
     Promise.all(loadPromises).then((images) => {
+      // 获取响应式卡片尺寸
+      const cardSize = getResponsiveCardSize(container.clientWidth)
+
       // 为每张卡片创建纹理版本和阴影版本
       images.forEach((img, idx) => {
         const cardT = idx / CARD_IMAGES.length
@@ -321,7 +464,13 @@ function WebGLCards() {
         texture.needsUpdate = true
 
         // 每张卡片创建独立的弯曲几何体（cardT 决定在圆形路径上的位置）
-        const texturedGeometry = createCurvedCardGeometry(CARD_WIDTH, CARD_HEIGHT, CARD_SEGMENTS, cardT)
+        const texturedGeometry = createCurvedCardGeometry(
+          cardSize.cardWidth,
+          cardSize.cardHeight,
+          CARD_SEGMENTS,
+          cardT,
+          cardSize.radius
+        )
         const texturedMaterial = new THREE.MeshBasicMaterial({
           map: texture,
           side: THREE.DoubleSide, // 双面可见（卡片会旋转到背面）
@@ -333,7 +482,13 @@ function WebGLCards() {
         texturedCards.push(texturedMesh)
 
         // 阴影卡片（每张卡片独立的弯曲几何体，不同材质）
-        const shadowGeometry = createCurvedCardGeometry(CARD_WIDTH, CARD_HEIGHT, CARD_SEGMENTS, cardT)
+        const shadowGeometry = createCurvedCardGeometry(
+          cardSize.cardWidth,
+          cardSize.cardHeight,
+          CARD_SEGMENTS,
+          cardT,
+          cardSize.radius
+        )
         const shadowMesh = new THREE.Mesh(shadowGeometry, shadowMaterial)
         sceneShadow.add(shadowMesh)
         shadowCards.push(shadowMesh)
@@ -354,12 +509,21 @@ function WebGLCards() {
         // 更新卡片在圆形路径上的偏移（源码: deltaTime * -5e-5）
         currentOffset += dt * ANIMATION_SPEED
 
+        // 获取当前响应式卡片尺寸
+        const currentCardSize = getResponsiveCardSize(container.clientWidth)
+
         // 每帧重新生成弯曲几何体（模拟 shader 的动态弯曲效果）
         // 源码中卡片沿圆形路径移动，弯曲形状随位置变化
         const regenerateCards = (cards: THREE.Mesh[]) => {
           cards.forEach((mesh, idx) => {
             const cardT = (((idx / CARD_IMAGES.length + currentOffset) % 1) + 1) % 1
-            const newGeom = createCurvedCardGeometry(CARD_WIDTH, CARD_HEIGHT, CARD_SEGMENTS, cardT)
+            const newGeom = createCurvedCardGeometry(
+              currentCardSize.cardWidth,
+              currentCardSize.cardHeight,
+              CARD_SEGMENTS,
+              cardT,
+              currentCardSize.radius
+            )
             mesh.geometry.dispose()
             mesh.geometry = newGeom
           })
@@ -369,28 +533,42 @@ function WebGLCards() {
         regenerateCards(shadowCards)
 
         // --------------------------------------------------------
-        // 7. 相机动画（源码参数）
+        // 7. 相机动画（响应式参数）
         // --------------------------------------------------------
+
+        // 获取当前容器尺寸的响应式参数
+        const currentParams = getResponsiveCameraParams(container.clientWidth, container.clientHeight)
 
         /**
          * 相机旋转跟随鼠标
          * 源码: rotation.z = Math.PI/180 * rotZ + (mouseX - 0.5) * 0.2
          * 鼠标在左侧时卡片组向右倾斜，右侧时向左倾斜
          */
-        const mobile = isMobile()
-        const rotZ = (Math.PI / 180) * (mobile ? -38 : -25)
-        const rotX = (Math.PI / 180) * (mobile ? -200 : -192)
+        const rotZ = (Math.PI / 180) * currentParams.rotZ
+        const rotX = (Math.PI / 180) * currentParams.rotX
         cameraShadow.rotation.z = cameraTextured.rotation.z = rotZ + (mouseRef.current.x - 0.5) * 0.2
         cameraShadow.rotation.x = cameraTextured.rotation.x = rotX
 
         /**
-         * 相机位置（移动端和桌面端不同）
-         * 源码: mobile ? [4, -17, -70] : [0, -14, -70]
+         * 相机位置（响应式调整）
          */
-        const camX = mobile ? 4 : 0
-        const camY = mobile ? -17 : -14
-        cameraShadow.position.x = cameraTextured.position.x = camX
-        cameraShadow.position.y = cameraTextured.position.y = camY
+        cameraShadow.position.x = cameraTextured.position.x = currentParams.camX
+        cameraShadow.position.y = cameraTextured.position.y = currentParams.camY
+
+        // 调试：更新相机标记位置
+        if (DEBUG_CAMERA && cameraHelpers.length > 0) {
+          // 更新阴影相机标记（前4个：球体、球体、线、线）
+          cameraHelpers[0].position.copy(cameraShadow.position) // 红色球体
+          cameraHelpers[2].position.copy(cameraShadow.position) // 红色方向线
+          cameraHelpers[2].rotation.copy(cameraShadow.rotation)
+          cameraHelpers[4].position.copy(cameraShadow.position) // 红色坐标轴
+
+          // 更新纹理相机标记
+          cameraHelpers[1].position.copy(cameraTextured.position) // 蓝色球体
+          cameraHelpers[3].position.copy(cameraTextured.position) // 蓝色方向线
+          cameraHelpers[3].rotation.copy(cameraTextured.rotation)
+          cameraHelpers[5].position.copy(cameraTextured.position) // 蓝色坐标轴
+        }
 
         // --------------------------------------------------------
         // 8. 渲染（先阴影后纹理，保证层叠正确）
@@ -417,11 +595,19 @@ function WebGLCards() {
     const onResize = () => {
       const w = container.clientWidth
       const h = container.clientHeight
-      cameraShadow.aspect = cameraTextured.aspect = w / h
-      cameraShadow.updateProjectionMatrix()
-      cameraTextured.updateProjectionMatrix()
+
+      // 更新渲染器尺寸
       rendererShadow.setSize(w, h)
       rendererTextured.setSize(w, h)
+
+      // 获取响应式相机参数
+      const params = getResponsiveCameraParams(w, h)
+
+      // 更新相机参数
+      cameraShadow.aspect = cameraTextured.aspect = w / h
+      cameraShadow.fov = cameraTextured.fov = params.fov
+      cameraShadow.updateProjectionMatrix()
+      cameraTextured.updateProjectionMatrix()
     }
 
     container.addEventListener('mousemove', onMouseMove)
