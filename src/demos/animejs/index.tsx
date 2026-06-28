@@ -9,7 +9,7 @@ import SubNav from './components/sub-nav'
 import Footer from './components/footer'
 import Engine from './components/engine'
 import './styles/animejs-global.css'
-import styles from './styles/animejs.module.css'
+import { layoutStyles } from './styles'
 
 export default function AnimejsDemo() {
   const pageRef = useRef<HTMLDivElement>(null)
@@ -21,7 +21,7 @@ export default function AnimejsDemo() {
 
     // 使用 requestAnimationFrame 确保在下一帧添加类
     const raf = requestAnimationFrame(() => {
-      page.classList.add(styles['is-ready'])
+      page.classList.add(layoutStyles['is-ready'])
     })
 
     return () => cancelAnimationFrame(raf)
@@ -29,7 +29,7 @@ export default function AnimejsDemo() {
 
   return (
     <div className='animejsRoot'>
-      <div ref={pageRef} className={styles.page}>
+      <div ref={pageRef} className={layoutStyles.page}>
         {/* 1. 顶部导航 */}
         <Header />
 

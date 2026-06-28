@@ -14,11 +14,11 @@ export const demoConfig: Record<string, DemoConfig> = {
     showToolbar: true,
   },
   'shader-se': {
-    visible: true,
+    visible: false,
     showToolbar: true,
   },
   'animejs': {
-    visible: false,
+    visible: true,
     showToolbar: false,
   },
 }

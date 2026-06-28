@@ -4,9 +4,9 @@
 
 import { useEffect } from 'react'
 import type { RefObject } from 'react'
-import styles from '@/demos/animejs/styles/animejs.module.css'
+import featuresStyles from '@/demos/animejs/styles/features.module.css'
 
-const IS_IN_VIEW_CLASS = styles['is-in-view'] || 'is-in-view'
+const IS_IN_VIEW_CLASS = featuresStyles['is-in-view'] || 'is-in-view'
 
 export interface UseInViewOptions {
   /** 是否只触发一次，默认 false */

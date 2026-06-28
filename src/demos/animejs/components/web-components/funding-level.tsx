@@ -2,7 +2,7 @@
 // 对应源码 <funding-level path="github-sponsors"> 自定义元素
 // 渲染 GitHub sponsors 列表（占位）
 
-import styles from '@/demos/animejs/styles/animejs.module.css'
+import { commonStyles } from '@/demos/animejs/styles'
 
 export interface FundingLevelProps {
   /** 路径标识：github-sponsors */
@@ -23,9 +23,9 @@ const PLACEHOLDER_FUNDING = [
 export default function FundingLevel({ path = 'github-sponsors', className = '' }: FundingLevelProps) {
   return (
     <funding-level path={path} class={className}>
-      <ul className={styles['funding-level-list']}>
+      <ul className={commonStyles['funding-level-list']}>
         {PLACEHOLDER_FUNDING.map((sponsor, index) => (
-          <li key={index} className={styles['funding-level-item']}>
+          <li key={index} className={commonStyles['funding-level-item']}>
             <a href={sponsor.url} target='_blank' rel='noopener noreferrer' title={sponsor.name}>
               {sponsor.name}
             </a>

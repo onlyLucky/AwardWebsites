@@ -224,6 +224,30 @@
   }
 }
 
+/* ===== Header 样式已迁移至 header.module.css ===== */
+
+/* ===== Sponsor 按钮基础样式 ===== */
+/* 基础样式 - 所有断点生效 */
+sponsor-button {
+  position: relative;
+  color: var(--hex-current-1, var(--hex-red-1));
+}
+
+sponsor-button a {
+  color: inherit;
+  text-decoration-color: inherit;
+}
+
+sponsor-button svg {
+  transition: filter 0.125s ease;
+  filter: drop-shadow(0 0 0px currentColor);
+}
+
+sponsor-button:hover svg {
+  mix-blend-mode: plus-lighter;
+  filter: drop-shadow(0 0 3px currentColor);
+}
+
 /* ===== 容器内全局重置 ===== */
 .animejsRoot *:before,
 .animejsRoot *:after {

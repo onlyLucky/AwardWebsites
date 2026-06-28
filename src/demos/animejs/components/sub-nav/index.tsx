@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useScrollProgress } from '@/demos/animejs/hooks/useScrollProgress'
 import { getModuleTotalSize, getModulesList } from '@/demos/animejs/components/home/modules'
 import FundingLevel from '../web-components/funding-level'
-import styles from '@/demos/animejs/styles/animejs.module.css'
+import { subNavStyles, modulesStyles, commonStyles } from '@/demos/animejs/styles'
 
 const FEATURE_IDS = [
   'intuitive',
@@ -168,18 +168,18 @@ export default function SubNav() {
   const totalSize = getModuleTotalSize()
 
   return (
-    <div className={styles['sub-nav']}>
+    <div className={subNavStyles['sub-nav']}>
       {/* 滚动进度条 */}
       <div
         ref={progressCardRef}
-        className={styles['home-progress-card']}
+        className={subNavStyles['home-progress-card']}
         style={{ opacity: showProgress ? 1 : 0, pointerEvents: showProgress ? 'auto' : 'none' }}
       >
-        <div className={styles['scroll-bar']}>
-          <div ref={cursorRef} className={styles['scroll-cursor']} style={{ transform: 'translateX(0%)' }}></div>
+        <div className={subNavStyles['scroll-bar']}>
+          <div ref={cursorRef} className={subNavStyles['scroll-cursor']} style={{ transform: 'translateX(0%)' }}></div>
           <div
             ref={ghostRef}
-            className={`${styles['scroll-cursor-ghost']} ${styles['scroll-cursor']}`}
+            className={`${subNavStyles['scroll-cursor-ghost']} ${subNavStyles['scroll-cursor']}`}
             style={{ transform: 'translateX(0%)' }}
           ></div>
         </div>
@@ -194,33 +194,33 @@ export default function SubNav() {
 
       {/* 模块可视化卡片 */}
       <div
-        className={`${styles['modules-sizes']} ${styles['home-section-card']} ${styles['text-layout']}`}
+        className={`${modulesStyles['modules-sizes']} ${subNavStyles['home-section-card']} ${commonStyles['text-layout']}`}
         data-card='modules'
         data-enter-offset='-=50lvh'
         data-leave-offset='-=150lvh'
         style={{ opacity: activeCard === 'modules' ? 1 : 0 }}
       >
-        <div className={styles['box-heading']}>
+        <div className={modulesStyles['box-heading']}>
           <h3>Bundle size</h3>
-          <div className={styles['modules-bundle-size']}>
-            <span className={styles['size']}>{totalSize}</span> KB
+          <div className={modulesStyles['modules-bundle-size']}>
+            <span className={modulesStyles['size']}>{totalSize}</span> KB
           </div>
         </div>
-        <div className={`${styles['modules-sizes-chart']} ${styles['chart']}`}>
+        <div className={`${modulesStyles['modules-sizes-chart']} ${modulesStyles['chart']}`}>
           {modules.map((m) => (
             <div
               key={m.name}
               data-size={m.size}
-              className={`${styles['chart-bar']} module-${m.color} ${styles[`color-${m.color}`]}`}
+              className={`${modulesStyles['chart-bar']} module-${m.color} ${modulesStyles[`color-${m.color}`]}`}
               style={{ ['--data-size' as any]: (m.size / MAX_BAR_SIZE) * 100 }}
             ></div>
           ))}
         </div>
-        <ul className={styles['modules-list']}>
+        <ul className={modulesStyles['modules-list']}>
           {modules.map((m) => (
             <li key={m.name}>
-              <span className={`${styles['label-dot']} ${styles[`color-${m.color}`]}`}></span>
-              {m.name} <span className={styles['size']}>{m.size} KB</span>
+              <span className={`${modulesStyles['label-dot']} ${modulesStyles[`color-${m.color}`]}`}></span>
+              {m.name} <span className={modulesStyles['size']}>{m.size} KB</span>
             </li>
           ))}
         </ul>
@@ -228,7 +228,7 @@ export default function SubNav() {
 
       {/* 赞助级别卡片 */}
       <div
-        className={`${styles['funding-level-box']} ${styles['home-section-card']} ${styles['text-layout']}`}
+        className={`${subNavStyles['funding-level-box']} ${subNavStyles['home-section-card']} ${commonStyles['text-layout']}`}
         data-card='sponsors'
         data-enter-offset='-=50lvh'
         data-leave-offset='-=50lvh'

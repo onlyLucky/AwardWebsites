@@ -3,7 +3,7 @@
 // 包含标题、描述、Bundle size 图表（动态生成）
 
 import { modules, totalSize } from '@/demos/animejs/data/features'
-import styles from '@/demos/animejs/styles/animejs.module.css'
+import { layoutStyles, commonStyles } from '@/demos/animejs/styles'
 
 // 用于 chart-bar 宽度的最大尺寸（KB）
 const MAX_BAR_SIZE = 6.41
@@ -12,22 +12,22 @@ export default function ModulesSection() {
   return (
     <section
       id='modules'
-      className={`home-section-container ${styles['home-section-light']}`}
+      className={`home-section-container ${commonStyles['home-section-light']}`}
       data-chapter='modules'
       data-label='MODULES'
       data-enter-offset='+=10lvh'
       data-leave-offset='-=75lvh'
     >
-      <section className={`${styles['home-section']} ${styles['fixed-section']}`}>
-        <div className={styles['home-section-content']}>
+      <section className={`${commonStyles['home-section']} ${layoutStyles['fixed-section']}`}>
+        <div className={commonStyles['home-section-content']}>
           <div
-            className={`${styles['home-section-text']} ${styles['text-layout']} ${styles['home-section-text-short']}`}
+            className={`${commonStyles['home-section-text']} ${commonStyles['text-layout']} ${commonStyles['home-section-text-short']}`}
           >
-            <h2 className={`${styles['section-heading']} ${styles['text-xxl']}`}>
+            <h2 className={`${commonStyles['section-heading']} ${commonStyles['text-xxl']}`}>
               A lightweight <br />
               and modular API
             </h2>
-            <p className={styles['section-sub-heading']}>
+            <p className={commonStyles['section-sub-heading']}>
               Keep your bundle size small by only importing the parts you need.
             </p>
           </div>
@@ -35,10 +35,10 @@ export default function ModulesSection() {
       </section>
 
       {/* 章节间距 */}
-      <div className={styles['section-spacer']}></div>
-      <div className={styles['section-spacer']}></div>
-      <div className={styles['section-spacer']}></div>
-      <div className={styles['section-spacer']}></div>
+      <div className={layoutStyles['section-spacer']}></div>
+      <div className={layoutStyles['section-spacer']}></div>
+      <div className={layoutStyles['section-spacer']}></div>
+      <div className={layoutStyles['section-spacer']}></div>
     </section>
   )
 }

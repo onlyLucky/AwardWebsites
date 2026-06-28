@@ -3,12 +3,12 @@
 // 包含标题、描述、赞助商列表
 
 import SponsorsList from '../web-components/sponsors-list'
-import styles from '@/demos/animejs/styles/animejs.module.css'
+import { layoutStyles, commonStyles } from '@/demos/animejs/styles'
 
 // SVG 箭头图标组件
 function ArrowIcon() {
   return (
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' className={styles.icon}>
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' className={commonStyles.icon}>
       <g fill='none' fillRule='evenodd'>
         <polygon
           fill='currentColor'
@@ -24,23 +24,23 @@ export default function SponsorsSection() {
   return (
     <section
       id='sponsors'
-      className={`${styles['home-section']} ${styles['text-layout']}`}
+      className={`${commonStyles['home-section']} ${commonStyles['text-layout']}`}
       data-chapter='sponsors'
       data-label='SPONSORS'
     >
-      <div className={styles['home-section-content']}>
-        <div className={styles['home-section-text']}>
+      <div className={commonStyles['home-section-content']}>
+        <div className={commonStyles['home-section-text']}>
           <h2>Our sponsors</h2>
           <p>Anime.js is 100% free and is only made possible with the help of our sponsors.</p>
           {/* Platinum 赞助商列表 */}
-          <div className={styles['company-sponsors-list']}>
+          <div className={commonStyles['company-sponsors-list']}>
             <SponsorsList size='large' boxed path='platinum-sponsors' />
           </div>
           {/* Silver 赞助商列表 */}
-          <div className={styles['company-sponsors-list']}>
+          <div className={commonStyles['company-sponsors-list']}>
             <SponsorsList size='small' boxed path='silver-sponsors' />
           </div>
-          <ul className={styles['feature-links']}>
+          <ul className={commonStyles['feature-links']}>
             <li>
               <a className='text-ui' href='https://github.com/sponsors/juliangarnier' target='_blank'>
                 <ArrowIcon />
@@ -52,8 +52,8 @@ export default function SponsorsSection() {
       </div>
 
       {/* 章节间距 */}
-      <div className={styles['section-spacer']}></div>
-      <div className={styles['section-spacer']}></div>
+      <div className={layoutStyles['section-spacer']}></div>
+      <div className={layoutStyles['section-spacer']}></div>
     </section>
   )
 }

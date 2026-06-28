@@ -3,7 +3,7 @@
 // 包含赞助商、站点链接、社交链接、版权信息、邮件订阅
 
 import SponsorButton from '../web-components/sponsor-button'
-import styles from '@/demos/animejs/styles/animejs.module.css'
+import { layoutStyles, commonStyles, footerStyles } from '@/demos/animejs/styles'
 
 // Logo 图片路径
 const LOGO_URL = new URL('@/assets/animejs/images/anime-js-logo-v4.svg', import.meta.url).href
@@ -16,7 +16,7 @@ const SPONSOR_PLACEHOLDER_URL = new URL(
 // 通用箭头图标
 function ArrowIcon() {
   return (
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' className={styles.icon}>
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' className={commonStyles.icon}>
       <g fill='none' fillRule='evenodd'>
         <polygon
           fill='currentColor'
@@ -30,13 +30,13 @@ function ArrowIcon() {
 
 export default function Footer() {
   return (
-    <footer id='site-footer' className={`${styles['site-footer']} ${styles['layout-container']}`} data-color='fg'>
-      <div id='site-footer-content' className={styles['site-footer-content']}>
-        <div className={styles['footer-row']}>
+    <footer id='site-footer' className={`${footerStyles['site-footer']} ${layoutStyles['layout-container']}`} data-color='fg'>
+      <div id='site-footer-content' className={footerStyles['site-footer-content']}>
+        <div className={footerStyles['footer-row']}>
           {/* 赞助商区块 */}
-          <div className={`${styles['footer-block']} ${styles['footer-block-sponsors']}`}>
-            <strong className={styles['links-list-heading']}>Platinum sponsors</strong>
-            <ul className={styles['links-list']}>
+          <div className={`${footerStyles['footer-block']} ${footerStyles['footer-block-sponsors']}`}>
+            <strong className={commonStyles['links-list-heading']}>Platinum sponsors</strong>
+            <ul className={commonStyles['links-list']}>
               <li>
                 <a
                   className='sponsor'
@@ -63,10 +63,10 @@ export default function Footer() {
           </div>
 
           {/* 链接区块 */}
-          <div className={`${styles['footer-block']} ${styles['footer-block-links']}`}>
-            <div className={styles['footer-block']}>
-              <strong className={styles['links-list-heading']}>Site</strong>
-              <ul className={styles['links-list']}>
+          <div className={`${footerStyles['footer-block']} ${footerStyles['footer-block-links']}`}>
+            <div className={footerStyles['footer-block']}>
+              <strong className={commonStyles['links-list-heading']}>Site</strong>
+              <ul className={commonStyles['links-list']}>
                 <li>
                   <a href='index.html' title='Documentation'>
                     Home
@@ -93,9 +93,9 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-            <div className={styles['footer-block']}>
-              <strong className={styles['links-list-heading']}>Socials</strong>
-              <ul className={styles['links-list']}>
+            <div className={footerStyles['footer-block']}>
+              <strong className={commonStyles['links-list-heading']}>Socials</strong>
+              <ul className={commonStyles['links-list']}>
                 <li>
                   <a target='_blank' href='https://x.com/juliangarnier'>
                     X / Twitter
@@ -126,15 +126,15 @@ export default function Footer() {
         </div>
 
         {/* 底部行 */}
-        <div className={styles['footer-row']}>
-          <div className={`${styles['footer-block']} ${styles['footer-logo-block']}`}>
-            <div className={`heading-logo ${styles['footer-logo']}`}>
+        <div className={footerStyles['footer-row']}>
+          <div className={`${footerStyles['footer-block']} ${footerStyles['footer-logo-block']}`}>
+            <div className={`heading-logo ${footerStyles['footer-logo']}`}>
               <a href='/'>
                 <img src={LOGO_URL} alt='anime.js logo v4' width='580' height='118' />
                 <span>Anime.js | JavaScript Animation Engine</span>
               </a>
             </div>
-            <div className={styles['footer-copyright']}>
+            <div className={footerStyles['footer-copyright']}>
               &copy; 2026{' '}
               <a href='https://juliangarnier.com' target='_blank'>
                 Julian Garnier
@@ -143,28 +143,28 @@ export default function Footer() {
           </div>
 
           {/* 邮件订阅区块 */}
-          <div className={styles['footer-block']}>
-            <strong className={styles['links-list-heading']}>Stay in the loop</strong>
-            <div className={styles['email-signup-form']}>
+          <div className={footerStyles['footer-block']}>
+            <strong className={commonStyles['links-list-heading']}>Stay in the loop</strong>
+            <div className={footerStyles['email-signup-form']}>
               <form>
-                <div className={`${styles['email-signup-fields']} ${styles['is-active']}`}>
+                <div className={`${footerStyles['email-signup-fields']} ${footerStyles['is-active']}`}>
                   <input
-                    className={`${styles['email-signup-field']} ${styles['email-signup-input']}`}
+                    className={`${footerStyles['email-signup-field']} ${footerStyles['email-signup-input']}`}
                     type='email'
                     name='email'
                     placeholder='Enter your email'
                     required
                   />
                   <input
-                    className={`${styles['email-signup-field']} ${styles['email-signup-submit']}`}
+                    className={`${footerStyles['email-signup-field']} ${footerStyles['email-signup-submit']}`}
                     type='submit'
                     value='Subscribe'
                   />
                 </div>
-                <div className={`${styles['email-signup-alert']} ${styles['email-signup-success']}`}>
+                <div className={`${footerStyles['email-signup-alert']} ${footerStyles['email-signup-success']}`}>
                   <p>Thanks! Check your inbox to confirm your subscription.</p>
                 </div>
-                <div className={`${styles['email-signup-alert']} ${styles['email-signup-error']}`}>
+                <div className={`${footerStyles['email-signup-alert']} ${footerStyles['email-signup-error']}`}>
                   <p>
                     Something went wrong. Please try again later or email me directly at{' '}
                     <a href='mailto:julian@animejs.com'>julian@animejs.com</a>

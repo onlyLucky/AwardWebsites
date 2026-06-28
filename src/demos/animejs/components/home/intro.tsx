@@ -2,27 +2,27 @@
 // 对应源码 #intro (Hero 区域)
 // 包含标题、副标题、npm 命令、Learn more 按钮
 
-import styles from '@/demos/animejs/styles/animejs.module.css'
+import { layoutStyles, commonStyles, introStyles } from '@/demos/animejs/styles'
 import SponsorsList from '../web-components/sponsors-list'
 
 export default function IntroSection() {
   return (
-    <section id='intro' className={styles['animejs-intro']} data-chapter='intro' data-label='HEADING'>
-      <div className={`${styles['home-section']} ${styles['text-layout']}`}>
-        <div className={styles['home-section-content']}>
+    <section id='intro' className={introStyles['animejs-intro']} data-chapter='intro' data-label='HEADING'>
+      <div className={`${commonStyles['home-section']} ${commonStyles['text-layout']}`}>
+        <div className={commonStyles['home-section-content']}>
           {/* 左侧文字内容 */}
-          <div className={`${styles['home-section-text']} ${styles['home-section-text-short']}`}>
+          <div className={`${commonStyles['home-section-text']} ${commonStyles['home-section-text-short']}`}>
             <h2>
               All-in-one <br />
               animation <br />
               engine
-              <span className={`animation-engine ${styles['red-dot']}`}>.</span>
+              <span className={`animation-engine ${introStyles['red-dot']}`}>.</span>
             </h2>
             <p>
               A fast and flexible JavaScript <br />
               library to animate{' '}
-              <span className={styles['animate-anything-wrapper']}>
-                <span className={styles['animate-anything']}>the web</span>
+              <span className={introStyles['animate-anything-wrapper']}>
+                <span className={introStyles['animate-anything']}>the web</span>
                 <span className='animate-anything-dot'>.</span>
               </span>
             </p>
@@ -30,15 +30,15 @@ export default function IntroSection() {
           </div>
 
           {/* 固定的行动按钮 */}
-          <div className={`fixed-container ${styles['heading-links']}`}>
-            <div className={styles['layout-container']}>
-              <div className={styles['ui-group']}>
-                <pre className={styles['npm-install']}>
+          <div className={`fixed-container ${introStyles['heading-links']}`}>
+            <div className={layoutStyles['layout-container']}>
+              <div className={introStyles['ui-group']}>
+                <pre className={introStyles['npm-install']}>
                   <code>npm i animejs</code>
                 </pre>
-                <button className={`${styles['learn-more']} ui-input ui-button`}>
+                <button className={`${introStyles['learn-more']} ui-input ui-button`}>
                   Learn more
-                  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' className={styles.icon}>
+                  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' className={commonStyles.icon}>
                     <g fill='none' fillRule='evenodd'>
                       <polygon
                         fill='currentColor'
@@ -47,7 +47,7 @@ export default function IntroSection() {
                       />
                     </g>
                   </svg>
-                  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' className={styles.icon}>
+                  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' className={commonStyles.icon}>
                     <g fill='none' fillRule='evenodd'>
                       <polygon
                         fill='currentColor'
@@ -58,7 +58,7 @@ export default function IntroSection() {
                   </svg>
                 </button>
               </div>
-              <div className={`${styles['heading-sponsors']} ${styles['text-layout']}`}>
+              <div className={`${introStyles['heading-sponsors']} ${commonStyles['text-layout']}`}>
                 <span className='text-xxs'>Sponsored by</span>
                 <SponsorsList path='platinum-sponsors' size='small' />
               </div>
@@ -68,8 +68,8 @@ export default function IntroSection() {
       </div>
 
       {/* 章节间距 */}
-      <div className={styles['section-spacer']}></div>
-      <div className={styles['section-spacer']}></div>
+      <div className={layoutStyles['section-spacer']}></div>
+      <div className={layoutStyles['section-spacer']}></div>
     </section>
   )
 }

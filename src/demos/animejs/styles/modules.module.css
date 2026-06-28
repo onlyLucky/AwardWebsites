@@ -1,0 +1,183 @@
+/* ===== Modules Section ===== */
+.modules-sizes {
+  background-color: var(--hex-bg-1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.box-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.box-heading h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.modules-bundle-size {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.modules-bundle-size .size {
+  color: var(--hex-red-1);
+}
+
+/* ===== 图表容器 ===== */
+.chart {
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  width: 100%;
+  border-radius: var(--br-s);
+  margin-bottom: var(--margin-xs);
+  background-color: var(--hex-bg-4);
+}
+
+.modules-sizes-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 100px;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.chart-bar {
+  height: 0.75rem;
+  width: 100%;
+  background-color: var(--hex-current-1);
+  will-change: width;
+}
+
+.chart-bar[data-size] {
+  flex-shrink: 0;
+  width: 0;
+  transition: width 0.4s ease;
+}
+
+.sub-nav .chart-bar[data-size] {
+  width: calc(var(--data-size, 0) * 1%);
+}
+
+/* ===== Chart Bar Colors ===== */
+.chart-bar.color-waapi {
+  background-color: var(--hex-green-1);
+}
+.chart-bar.color-timeline {
+  background-color: var(--hex-orange-1);
+}
+.chart-bar.color-utils {
+  background-color: var(--hex-citrus-1);
+}
+.chart-bar.color-svg {
+  background-color: var(--hex-turquoise-1);
+}
+.chart-bar.color-easings {
+  background-color: var(--hex-cyan-1);
+}
+.chart-bar.color-timer {
+  background-color: var(--hex-red-1);
+}
+.chart-bar.color-events {
+  background-color: var(--hex-lime-1);
+}
+.chart-bar.color-animation {
+  background-color: var(--hex-corail-1);
+}
+.chart-bar.color-draggable {
+  background-color: var(--hex-cyan-1);
+}
+.chart-bar.color-scope {
+  background-color: var(--hex-green-1);
+}
+
+/* ===== 模块列表 ===== */
+ul.modules-list {
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.modules-list li {
+  list-style: none;
+  width: 33%;
+  font-size: var(--text-xxs);
+  color: var(--hex-fg-3);
+  line-height: 1.25em;
+}
+
+.modules-list .label-dot {
+  margin-right: 0.5rem;
+  position: relative;
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--hex-current-1);
+}
+
+.modules-list .label-dot.color-timer {
+  background-color: var(--hex-red-1);
+}
+.modules-list .label-dot.color-animation {
+  background-color: var(--hex-corail-1);
+}
+.modules-list .label-dot.color-timeline {
+  background-color: var(--hex-orange-1);
+}
+.modules-list .label-dot.color-animatable {
+  background-color: var(--hex-yellow-1);
+}
+.modules-list .label-dot.color-draggable {
+  background-color: var(--hex-cyan-1);
+}
+.modules-list .label-dot.color-events {
+  background-color: var(--hex-lime-1);
+}
+.modules-list .label-dot.color-scope {
+  background-color: var(--hex-green-1);
+}
+.modules-list .label-dot.color-svg {
+  background-color: var(--hex-turquoise-1);
+}
+.modules-list .label-dot.color-utils {
+  background-color: var(--hex-citrus-1);
+}
+.modules-list .label-dot.color-easings {
+  background-color: var(--hex-cyan-1);
+}
+.modules-list .label-dot.color-waapi {
+  background-color: var(--hex-green-1);
+}
+
+.modules-list .size {
+  display: none;
+  margin-left: 0.25em;
+  font-family: var(--font-code);
+  font-size: var(--text-xxs);
+  color: var(--hex-fg-4);
+}
+
+.modules-sizes {
+  margin: 0;
+}
+
+/* ===== 响应式设计 ===== */
+@media (max-width: 899px) {
+  .chart-bar {
+    height: 1rem;
+  }
+
+  ul.modules-list {
+    display: none;
+  }
+}
