@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from 'react'
 import { useScrollProgress } from '@/demos/animejs/hooks/useScrollProgress'
 import { getModuleTotalSize, getModulesList } from '@/demos/animejs/components/home/modules'
 import FundingLevel from '../web-components/funding-level'
-import { subNavStyles, modulesStyles, commonStyles } from '@/demos/animejs/styles'
 
 const FEATURE_IDS = [
   'intuitive',
@@ -168,19 +167,19 @@ export default function SubNav() {
   const totalSize = getModuleTotalSize()
 
   return (
-    <div className={subNavStyles['sub-nav']}>
+    <div className='pointer-events-none overflow-hidden fixed z-[10] bottom-[var(--margin-s)] rounded-[var(--br-l)] hidden animejs-md:block animejs-md:left-auto animejs-md:w-[var(--max-box-width)] animejs-md:right-[var(--margin-l)] animejs-md:bottom-[var(--margin-l)]' style={{ right: 'var(--margin-s)', left: 'var(--margin-s)', width: 'calc(100% - var(--margin-s) * 2)', height: '10rem' }}>
       {/* 滚动进度条 */}
       <div
         ref={progressCardRef}
-        className={subNavStyles['home-progress-card']}
-        style={{ opacity: showProgress ? 1 : 0, pointerEvents: showProgress ? 'auto' : 'none' }}
+        className='opacity-0 absolute z-[10] bottom-0 w-full h-10 rounded-[var(--br-l)]'
+        style={{ backgroundColor: 'var(--hex-bg-3)', opacity: showProgress ? 1 : 0, pointerEvents: showProgress ? 'auto' : 'none' }}
       >
-        <div className={subNavStyles['scroll-bar']}>
-          <div ref={cursorRef} className={subNavStyles['scroll-cursor']} style={{ transform: 'translateX(0%)' }}></div>
+        <div className='relative flex w-[calc(100%-2rem)] h-3 top-[0.865rem] left-4' style={{ backgroundSize: '0.7692307692% 0.5rem', backgroundImage: 'linear-gradient(to right, rgba(255, 255, 255, 0.15) 1px, transparent 1px)' }}>
+          <div ref={cursorRef} className='absolute z-[100] shrink-0 top-[-0.125rem] w-[3px] h-4 rounded-[3px]' style={{ backgroundColor: 'var(--hex-red-1)', willChange: 'transform', transform: 'translateX(0%)' }}></div>
           <div
             ref={ghostRef}
-            className={`${subNavStyles['scroll-cursor-ghost']} ${subNavStyles['scroll-cursor']}`}
-            style={{ transform: 'translateX(0%)' }}
+            className='absolute z-[100] shrink-0 top-[-0.125rem] w-[3px] h-4 rounded-[3px] opacity-0 pointer-events-none'
+            style={{ backgroundColor: 'var(--hex-red-2)', willChange: 'transform', transform: 'translateX(0%)' }}
           ></div>
         </div>
       </div>
@@ -194,33 +193,33 @@ export default function SubNav() {
 
       {/* 模块可视化卡片 */}
       <div
-        className={`${modulesStyles['modules-sizes']} ${subNavStyles['home-section-card']} ${commonStyles['text-layout']}`}
+        className='bg-[var(--hex-bg-1)] border border-white/5 rounded-xl p-6 m-0'
         data-card='modules'
         data-enter-offset='-=50lvh'
         data-leave-offset='-=150lvh'
-        style={{ opacity: activeCard === 'modules' ? 1 : 0 }}
+        style={{ opacity: activeCard === 'modules' ? 1 : 0, color: 'var(--hex-fg-2)' }}
       >
-        <div className={modulesStyles['box-heading']}>
-          <h3>Bundle size</h3>
-          <div className={modulesStyles['modules-bundle-size']}>
-            <span className={modulesStyles['size']}>{totalSize}</span> KB
+        <div className='flex justify-between items-center mb-4 pb-3 border-b border-white/5'>
+          <h3 className='text-base font-semibold'>Bundle size</h3>
+          <div className='text-xl font-bold'>
+            <span className='size' style={{ color: 'var(--hex-red-1)' }}>{totalSize}</span> KB
           </div>
         </div>
-        <div className={`${modulesStyles['modules-sizes-chart']} ${modulesStyles['chart']}`}>
+        <div className='flex items-end gap-1 h-[100px] mb-4 pb-3 border-b border-white/5'>
           {modules.map((m) => (
             <div
               key={m.name}
               data-size={m.size}
-              className={`${modulesStyles['chart-bar']} module-${m.color} ${modulesStyles[`color-${m.color}`]}`}
-              style={{ ['--data-size' as any]: (m.size / MAX_BAR_SIZE) * 100 }}
+              className={`h-3 w-full shrink-0 transition-all duration-400 module-${m.color}`}
+              style={{ backgroundColor: 'var(--hex-fg-1)', width: `${(m.size / MAX_BAR_SIZE) * 100}%` }}
             ></div>
           ))}
         </div>
-        <ul className={modulesStyles['modules-list']}>
+        <ul className='list-none p-0 m-0 flex flex-wrap'>
           {modules.map((m) => (
-            <li key={m.name}>
-              <span className={`${modulesStyles['label-dot']} ${modulesStyles[`color-${m.color}`]}`}></span>
-              {m.name} <span className={modulesStyles['size']}>{m.size} KB</span>
+            <li key={m.name} className='list-none w-1/3 leading-[1.25em]' style={{ fontSize: 'var(--text-xxs)', color: 'var(--hex-fg-3)' }}>
+              <span className={`inline-block w-2 h-2 rounded-full mr-2 module-${m.color}`} style={{ backgroundColor: 'var(--hex-fg-1)' }}></span>
+              {m.name} <span className='hidden ml-[0.25em]' style={{ fontFamily: 'var(--font-code)', fontSize: 'var(--text-xxs)', color: 'var(--hex-fg-4)' }}>{m.size} KB</span>
             </li>
           ))}
         </ul>
@@ -228,11 +227,11 @@ export default function SubNav() {
 
       {/* 赞助级别卡片 */}
       <div
-        className={`${subNavStyles['funding-level-box']} ${subNavStyles['home-section-card']} ${commonStyles['text-layout']}`}
+        className='bottom-12'
         data-card='sponsors'
         data-enter-offset='-=50lvh'
         data-leave-offset='-=50lvh'
-        style={{ opacity: activeCard === 'sponsors' ? 1 : 0 }}
+        style={{ opacity: activeCard === 'sponsors' ? 1 : 0, color: 'var(--hex-fg-2)' }}
       >
         <FundingLevel path='github-sponsors' />
       </div>

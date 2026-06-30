@@ -8,8 +8,8 @@ import Home from './components/home'
 import SubNav from './components/sub-nav'
 import Footer from './components/footer'
 import Engine from './components/engine'
-import './styles/animejs-global.css'
-import { layoutStyles } from './styles'
+import './styles/tailwind.css'
+import './styles/components.css'
 
 export default function AnimejsDemo() {
   const pageRef = useRef<HTMLDivElement>(null)
@@ -21,15 +21,23 @@ export default function AnimejsDemo() {
 
     // 使用 requestAnimationFrame 确保在下一帧添加类
     const raf = requestAnimationFrame(() => {
-      page.classList.add(layoutStyles['is-ready'])
+      page.classList.add('is-ready')
     })
 
     return () => cancelAnimationFrame(raf)
   }, [])
 
   return (
-    <div className='animejsRoot'>
-      <div ref={pageRef} className={layoutStyles.page}>
+    <div className='animejs-root'>
+      <div
+        ref={pageRef}
+        className='flex flex-col justify-start items-center w-full min-h-dvh overflow-x-hidden opacity-0 transition-opacity duration-300 [&.is-ready]:opacity-100'
+        style={{
+          backgroundColor: 'var(--hex-bg-1)',
+          color: 'var(--hex-fg-1)',
+          fontFamily: 'var(--font-body)',
+        }}
+      >
         {/* 1. 顶部导航 */}
         <Header />
 

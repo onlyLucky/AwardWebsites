@@ -3,7 +3,6 @@
 // 渲染 Platinum / Silver 等赞助商列表
 
 import type { ReactNode } from 'react'
-import { commonStyles } from '@/demos/animejs/styles'
 
 export interface SponsorsListProps {
   /** 路径标识：platinum-sponsors / silver-sponsors / gold-sponsors */
@@ -40,7 +39,7 @@ export default function SponsorsList({
   const renderSponsor = (sponsor: { name: string; url: string }, index: number): ReactNode => {
     if (isSmall) {
       return (
-        <li key={index} className={`sponsor-item ${commonStyles['sponsor-item-small']}`}>
+        <li key={index} className='sponsor-item block text-sm'>
           <a href={sponsor.url} target='_blank' rel='noopener noreferrer' title={sponsor.name}>
             {sponsor.name}
           </a>
@@ -48,7 +47,7 @@ export default function SponsorsList({
       )
     }
     return (
-      <li key={index} className={`sponsor-item ${commonStyles['sponsor-item-large']}`}>
+      <li key={index} className='sponsor-item block'>
         <a href={sponsor.url} target='_blank' rel='noopener noreferrer' title={sponsor.name}>
           {sponsor.name}
         </a>
@@ -59,7 +58,7 @@ export default function SponsorsList({
   return (
     <sponsors-list path={path} size={size} boxed={boxed ? '' : undefined} class={className}>
       <ul
-        className={`${commonStyles['sponsors-list']} ${commonStyles[`sponsors-list-${size}`]}${boxed ? ` ${commonStyles['sponsors-list-boxed']}` : ''}`}
+        className={`list-none p-0 m-0 flex flex-wrap gap-4 ${size === 'large' ? 'gap-6' : 'gap-4'}${boxed ? ' p-4 border border-white/10 rounded-lg' : ''}`}
       >
         {sponsors.map(renderSponsor)}
       </ul>

@@ -3,11 +3,10 @@
 // 3D 引擎区域，包含 Canvas、模型渲染等
 
 import { Canvas } from '@react-three/fiber'
-import { layoutStyles } from '@/demos/animejs/styles'
 
 export default function Engine() {
   return (
-    <div id='engine' className={layoutStyles['animejs-engine']}>
+    <div id='engine' className='fixed w-full h-lvh'>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
         style={{ background: 'transparent' }}

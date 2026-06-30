@@ -6,6 +6,10 @@ import dynamic from 'next/dynamic'
 import DemoWrapper from '@/components/demo-wrapper'
 import PageTransition from '@/components/page-transition'
 
+// 导入 animejs demo 样式（需要在客户端组件中导入，不能在动态加载的组件中）
+import '@/demos/animejs/styles/tailwind.css'
+import '@/demos/animejs/styles/components.css'
+
 // Demo 名称映射
 const DEMO_NAMES: Record<string, string> = {
   'follow-art': 'follow.art',

@@ -3,7 +3,6 @@
 // 包含标题、描述、Bundle size 图表（动态生成）
 
 import { modules, totalSize } from '@/demos/animejs/data/features'
-import { layoutStyles, commonStyles } from '@/demos/animejs/styles'
 
 // 用于 chart-bar 宽度的最大尺寸（KB）
 const MAX_BAR_SIZE = 6.41
@@ -12,22 +11,21 @@ export default function ModulesSection() {
   return (
     <section
       id='modules'
-      className={`home-section-container ${commonStyles['home-section-light']}`}
+      className='flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] max-w-[var(--max-box-width)]'
+      style={{ color: 'var(--hex-fg-3)' }}
       data-chapter='modules'
       data-label='MODULES'
       data-enter-offset='+=10lvh'
       data-leave-offset='-=75lvh'
     >
-      <section className={`${commonStyles['home-section']} ${layoutStyles['fixed-section']}`}>
-        <div className={commonStyles['home-section-content']}>
-          <div
-            className={`${commonStyles['home-section-text']} ${commonStyles['text-layout']} ${commonStyles['home-section-text-short']}`}
-          >
-            <h2 className={`${commonStyles['section-heading']} ${commonStyles['text-xxl']}`}>
+      <section className='flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] opacity-[0.001] pointer-events-none fixed top-0 left-0'>
+        <div className='relative w-full h-lvh py-[var(--margin-s)]'>
+          <div className='relative z-[1] flex flex-col max-w-[var(--max-box-width)]'>
+            <h2 className='font-bold leading-tight' style={{ fontSize: 'var(--text-xxl)' }}>
               A lightweight <br />
               and modular API
             </h2>
-            <p className={commonStyles['section-sub-heading']}>
+            <p className='font-semibold' style={{ color: 'var(--hex-fg-2)' }}>
               Keep your bundle size small by only importing the parts you need.
             </p>
           </div>
@@ -35,10 +33,10 @@ export default function ModulesSection() {
       </section>
 
       {/* 章节间距 */}
-      <div className={layoutStyles['section-spacer']}></div>
-      <div className={layoutStyles['section-spacer']}></div>
-      <div className={layoutStyles['section-spacer']}></div>
-      <div className={layoutStyles['section-spacer']}></div>
+      <div className='h-lvh pointer-events-none'></div>
+      <div className='h-lvh pointer-events-none'></div>
+      <div className='h-lvh pointer-events-none'></div>
+      <div className='h-lvh pointer-events-none'></div>
     </section>
   )
 }

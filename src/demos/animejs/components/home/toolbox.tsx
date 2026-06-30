@@ -4,7 +4,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { toolboxLabelsLeft, toolboxLabelsRight } from '@/demos/animejs/data/features'
-import { layoutStyles, commonStyles, toolboxStyles } from '@/demos/animejs/styles'
 
 export default function ToolboxSection() {
   const [activeLeft, setActiveLeft] = useState(0)
@@ -43,42 +42,43 @@ export default function ToolboxSection() {
     <section
       ref={sectionRef}
       id='toolbox'
-      className={`home-section-container ${commonStyles['home-section-light']}`}
+      className='flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] max-w-[var(--max-box-width)]'
+      style={{ color: 'var(--hex-fg-3)' }}
       data-chapter='toolbox'
       data-label='TOOLBOX'
       data-enter-offset='-=100lvh'
       data-leave-offset='-=10lvh'
     >
-      <div className={`${commonStyles['home-section']} ${layoutStyles['fixed-section']}`}>
-        <div className={commonStyles['home-section-content']}>
-          <div
-            className={`${commonStyles['home-section-text']} ${commonStyles['text-layout']} ${commonStyles['home-section-text-short']}`}
-          >
-            <h2 className={`${commonStyles['section-heading']} ${commonStyles['text-xxl']}`}>
+      <div className='flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] opacity-[0.001] pointer-events-none fixed top-0 left-0'>
+        <div className='relative w-full h-lvh py-[var(--margin-s)]'>
+          <div className='relative z-[1] flex flex-col max-w-[var(--max-box-width)]'>
+            <h2 className='font-bold leading-tight' style={{ fontSize: 'var(--text-xxl)' }}>
               The complete <br />
               animator's toolbox
             </h2>
-            <p className={commonStyles['section-sub-heading']}>
+            <p className='font-semibold' style={{ color: 'var(--hex-fg-2)' }}>
               Break free from browser limitations and animate anything on the web with a single API.
             </p>
           </div>
-          <div className={`${toolboxStyles['toolbox-labels-container']} ${layoutStyles['layout-container']}`}>
-            <div className={toolboxStyles['toolbox-labels']}>
-              <ul className={toolboxStyles['toolbox-labels-left']}>
+          <div className='mt-8 relative z-[1] flex flex-wrap flex-row w-full max-w-[1500px]'>
+            <div className='flex justify-between gap-8'>
+              <ul className='list-none p-0 m-0 flex-1 relative min-h-[1.5em] text-left'>
                 {toolboxLabelsLeft.map((label, i) => (
                   <li
                     key={i}
-                    className={`${toolboxStyles['toolbox-label']}${i === activeLeft ? ` ${toolboxStyles['is-active']}` : ''}`}
+                    className={`absolute top-0 left-0 pointer-events-none whitespace-nowrap transition-all duration-300 ${i === activeLeft ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+                    style={{ fontSize: 'var(--text-l)', fontWeight: 700, color: 'var(--hex-bg-3)' }}
                   >
                     {label}
                   </li>
                 ))}
               </ul>
-              <ul className={toolboxStyles['toolbox-labels-right']}>
+              <ul className='list-none p-0 m-0 flex-1 relative min-h-[1.5em] text-right'>
                 {toolboxLabelsRight.map((label, i) => (
                   <li
                     key={i}
-                    className={`${toolboxStyles['toolbox-label']}${i === activeRight ? ` ${toolboxStyles['is-active']}` : ''}`}
+                    className={`absolute top-0 right-0 pointer-events-none whitespace-nowrap transition-all duration-300 ${i === activeRight ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+                    style={{ fontSize: 'var(--text-l)', fontWeight: 700, color: 'var(--hex-bg-3)' }}
                   >
                     {label}
                   </li>
@@ -90,10 +90,10 @@ export default function ToolboxSection() {
       </div>
 
       {/* 章节间距 */}
-      <div className={layoutStyles['section-spacer']}></div>
-      <div className={layoutStyles['section-spacer']}></div>
-      <div className={layoutStyles['section-spacer']}></div>
-      <div className={layoutStyles['section-spacer']}></div>
+      <div className='h-lvh pointer-events-none'></div>
+      <div className='h-lvh pointer-events-none'></div>
+      <div className='h-lvh pointer-events-none'></div>
+      <div className='h-lvh pointer-events-none'></div>
     </section>
   )
 }
