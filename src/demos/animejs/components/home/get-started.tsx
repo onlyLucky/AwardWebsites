@@ -13,103 +13,65 @@ function ArrowIcon() {
   )
 }
 
+// 链接数据
+const LINKS = [
+  { href: 'documentation/getting-started.html', label: 'Getting started' },
+  { href: 'documentation/timer.html', label: 'Timer' },
+  { href: 'documentation/animation.html', label: 'Animation' },
+  { href: 'documentation/timeline.html', label: 'Timeline' },
+  { href: 'documentation/animatable.html', label: 'Animatable' },
+  { href: 'documentation/draggable.html', label: 'Draggable' },
+  { href: 'documentation/scope.html', label: 'Scope' },
+  { href: 'documentation/events/onscroll.html', label: 'Scroll' },
+  { href: 'documentation/svg.html', label: 'SVG' },
+  { href: 'documentation/utilities.html', label: 'Utils' },
+  { href: 'documentation/easings.html', label: 'Easings' },
+  { href: 'documentation/web-animation-api.html', label: 'WAAPI' },
+]
+
 export default function GetStartedSection() {
   return (
     <section id='get-started' data-chapter='get-started' data-label='GET_STARTED'>
       {/* 章节间距 */}
       <div className='h-lvh pointer-events-none'></div>
 
-      <section className='flex flex-col justify-center w-full h-lvh px-[var(--margin-s)]' style={{ color: 'var(--hex-fg-3)' }}>
-        <div className='relative w-full h-lvh py-[var(--margin-s)] justify-center items-center text-center'>
-          <div className='relative z-[1] flex flex-col justify-center items-center text-center'>
-            <h2 style={{ fontSize: 'var(--text-xxxl)' }}>Start animating</h2>
-            <p>Get started quickly with our in-depth documentation.</p>
+      <section className='home-section flex flex-col justify-center w-full h-lvh px-[var(--margin-s)]' style={{ color: 'var(--hex-fg-3)' }}>
+        <div className='home-section-content home-section-centered flex flex-col justify-center items-center h-auto py-16 text-center'>
+          <div className='home-section-text home-section-centered flex flex-col items-center text-center mb-10'>
+            <h2 className='font-bold' style={{ fontSize: 'var(--text-xxxl)', color: 'var(--hex-fg-2)', lineHeight: '0.95em', marginBottom: '0.375em' }}>Start animating</h2>
+            <p className='text-l font-semibold' style={{ color: 'var(--hex-fg-2)', lineHeight: '1.25em' }}>Get started quickly with our in-depth documentation.</p>
           </div>
-          <ul className='list-none p-0 m-0 grid grid-cols-2 gap-4'>
-            <li>
-              <a href='documentation/getting-started.html' className='flex justify-between items-center no-underline py-2' style={{ color: 'var(--hex-fg-2)' }}>
-                <span className='inline-block w-2 h-2 rounded-full mr-2' style={{ backgroundColor: 'var(--hex-fg-4)' }}></span>
-                Getting started
-                <ArrowIcon />
-              </a>
-            </li>
-            <li>
-              <a href='documentation/timer.html' className='flex justify-between items-center no-underline py-2' style={{ color: 'var(--hex-fg-2)' }}>
-                <span className='inline-block w-2 h-2 rounded-full mr-2' style={{ backgroundColor: 'var(--hex-fg-4)' }}></span>
-                Timer
-                <ArrowIcon />
-              </a>
-            </li>
-            <li>
-              <a href='documentation/animation.html' className='flex justify-between items-center no-underline py-2' style={{ color: 'var(--hex-fg-2)' }}>
-                <span className='inline-block w-2 h-2 rounded-full mr-2' style={{ backgroundColor: 'var(--hex-fg-4)' }}></span>
-                Animation
-                <ArrowIcon />
-              </a>
-            </li>
-            <li>
-              <a href='documentation/timeline.html' className='flex justify-between items-center no-underline py-2' style={{ color: 'var(--hex-fg-2)' }}>
-                <span className='inline-block w-2 h-2 rounded-full mr-2' style={{ backgroundColor: 'var(--hex-fg-4)' }}></span>
-                Timeline
-                <ArrowIcon />
-              </a>
-            </li>
-            <li>
-              <a href='documentation/animatable.html' className='flex justify-between items-center no-underline py-2' style={{ color: 'var(--hex-fg-2)' }}>
-                <span className='inline-block w-2 h-2 rounded-full mr-2' style={{ backgroundColor: 'var(--hex-fg-4)' }}></span>
-                Animatable
-                <ArrowIcon />
-              </a>
-            </li>
-            <li>
-              <a href='documentation/draggable.html' className='flex justify-between items-center no-underline py-2' style={{ color: 'var(--hex-fg-2)' }}>
-                <span className='inline-block w-2 h-2 rounded-full mr-2' style={{ backgroundColor: 'var(--hex-fg-4)' }}></span>
-                Draggable
-                <ArrowIcon />
-              </a>
-            </li>
-            <li>
-              <a href='documentation/scope.html' className='flex justify-between items-center no-underline py-2' style={{ color: 'var(--hex-fg-2)' }}>
-                <span className='inline-block w-2 h-2 rounded-full mr-2' style={{ backgroundColor: 'var(--hex-fg-4)' }}></span>
-                Scope
-                <ArrowIcon />
-              </a>
-            </li>
-            <li>
-              <a href='documentation/events/onscroll.html' className='flex justify-between items-center no-underline py-2' style={{ color: 'var(--hex-fg-2)' }}>
-                <span className='inline-block w-2 h-2 rounded-full mr-2' style={{ backgroundColor: 'var(--hex-fg-4)' }}></span>
-                Scroll
-                <ArrowIcon />
-              </a>
-            </li>
-            <li>
-              <a href='documentation/svg.html' className='flex justify-between items-center no-underline py-2' style={{ color: 'var(--hex-fg-2)' }}>
-                <span className='inline-block w-2 h-2 rounded-full mr-2' style={{ backgroundColor: 'var(--hex-fg-4)' }}></span>
-                SVG
-                <ArrowIcon />
-              </a>
-            </li>
-            <li>
-              <a href='documentation/utilities.html' className='flex justify-between items-center no-underline py-2' style={{ color: 'var(--hex-fg-2)' }}>
-                <span className='inline-block w-2 h-2 rounded-full mr-2' style={{ backgroundColor: 'var(--hex-fg-4)' }}></span>
-                Utils
-                <ArrowIcon />
-              </a>
-            </li>
-            <li>
-              <a href='documentation/easings.html' className='flex justify-between items-center no-underline py-2' style={{ color: 'var(--hex-fg-2)' }}>
-                <span className='inline-block w-2 h-2 rounded-full mr-2' style={{ backgroundColor: 'var(--hex-fg-4)' }}></span>
-                Easings
-                <ArrowIcon />
-              </a>
-            </li>
-            <li>
-              <a href='documentation/web-animation-api.html' className='flex justify-between items-center no-underline py-2' style={{ color: 'var(--hex-fg-2)' }}>
-                <span className='inline-block w-2 h-2 rounded-full mr-2' style={{ backgroundColor: 'var(--hex-fg-4)' }}></span>
-                WAAPI
-                <ArrowIcon />
-              </a>
-            </li>
+          <ul className='links-list links-list-grid list-none p-0 m-0 flex flex-wrap justify-center' style={{ maxWidth: '720px', width: '720px', gap: '8px' }}>
+            {LINKS.map((link) => (
+              <li key={link.href} className='list-none' style={{ width: 'calc(50% - 4px)' }}>
+                <a
+                  href={link.href}
+                  className='relative flex justify-between items-center no-underline'
+                  style={{
+                    padding: '8px 8px 8px 40px',
+                    fontSize: '16px',
+                    color: 'rgb(180, 177, 175)',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <span
+                    className='label-dot'
+                    style={{
+                      position: 'absolute',
+                      left: '16px',
+                      top: '18px',
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      backgroundColor: 'var(--hex-red-1)',
+                      color: 'var(--hex-red-1)',
+                    }}
+                  ></span>
+                  {link.label}
+                  <ArrowIcon />
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </section>

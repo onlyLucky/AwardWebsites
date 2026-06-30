@@ -2,6 +2,13 @@
 /* Demo 专属的 Tailwind 配置，包含变量、断点、字体等 */
 /* 使用 .animejs-root 容器隔离，避免影响其他 demo */
 
+@theme {
+  /* 自定义断点（带前缀隔离） */
+  --breakpoint-animejs-sm: 600px;
+  --breakpoint-animejs-md: 900px;
+  --breakpoint-animejs-lg: 1200px;
+}
+
 .animejs-root {
   /* ===== 颜色变量 - 黑色系列 ===== */
   --hex-black-1: #252423;
@@ -154,8 +161,8 @@
   --font-code: 'Mono', monospace;
 
   /* ===== 字体大小变量 ===== */
-  --text-xxxxl: 2.5rem;
-  --text-xxxl: 2.5rem;
+  --text-xxxxl: 4rem;
+  --text-xxxl: 3.25rem;
   --text-xxl: 2rem;
   --text-xl: 1.5rem;
   --text-l: 1.25rem;

@@ -3,7 +3,6 @@
 // 包含 header、home、sub-nav、footer、engine
 
 import { useEffect, useRef } from 'react'
-import Header from './components/header'
 import Home from './components/home'
 import SubNav from './components/sub-nav'
 import Footer from './components/footer'
@@ -38,10 +37,7 @@ export default function AnimejsDemo() {
           fontFamily: 'var(--font-body)',
         }}
       >
-        {/* 1. 顶部导航 */}
-        <Header />
-
-        {/* 2. 主内容区域 */}
+        {/* 1. 主内容区域 */}
         <Home />
 
         {/* 3. 滚动进度和代码片段 */}

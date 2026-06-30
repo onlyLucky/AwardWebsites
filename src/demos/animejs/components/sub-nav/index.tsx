@@ -167,7 +167,7 @@ export default function SubNav() {
   const totalSize = getModuleTotalSize()
 
   return (
-    <div className='pointer-events-none overflow-hidden fixed z-[10] bottom-[var(--margin-s)] rounded-[var(--br-l)] hidden animejs-md:block animejs-md:left-auto animejs-md:w-[var(--max-box-width)] animejs-md:right-[var(--margin-l)] animejs-md:bottom-[var(--margin-l)]' style={{ right: 'var(--margin-s)', left: 'var(--margin-s)', width: 'calc(100% - var(--margin-s) * 2)', height: '10rem' }}>
+    <div className='sub-nav'>
       {/* 滚动进度条 */}
       <div
         ref={progressCardRef}

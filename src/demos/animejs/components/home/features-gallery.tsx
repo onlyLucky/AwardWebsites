@@ -19,7 +19,7 @@ export default function FeaturesGallerySection() {
       {/* 特性 1: Intuitive API */}
       <section
         id='intuitive'
-        className='feature-section flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
+        className='feature-section color-getting-started flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
         style={{ color: 'var(--hex-fg-3)' }}
         data-chapter='intuitive'
         data-demo='intuitive'
@@ -27,10 +27,10 @@ export default function FeaturesGallerySection() {
         <div className='relative w-full h-lvh py-[var(--margin-s)] grid grid-cols-2 gap-16 items-center animejs-md:grid-cols-1'>
           <div className='relative z-[1] flex flex-col'>
             <div className='mb-[var(--margin-m)]' style={{ width: 'calc(100% - var(--margin-s) * 2)' }}>
-              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxl)' }}>Intuitive API</h2>
-              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-s)' }}>Animate faster with an easy-to-use, yet powerful animation API.</p>
+              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxxl)', color: 'var(--hex-current-1, var(--hex-red-1))' }}>Intuitive API</h2>
+              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-l)' }}>Animate faster with an easy-to-use, yet powerful animation API.</p>
             </div>
-            <ul className='list-none p-0 m-0 hidden animejs-md:block relative w-full pt-[var(--margin-s)] pl-0'>
+            <ul className='feature-links list-none p-0 m-0 relative w-full pt-[var(--margin-s)] pl-0'>
               <li>
                 <a className='flex justify-between items-center no-underline pl-7' style={{ fontSize: 'var(--text-s)', color: 'var(--hex-fg-3)' }} href='documentation/animation/tween-parameters/composition.html'>
                   <ArrowIcon />
@@ -60,7 +60,7 @@ export default function FeaturesGallerySection() {
       {/* 特性 2: Enhanced transforms */}
       <section
         id='composition'
-        className='feature-section flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
+        className='feature-section color-animation flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
         style={{ color: 'var(--hex-fg-3)' }}
         data-chapter='composition'
         data-demo='composition'
@@ -68,10 +68,10 @@ export default function FeaturesGallerySection() {
         <div className='relative w-full h-lvh py-[var(--margin-s)] grid grid-cols-2 gap-16 items-center animejs-md:grid-cols-1'>
           <div className='relative z-[1] flex flex-col'>
             <div className='mb-[var(--margin-m)]' style={{ width: 'calc(100% - var(--margin-s) * 2)' }}>
-              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxl)' }}>Enhanced transforms</h2>
-              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-s)' }}>Smoothly blend individual CSS transform properties with a versatile composition API.</p>
+              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxxl)', color: 'var(--hex-current-1, var(--hex-red-1))' }}>Enhanced transforms</h2>
+              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-l)' }}>Smoothly blend individual CSS transform properties with a versatile composition API.</p>
             </div>
-            <ul className='list-none p-0 m-0 hidden animejs-md:block relative w-full pt-[var(--margin-s)] pl-0'>
+            <ul className='feature-links list-none p-0 m-0 relative w-full pt-[var(--margin-s)] pl-0'>
               <li>
                 <a className='flex justify-between items-center no-underline pl-7' style={{ fontSize: 'var(--text-s)', color: 'var(--hex-fg-3)' }} href='documentation/animation/animatable-properties/css-transforms.html'>
                   <ArrowIcon />
@@ -101,7 +101,7 @@ export default function FeaturesGallerySection() {
       {/* 特性 3: Scroll Observer */}
       <section
         id='scroll'
-        className='feature-section flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
+        className='feature-section color-turquoise flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
         style={{ color: 'var(--hex-fg-3)' }}
         data-chapter='scroll'
         data-demo='scroll'
@@ -109,10 +109,10 @@ export default function FeaturesGallerySection() {
         <div className='relative w-full h-lvh py-[var(--margin-s)] grid grid-cols-2 gap-16 items-center animejs-md:grid-cols-1'>
           <div className='relative z-[1] flex flex-col'>
             <div className='mb-[var(--margin-m)]' style={{ width: 'calc(100% - var(--margin-s) * 2)' }}>
-              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxl)' }}>Scroll Observer</h2>
-              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-s)' }}>Synchronise and trigger animations on scroll with the Scroll Observer API.</p>
+              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxxl)', color: 'var(--hex-current-1, var(--hex-red-1))' }}>Scroll Observer</h2>
+              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-l)' }}>Synchronise and trigger animations on scroll with the Scroll Observer API.</p>
             </div>
-            <ul className='list-none p-0 m-0 hidden animejs-md:block relative w-full pt-[var(--margin-s)] pl-0'>
+            <ul className='feature-links list-none p-0 m-0 relative w-full pt-[var(--margin-s)] pl-0'>
               <li>
                 <a className='flex justify-between items-center no-underline pl-7' style={{ fontSize: 'var(--text-s)', color: 'var(--hex-fg-3)' }} href='documentation/events/onscroll/scrollobserver-synchronisation-modes.html'>
                   <ArrowIcon />
@@ -142,7 +142,7 @@ export default function FeaturesGallerySection() {
       {/* 特性 4: Advanced staggering */}
       <section
         id='staggering'
-        className='feature-section flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
+        className='feature-section color-utils flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
         style={{ color: 'var(--hex-fg-3)' }}
         data-chapter='staggering'
         data-demo='staggering'
@@ -150,10 +150,10 @@ export default function FeaturesGallerySection() {
         <div className='relative w-full h-lvh py-[var(--margin-s)] grid grid-cols-2 gap-16 items-center animejs-md:grid-cols-1'>
           <div className='relative z-[1] flex flex-col'>
             <div className='mb-[var(--margin-m)]' style={{ width: 'calc(100% - var(--margin-s) * 2)' }}>
-              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxl)' }}>Advanced staggering</h2>
-              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-s)' }}>Create stunning effects in seconds with the built-in Stagger utility function.</p>
+              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxxl)', color: 'var(--hex-current-1, var(--hex-red-1))' }}>Advanced staggering</h2>
+              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-l)' }}>Create stunning effects in seconds with the built-in Stagger utility function.</p>
             </div>
-            <ul className='list-none p-0 m-0 hidden animejs-md:block relative w-full pt-[var(--margin-s)] pl-0'>
+            <ul className='feature-links list-none p-0 m-0 relative w-full pt-[var(--margin-s)] pl-0'>
               <li>
                 <a className='flex justify-between items-center no-underline pl-7' style={{ fontSize: 'var(--text-s)', color: 'var(--hex-fg-3)' }} href='https://animejs.com/documentation/stagger/time-staggering'>
                   <ArrowIcon />
@@ -183,7 +183,7 @@ export default function FeaturesGallerySection() {
       {/* 特性 5: SVG toolset */}
       <section
         id='svgUtils'
-        className='feature-section flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
+        className='feature-section color-svg flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
         style={{ color: 'var(--hex-fg-3)' }}
         data-chapter='svgUtils'
         data-demo='svgUtils'
@@ -191,10 +191,10 @@ export default function FeaturesGallerySection() {
         <div className='relative w-full h-lvh py-[var(--margin-s)] grid grid-cols-2 gap-16 items-center animejs-md:grid-cols-1'>
           <div className='relative z-[1] flex flex-col'>
             <div className='mb-[var(--margin-m)]' style={{ width: 'calc(100% - var(--margin-s) * 2)' }}>
-              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxl)' }}>SVG toolset</h2>
-              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-s)' }}>Morph shapes, follow motion paths, and draw lines easily with the built-in SVG utilities.</p>
+              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxxl)', color: 'var(--hex-current-1, var(--hex-red-1))' }}>SVG toolset</h2>
+              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-l)' }}>Morph shapes, follow motion paths, and draw lines easily with the built-in SVG utilities.</p>
             </div>
-            <ul className='list-none p-0 m-0 hidden animejs-md:block relative w-full pt-[var(--margin-s)] pl-0'>
+            <ul className='feature-links list-none p-0 m-0 relative w-full pt-[var(--margin-s)] pl-0'>
               <li>
                 <a className='flex justify-between items-center no-underline pl-7' style={{ fontSize: 'var(--text-s)', color: 'var(--hex-fg-3)' }} href='documentation/svg/morphto.html'>
                   <ArrowIcon />
@@ -224,7 +224,7 @@ export default function FeaturesGallerySection() {
       {/* 特性 6: Springs and draggable */}
       <section
         id='draggable'
-        className='feature-section flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
+        className='feature-section color-draggable flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
         style={{ color: 'var(--hex-fg-3)' }}
         data-chapter='draggable'
         data-demo='draggable'
@@ -232,10 +232,10 @@ export default function FeaturesGallerySection() {
         <div className='relative w-full h-lvh py-[var(--margin-s)] grid grid-cols-2 gap-16 items-center animejs-md:grid-cols-1'>
           <div className='relative z-[1] flex flex-col'>
             <div className='mb-[var(--margin-m)]' style={{ width: 'calc(100% - var(--margin-s) * 2)' }}>
-              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxl)' }}>Springs and draggable</h2>
-              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-s)' }}>Drag, snap, flick and throw HTML elements with the fully-featured Draggable API.</p>
+              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxxl)', color: 'var(--hex-current-1, var(--hex-red-1))' }}>Springs and draggable</h2>
+              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-l)' }}>Drag, snap, flick and throw HTML elements with the fully-featured Draggable API.</p>
             </div>
-            <ul className='list-none p-0 m-0 hidden animejs-md:block relative w-full pt-[var(--margin-s)] pl-0'>
+            <ul className='feature-links list-none p-0 m-0 relative w-full pt-[var(--margin-s)] pl-0'>
               <li>
                 <a className='flex justify-between items-center no-underline pl-7' style={{ fontSize: 'var(--text-s)', color: 'var(--hex-fg-3)' }} href='documentation/draggable/draggable-settings.html'>
                   <ArrowIcon />
@@ -269,7 +269,7 @@ export default function FeaturesGallerySection() {
       {/* 特性 7: Runs like clockwork */}
       <section
         id='clockwork'
-        className='feature-section flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
+        className='feature-section color-timeline flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
         style={{ color: 'var(--hex-fg-3)' }}
         data-chapter='clockwork'
         data-demo='clockwork'
@@ -277,13 +277,13 @@ export default function FeaturesGallerySection() {
         <div className='relative w-full h-lvh py-[var(--margin-s)] grid grid-cols-2 gap-16 items-center animejs-md:grid-cols-1'>
           <div className='relative z-[1] flex flex-col'>
             <div className='mb-[var(--margin-m)]' style={{ width: 'calc(100% - var(--margin-s) * 2)' }}>
-              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxl)' }}>
+              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxxl)', color: 'var(--hex-current-1, var(--hex-red-1))' }}>
                 Runs like <br />
                 clockwork
               </h2>
-              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-s)' }}>Orchestrate animation sequences and keep callbacks in sync with the powerful Timeline API.</p>
+              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-l)' }}>Orchestrate animation sequences and keep callbacks in sync with the powerful Timeline API.</p>
             </div>
-            <ul className='list-none p-0 m-0 hidden animejs-md:block relative w-full pt-[var(--margin-s)] pl-0'>
+            <ul className='feature-links list-none p-0 m-0 relative w-full pt-[var(--margin-s)] pl-0'>
               <li>
                 <a className='flex justify-between items-center no-underline pl-7' style={{ fontSize: 'var(--text-s)', color: 'var(--hex-fg-3)' }} href='documentation/timeline/add-animations.html'>
                   <ArrowIcon />
@@ -313,7 +313,7 @@ export default function FeaturesGallerySection() {
       {/* 特性 8: Responsive animations */}
       <section
         id='responsive'
-        className='feature-section flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
+        className='feature-section color-green flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] scroll-mt-[-45lvh] pointer-events-none'
         style={{ color: 'var(--hex-fg-3)' }}
         data-chapter='responsive'
         data-demo='responsive'
@@ -321,10 +321,10 @@ export default function FeaturesGallerySection() {
         <div className='relative w-full h-lvh py-[var(--margin-s)] grid grid-cols-2 gap-16 items-center animejs-md:grid-cols-1'>
           <div className='relative z-[1] flex flex-col'>
             <div className='mb-[var(--margin-m)]' style={{ width: 'calc(100% - var(--margin-s) * 2)' }}>
-              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxl)' }}>Responsive animations</h2>
-              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-s)' }}>Make animations respond to media queries easily with the Scope API.</p>
+              <h2 className='font-bold leading-[0.95em] tracking-[-0.0125em] mb-[0.365em]' style={{ fontSize: 'var(--text-xxxl)', color: 'var(--hex-current-1, var(--hex-red-1))' }}>Responsive animations</h2>
+              <p className='font-semibold leading-[1.25em]' style={{ color: 'var(--hex-fg-2)', fontSize: 'var(--text-l)' }}>Make animations respond to media queries easily with the Scope API.</p>
             </div>
-            <ul className='list-none p-0 m-0 hidden animejs-md:block relative w-full pt-[var(--margin-s)] pl-0'>
+            <ul className='feature-links list-none p-0 m-0 relative w-full pt-[var(--margin-s)] pl-0'>
               <li>
                 <a className='flex justify-between items-center no-underline pl-7' style={{ fontSize: 'var(--text-s)', color: 'var(--hex-fg-3)' }} href='documentation/scope/scope-parameters/mediaqueries.html'>
                   <ArrowIcon />

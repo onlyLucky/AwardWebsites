@@ -122,4 +122,265 @@
       filter: drop-shadow(0 0 3px var(--hex-red-5));
     }
   }
+
+  /* ===== npm install 代码块样式 ===== */
+  pre.npm-install {
+    margin: 0;
+    margin-right: 1rem;
+  }
+
+  /* ===== 固定定位区域（toolbox 等） ===== */
+  .fixed-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100lvh;
+    padding: 0;
+    will-change: opacity;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (min-width: 900px) {
+    .fixed-section {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .fixed-section .home-section-content {
+    max-width: 1500px;
+    width: 100%;
+    height: 100dvh;
+    padding: var(--margin-s);
+  }
+
+  @media (min-width: 900px) {
+    .fixed-section .home-section-content {
+      padding: var(--margin-l);
+    }
+  }
+
+  /* ===== 文字大小工具类 ===== */
+  .text-xxxxl {
+    font-size: var(--text-xxxxl);
+    line-height: 0.865em;
+    letter-spacing: -0.025em;
+  }
+
+  .text-xxl {
+    font-size: var(--text-xxl);
+    line-height: 0.95em;
+    letter-spacing: -0.025em;
+  }
+
+  .text-l {
+    font-size: var(--text-l);
+    line-height: 1.25em;
+    font-weight: 600;
+  }
+
+  /* ===== 浅色背景区域文字样式 ===== */
+  .home-section-light .home-section-text h2 {
+    color: var(--hex-bg-3);
+    font-weight: 800;
+  }
+
+  .home-section-light .home-section-text p {
+    color: var(--hex-bg-4);
+  }
+
+  /* ===== 底部按钮固定定位 ===== */
+  .fixed-container {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
+
+  .heading-links {
+    will-change: transform;
+  }
+
+  .heading-links > div {
+    justify-content: space-between;
+    padding-left: var(--margin-s);
+    padding-right: var(--margin-s);
+    padding-bottom: var(--margin-s);
+  }
+
+  @media (min-width: 900px) {
+    .heading-links > div {
+      padding-left: var(--margin-l);
+      padding-right: var(--margin-l);
+      padding-bottom: var(--margin-l);
+    }
+  }
+
+  .heading-sponsors {
+    position: relative;
+    max-width: 10rem;
+    width: 100%;
+    height: 3rem;
+  }
+
+  .heading-sponsors span {
+    display: block;
+    position: absolute;
+    top: -1.5rem;
+    right: 0;
+  }
+
+  /* ===== npm install 响应式隐藏 ===== */
+  @media (max-width: 899px) {
+    pre.npm-install {
+      display: none;
+    }
+  }
+
+  /* ===== Sub-nav 滚动进度条和代码片段 ===== */
+  .sub-nav {
+    position: fixed;
+    bottom: var(--margin-l);
+    right: var(--margin-l);
+    width: var(--max-box-width);
+    height: 10rem;
+    z-index: 10;
+    pointer-events: none;
+    overflow: hidden;
+    border-radius: var(--br-l);
+  }
+
+  @media (max-width: 899px) {
+    .sub-nav {
+      display: none;
+    }
+  }
+
+  /* ===== Feature 颜色主题类 ===== */
+  .color-getting-started {
+    --hex-current-1: var(--hex-red-1);
+    --hex-current-2: var(--hex-red-2);
+    --hex-current-3: var(--hex-red-3);
+    --hex-current-4: var(--hex-red-4);
+    --hex-current-5: var(--hex-red-5);
+    --hex-current-6: var(--hex-red-6);
+    --hex-current-7: var(--hex-red-7);
+    --hex-current-8: var(--hex-red-8);
+  }
+
+  .color-animation {
+    --hex-current-1: var(--hex-orange-1);
+    --hex-current-2: var(--hex-orange-2);
+    --hex-current-3: var(--hex-orange-3);
+    --hex-current-4: var(--hex-orange-4);
+    --hex-current-5: var(--hex-orange-5);
+    --hex-current-6: var(--hex-orange-6);
+    --hex-current-7: var(--hex-orange-7);
+    --hex-current-8: var(--hex-orange-8);
+  }
+
+  .color-turquoise {
+    --hex-current-1: var(--hex-turquoise-1);
+    --hex-current-2: var(--hex-turquoise-2);
+    --hex-current-3: var(--hex-turquoise-3);
+    --hex-current-4: var(--hex-turquoise-4);
+    --hex-current-5: var(--hex-turquoise-5);
+    --hex-current-6: var(--hex-turquoise-6);
+    --hex-current-7: var(--hex-turquoise-7);
+    --hex-current-8: var(--hex-turquoise-8);
+  }
+
+  .color-utils {
+    --hex-current-1: var(--hex-king-1);
+    --hex-current-2: var(--hex-king-2);
+    --hex-current-3: var(--hex-king-3);
+    --hex-current-4: var(--hex-king-4);
+    --hex-current-5: var(--hex-king-5);
+    --hex-current-6: var(--hex-king-6);
+    --hex-current-7: var(--hex-king-7);
+    --hex-current-8: var(--hex-king-8);
+  }
+
+  .color-svg {
+    --hex-current-1: var(--hex-sky-1);
+    --hex-current-2: var(--hex-sky-2);
+    --hex-current-3: var(--hex-sky-3);
+    --hex-current-4: var(--hex-sky-4);
+    --hex-current-5: var(--hex-sky-5);
+    --hex-current-6: var(--hex-sky-6);
+    --hex-current-7: var(--hex-sky-7);
+    --hex-current-8: var(--hex-sky-8);
+  }
+
+  .color-draggable {
+    --hex-current-1: var(--hex-lime-1);
+    --hex-current-2: var(--hex-lime-2);
+    --hex-current-3: var(--hex-lime-3);
+    --hex-current-4: var(--hex-lime-4);
+    --hex-current-5: var(--hex-lime-5);
+    --hex-current-6: var(--hex-lime-6);
+    --hex-current-7: var(--hex-lime-7);
+    --hex-current-8: var(--hex-lime-8);
+  }
+
+  .color-timeline {
+    --hex-current-1: var(--hex-yellow-1);
+    --hex-current-2: var(--hex-yellow-2);
+    --hex-current-3: var(--hex-yellow-3);
+    --hex-current-4: var(--hex-yellow-4);
+    --hex-current-5: var(--hex-yellow-5);
+    --hex-current-6: var(--hex-yellow-6);
+    --hex-current-7: var(--hex-yellow-7);
+    --hex-current-8: var(--hex-yellow-8);
+  }
+
+  .color-green {
+    --hex-current-1: var(--hex-green-1);
+    --hex-current-2: var(--hex-green-2);
+    --hex-current-3: var(--hex-green-3);
+    --hex-current-4: var(--hex-green-4);
+    --hex-current-5: var(--hex-green-5);
+    --hex-current-6: var(--hex-green-6);
+    --hex-current-7: var(--hex-green-7);
+    --hex-current-8: var(--hex-green-8);
+  }
+
+  /* ===== 浅色主题（滚动到浅色区域时切换） ===== */
+  html.is-light body {
+    background-color: #DAD5D0 !important;
+  }
+
+  html.is-light .animejs-root > div {
+    background-color: #DAD5D0 !important;
+  }
+
+  /* ===== animate-anything 文字样式 ===== */
+  .animate-anything-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  .animate-anything {
+    position: relative;
+  }
+
+  .animate-anything .char {
+    transform-origin: 0% 95%;
+  }
+
+  .animate-anything-dot {
+    display: block;
+    position: absolute;
+    right: -0.25em;
+    bottom: -0.01em;
+  }
 }

@@ -11,14 +11,14 @@ export default function ModulesSection() {
   return (
     <section
       id='modules'
-      className='flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] max-w-[var(--max-box-width)]'
+      className='home-section-container home-section-light flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] max-w-[var(--max-box-width)]'
       style={{ color: 'var(--hex-fg-3)' }}
       data-chapter='modules'
       data-label='MODULES'
       data-enter-offset='+=10lvh'
       data-leave-offset='-=75lvh'
     >
-      <section className='flex flex-col justify-center w-full h-lvh px-[var(--margin-s)] opacity-[0.001] pointer-events-none fixed top-0 left-0'>
+      <section className='home-section fixed-section flex flex-col justify-center w-full h-lvh px-[var(--margin-s)]'>
         <div className='relative w-full h-lvh py-[var(--margin-s)]'>
           <div className='relative z-[1] flex flex-col max-w-[var(--max-box-width)]'>
             <h2 className='font-bold leading-tight' style={{ fontSize: 'var(--text-xxl)' }}>
