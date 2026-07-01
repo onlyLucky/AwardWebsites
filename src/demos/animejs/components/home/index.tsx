@@ -14,14 +14,27 @@ import GetStartedSection from './get-started'
 
 export default function Home() {
   useEffect(() => {
-    // 监听所有 feature-section 进入视口
+    // 监听所有 feature-section 进入视口，控制 is-in-view 和 demo wrapper opacity
     if (typeof IntersectionObserver === 'undefined') return
     const targets = document.querySelectorAll<HTMLElement>('.feature-section')
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          const section = entry.target as HTMLElement
+          const demoWrapper = section.querySelector<HTMLElement>('.feature-demo-wrapper')
           if (entry.isIntersecting) {
-            entry.target.classList.add('is-in-view')
+            section.classList.add('is-in-view')
+            // 显示当前 section 的 demo 内容
+            if (demoWrapper) {
+              demoWrapper.style.opacity = '1'
+              demoWrapper.style.pointerEvents = 'auto'
+            }
+          } else {
+            // 离开视口时隐藏 demo 内容
+            if (demoWrapper) {
+              demoWrapper.style.opacity = '0'
+              demoWrapper.style.pointerEvents = 'none'
+            }
           }
         })
       },
@@ -36,6 +49,9 @@ export default function Home() {
     const allSections = document.querySelectorAll<HTMLElement>('[data-chapter]')
     const lightSections = document.querySelectorAll<HTMLElement>('.home-section-light')
     if (!allSections.length) return
+
+    // 添加背景色过渡动画
+    document.body.style.transition = 'background-color 0.25s ease-in-out'
 
     let ticking = false
     const onScroll = () => {
@@ -103,9 +119,11 @@ export default function Home() {
           }
         })
         if (isLight) {
-          document.documentElement.classList.add('is-light')
+          document.body.classList.add('is-light')
+          document.body.style.backgroundColor = '#DAD5D0'
         } else {
-          document.documentElement.classList.remove('is-light')
+          document.body.classList.remove('is-light')
+          document.body.style.backgroundColor = '#252423'
         }
       })
     }
@@ -113,7 +131,9 @@ export default function Home() {
     onScroll()
     return () => {
       window.removeEventListener('scroll', onScroll)
-      document.documentElement.classList.remove('is-light')
+      document.body.classList.remove('is-light')
+      document.body.style.backgroundColor = ''
+      document.body.style.transition = ''
     }
   }, [])
 

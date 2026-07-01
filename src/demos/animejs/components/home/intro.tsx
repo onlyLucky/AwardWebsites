@@ -34,11 +34,7 @@ export default function IntroSection() {
       lines.forEach((line, lineIndex) => {
         const lineSpan = document.createElement('span')
         lineSpan.style.display = 'block'
-        lineSpan.style.fontSize = 'var(--text-xxxxl)'
-        lineSpan.style.lineHeight = '0.865em'
-        lineSpan.style.fontWeight = '700'
-        lineSpan.style.letterSpacing = '-0.025em'
-        lineSpan.style.color = 'var(--hex-fg-1)'
+        lineSpan.className = 'font-bold text-[var(--hex-fg-1)]'
         // 如果是最后一行，拆分出句点
         if (lineIndex === lines.length - 1) {
           const engineChars = line.slice(0, -1)
@@ -65,9 +61,6 @@ export default function IntroSection() {
           })
         }
         h2.appendChild(lineSpan)
-        if (lineIndex < lines.length - 1) {
-          h2.appendChild(document.createElement('br'))
-        }
       })
 
       // 创建标题入场动画时间线
@@ -105,35 +98,57 @@ export default function IntroSection() {
     // ===== 副标题逐字动画 =====
     const p = pRef.current
     if (p) {
-      const text = p.textContent || ''
-      p.innerHTML = ''
-      // 拆分文字，保留空格
-      const words = text.split(' ')
-      words.forEach((word, index) => {
-        const wordSpan = document.createElement('span')
-        wordSpan.textContent = word
-        wordSpan.style.display = 'inline-block'
-        p.appendChild(wordSpan)
-        // 添加空格（除了最后一个单词）
-        if (index < words.length - 1) {
-          p.appendChild(document.createTextNode(' '))
+      // 保留 animate-anything-wrapper，只动画前面的文字
+      const wrapper = p.querySelector('.animate-anything-wrapper')
+      if (wrapper) {
+        // 获取 wrapper 前面的文本内容
+        let textBeforeWrapper = ''
+        const childNodes = Array.from(p.childNodes)
+        for (const node of childNodes) {
+          if (node === wrapper) break
+          if (node.nodeType === Node.TEXT_NODE) {
+            textBeforeWrapper += node.textContent || ''
+          }
         }
-      })
 
-      // 创建副标题入场动画
-      const pWords = p.querySelectorAll('span')
-      gsap.fromTo(
-        pWords,
-        { opacity: 0, y: 10 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.3,
-          stagger: 0.03,
-          ease: 'power2.out',
-          delay: 1.5,
+        // 拆分文本为单词（保留空格）
+        const trimmedText = textBeforeWrapper.trimEnd()
+        const words = trimmedText.split(' ')
+
+        // 清除 wrapper 前面的文本节点
+        for (const node of [...p.childNodes]) {
+          if (node === wrapper) break
+          if (node.nodeType === Node.TEXT_NODE) {
+            node.remove()
+          }
         }
-      )
+
+        // 在 wrapper 前逐个插入单词 span（空格通过 CSS margin 实现）
+        words.forEach((word, index) => {
+          const wordSpan = document.createElement('span')
+          wordSpan.textContent = word
+          wordSpan.style.display = 'inline-block'
+          if (index < words.length - 1) {
+            wordSpan.style.marginRight = '0.3em'
+          }
+          p.insertBefore(wordSpan, wrapper)
+        })
+
+        // 创建副标题入场动画（只动画单词，不包括 wrapper）
+        const pWords = p.querySelectorAll('span:not(.animate-anything-wrapper):not(.animate-anything):not(.animate-anything-dot)')
+        gsap.fromTo(
+          pWords,
+          { opacity: 0, y: 10 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.3,
+            stagger: 0.03,
+            ease: 'power2.out',
+            delay: 1.5,
+          }
+        )
+      }
     }
 
     // ===== "animate anything" 文字循环动画 =====
@@ -258,7 +273,7 @@ export default function IntroSection() {
           <div className='relative z-[1] flex flex-col w-full md:w-[432px] md:max-w-[432px] md:mb-16 md:items-start md:text-left'>
             <h2
               ref={h2Ref}
-              className='text-[var(--text-xxxxl)] leading-[0.865em] tracking-[-0.025em] text-[var(--hex-fg-1)] font-bold mb-[23.36px] md:mb-[23.36px]'
+              className='text-[var(--hex-fg-1)] font-bold'
             >
               All-in-one <br />
               animation <br />
@@ -266,7 +281,7 @@ export default function IntroSection() {
             </h2>
             <p
               ref={pRef}
-              className='w-full text-[var(--text-l)] font-semibold leading-[1.25em] text-[var(--hex-fg-2)]'
+              className='text-l w-full font-semibold text-[var(--hex-fg-2)]'
             >
               A fast and flexible JavaScript library to animate{' '}
               <span className='animate-anything-wrapper relative inline-block'>

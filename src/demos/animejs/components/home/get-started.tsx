@@ -31,7 +31,7 @@ const LINKS = [
 
 export default function GetStartedSection() {
   return (
-    <section id='get-started' data-chapter='get-started' data-label='GET_STARTED'>
+    <section id='get-started' className='w-full' data-chapter='get-started' data-label='GET_STARTED'>
       {/* 章节间距 */}
       <div className='h-lvh pointer-events-none'></div>
 
